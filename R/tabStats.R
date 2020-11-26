@@ -2,7 +2,7 @@ numDig = 2
 
 # Generate table of statistics for datasets
 
-resultsTab = file.path('..', 'results', 'tables', 'allStatsXXX.csv')
+resultsTab = file.path('..', 'results', 'tables', 'allStats.csv')
 D = read.csv(resultsTab)
 D[['1/cv']] = abs(D$mse / D$rmsd)
 D[['u_1/cv']] = abs(D$mse / D$rmsd) *
@@ -63,7 +63,7 @@ for(s in stats) {
   v = d[[s]]
   vu = matrix(apply(cbind(v, d[[paste0('u_', s)]]), 1,
                     function(x)
-                      prettyUnc(x[1], x[2], numDig = numdig)),
+                      prettyUnc(x[1], x[2], numDig = numDig)),
               ncol = 1)
   colnames(vu) = s
   df = cbind(df, vu)

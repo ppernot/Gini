@@ -116,8 +116,7 @@ Pascal PERNOT (pascal.pernot@universite-paris-saclay.fr)
 \begin_inset Newline newline
 \end_inset
 
-Institut de Chimie Physique, CNRS, Univ.
- Paris-Sud, 
+Institut de Chimie Physique, UMR8000 CNRS, 
 \begin_inset Newline newline
 \end_inset
 
@@ -141,7 +140,11 @@ Andreas SAVIN (andreas.savin@lct.jussieu.fr)
 \begin_inset Newline newline
 \end_inset
 
-Laboratoire de Chimie Théorique, CNRS and UPMC Université Paris 06,
+Laboratoire de Chimie Théorique, 
+\begin_inset Newline newline
+\end_inset
+
+CNRS and UPMC Université Paris 06,
 \begin_inset Newline newline
 \end_inset
 
@@ -153,12 +156,14 @@ Email: andreas.savin@lct.jussieu.fr
 \end_layout
 
 \begin_layout Abstract
-The distribution of errors being a central object in the assesment and benchmark
-ing of quantum chemistry methods, we show how the Lorenz curve and the associate
-d statistics can be used to characterize it.
- 
-\color red
-TO BE COMPLETED...
+The distribution of errors is a central object in the assesment and benchmarking
+ of computational chemistry methods.
+ The popular and often blind use of the mean unsigned error as a benchmarking
+ statistic leads to ignore distributions features that impact the reliability
+ of the tested methods.
+ We explore how the Gini coefficient offers a global apprehension of the
+ errors distribution that can usefully complement the mean unsigned error
+ and alert on possibly problematic error sets.
 \end_layout
 
 \begin_layout Standard
@@ -173,9 +178,9 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-The reliability of a computational chemistry method is strongly conditioned
- by the distribution of its prediction errors.
- Distributions with heavy tails entail a risk of large prediction errors.
+The reliability of a computational chemistry method is conditioned by the
+ distribution of its prediction errors.
+ Distributions with heavy tails elicit a risk of large prediction errors.
  As a benchmarking statistic, the popular mean unsigned error (MUE) bears
  no information on such a risk 
 \begin_inset CommandInset citation
@@ -186,12 +191,9 @@ literal "false"
 \end_inset
 
 .
- We have recently reported a case where two error distributions with identical
- values of the MUE have widely different risks of large errors 
-\color red
-MORE PRECISE
-\color inherit
- 
+ We have recently reported a case where two unbiased error distributions
+ with identical values of the MUE present widely different risks of large
+ errors because of heavy tails in one of them 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Pernot2020b,Pernot2020a"
@@ -200,9 +202,8 @@ literal "false"
 \end_inset
 
 .
- This was mainly due to heavy tails in one of the two practically unbiased
- distributions, but cases might occur where bias adds even more complexity
- to the MUE comparison.
+ Cases might also occur where bias adds even more complexity to the comparison
+ of MUE values.
  As summarized in Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -331,7 +332,7 @@ literal "false"
 \end_layout
 
 \begin_layout Itemize
-there is a 5
+There is a 5
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -343,7 +344,7 @@ there is a 5
 \end_layout
 
 \begin_layout Itemize
-there is a probability 
+There is a probability 
 \begin_inset Formula $P_{\eta}$
 \end_inset
 
@@ -370,7 +371,7 @@ a priori
 \end_layout
 
 \begin_layout Itemize
-for two methods 
+For two methods 
 \begin_inset Formula $M_{1}$
 \end_inset
 
@@ -410,7 +411,7 @@ The
 \begin_inset Formula $P_{\eta}$
 \end_inset
 
- partly answer to the question, but they are point estimates on the cumulated
+ partly answer the question, but they are point estimates on the cumulated
  density function of the absolute errors, and a more global statistic, accountin
 g for the whole distribution might be of interest.
  Besides, it is well established in econometrics that measures of dispersions
@@ -458,8 +459,8 @@ literal "false"
  It is also used in biology to estimate the inequality of properties within
  plant populations.
  The Lorenz curve has many mathematical representations, the most interesting
- one for us being its formulation as an integral of the quantile function,
- making the link with our study of probabilistic metrics 
+ one, for us, being its formulation as an integral of the quantile function,
+ a direct link with our study of probabilistic metrics 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Pernot2018,Pernot2020,Pernot2020a"
@@ -605,7 +606,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -812,10 +813,12 @@ i.e.
 \end_inset
 
 .
+ Note that this case corresponds to a discontinuous CDF, with a jump at
  
-\color red
-JUMP IN THE CDF
-\color inherit
+\begin_inset Formula $\varepsilon=c$
+\end_inset
+
+.
  The deviation of the error distributions from this case can be estimated
  by the Gini coefficient.
 \end_layout
@@ -977,7 +980,7 @@ literal "false"
 , hence the 'CS' subscript)
 \begin_inset Formula 
 \begin{equation}
-\kappa_{CS}=\frac{q(0.975)-q(0.025)}{q(0.75)-q(0.25)}-2.905\label{eq:kurtcs}
+\kappa_{CS}=\frac{q(0.975)-q(0.025)}{q(0.75)-q(0.25)}-2.91\label{eq:kurtcs}
 \end{equation}
 
 \end_inset
@@ -991,7 +994,7 @@ where
 signed
 \emph default
  errors.
- The correction factor for the normal distribution (2.905) makes that 
+ The correction factor for the normal distribution (2.91) makes that 
 \begin_inset Formula $\kappa_{CS}$
 \end_inset
 
@@ -1142,7 +1145,7 @@ Using a fast sorting of the sample of absolute errors, an efficient estimation
  uses the formula 
 \begin_inset CommandInset citation
 LatexCommand citep
-key "Damgaard2000,ineq"
+key "Glasser1962,Dixon1987,Damgaard2000,ineq"
 literal "false"
 
 \end_inset
@@ -1163,14 +1166,10 @@ literal "false"
 
 \end_inset
 
- 
-\color red
-OLDER REF ?
-\color inherit
 
 \begin_inset Formula 
 \begin{equation}
-G=\frac{1}{<\varepsilon>}<\max\{0,\varepsilon_{1}-\varepsilon_{2}\}>
+G=\frac{1}{MUE}<\max\{0,\varepsilon_{1}-\varepsilon_{2}\}>
 \end{equation}
 
 \end_inset
@@ -1337,10 +1336,13 @@ Before applying the Gini coefficient to literature datasets, one explores
 \end_layout
 
 \begin_layout Standard
-
-\color red
-Distributions grossièrement unimodales...
- Cas limites ? marche pas pour les bi-delta
+It is important to note that we explore only distributions with a unique,
+ more or less structured peak, such as the ones encountered in most computationa
+l chemistry error datasets.
+ It is easy to imagine multi-peaked distributions for which our conclusions
+ on the Gini coefficient would not be valid.
+ In fact, none of the usual summary statistics (MUE, MSE, RMSD) would describe
+ properly such distributions.
 \end_layout
 
 \begin_layout Subsection
@@ -1370,18 +1372,14 @@ noprefix "false"
 
 .
  In all cases, the distributions refer to signed errors.
- 
-\color red
-The statistics, probability density functions and Lorenz curves corresponding
- to these datasets are provided in Supplementary Information.
-
-\color inherit
+ The statistics, probability density functions and Lorenz curves corresponding
+ to these datasets are provided as Supplementary Information.
  
 \begin_inset Float table
 placement !t
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1390,7 +1388,7 @@ status open
 <lyxtabular version="3" rows="8" columns="2">
 <features tabularvalignment="middle">
 <column alignment="left" valignment="top">
-<column alignment="left" valignment="top">
+<column alignment="left" valignment="top" width="12cm">
 <row>
 <cell alignment="left" valignment="top" topline="true" bottomline="true" usebox="none">
 \begin_inset Text
@@ -1445,7 +1443,7 @@ Student
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1489,7 +1487,7 @@ StudentBias2
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1509,7 +1507,7 @@ GandH
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1520,7 +1518,15 @@ GandH
 \begin_inset Formula $h$
 \end_inset
 
- distributions with asymmetry parameter 
+ distributions 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Hoaglin1985,Wilcox2012,Pernot2020"
+literal "false"
+
+\end_inset
+
+ with asymmetry parameter 
 \begin_inset Formula $g$
 \end_inset
 
@@ -1540,7 +1546,7 @@ GandHBias1
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" usebox="none">
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1560,7 +1566,7 @@ GandHBias2
 
 \end_inset
 </cell>
-<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -1658,11 +1664,10 @@ noprefix "false"
  At small bias values, the properties of the folded normal distribution
  take precedence, and the symbols deviate from the inverse law to converge
  to the value 
-\begin_inset Formula $G\simeq0.41$
+\begin_inset Formula $G=\sqrt{2}-1\simeq0.41$
 \end_inset
 
  for a centered normal distribution.
- 
 \end_layout
 
 \begin_layout Standard
@@ -1711,7 +1716,7 @@ The Student case (red squares) gives us milestones for centered symmetric
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1882,18 +1887,14 @@ literal "false"
 \end_inset
 
 .
- 
-\color red
-The statistics, probability density functions and Lorenz curves corresponding
- to these datasets are provided in Supplementary Information.
-
-\color inherit
+ The statistics, empirical cumulative density functions and Lorenz curves
+ corresponding to these datasets are provided as Supplementary Information.
  
 \begin_inset Float table
 placement !t
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -1973,7 +1974,7 @@ BOR2019
 \begin_inset Text
 
 \begin_layout Plain Layout
-Band gaps
+Band gaps (eV)
 \end_layout
 
 \end_inset
@@ -2027,7 +2028,7 @@ HAI2018
 \begin_inset Text
 
 \begin_layout Plain Layout
-Dipole moments
+Dipole moments (Debye)
 \end_layout
 
 \end_inset
@@ -2036,7 +2037,7 @@ Dipole moments
 \begin_inset Text
 
 \begin_layout Plain Layout
-149
+152
 \end_layout
 
 \end_inset
@@ -2045,7 +2046,7 @@ Dipole moments
 \begin_inset Text
 
 \begin_layout Plain Layout
-5
+93
 \end_layout
 
 \end_inset
@@ -2081,7 +2082,7 @@ NAR2019
 \begin_inset Text
 
 \begin_layout Plain Layout
-Enthalpies of formation
+Enthalpies of formation (kcal/mol)
 \end_layout
 
 \end_inset
@@ -2135,7 +2136,7 @@ PER2018
 \begin_inset Text
 
 \begin_layout Plain Layout
-Intensive atomization energies
+Intensive atomization energies (kcal/mol)
 \end_layout
 
 \end_inset
@@ -2189,7 +2190,7 @@ SCH2018
 \begin_inset Text
 
 \begin_layout Plain Layout
-Chemisorption energies
+Chemisorption energies (eV)
 \end_layout
 
 \end_inset
@@ -2243,7 +2244,7 @@ THA2015
 \begin_inset Text
 
 \begin_layout Plain Layout
-Polarizability
+Polarizability (relative errors, in %)
 \end_layout
 
 \end_inset
@@ -2297,7 +2298,7 @@ WU2015
 \begin_inset Text
 
 \begin_layout Plain Layout
-Polarizability
+Polarizability (relative errors, in %)
 \end_layout
 
 \end_inset
@@ -2351,7 +2352,7 @@ ZAS2019
 \begin_inset Text
 
 \begin_layout Plain Layout
-Effective atomization energies
+Effective atomization energies (kcal/mol)
 \end_layout
 
 \end_inset
@@ -2405,7 +2406,7 @@ ZHA2018
 \begin_inset Text
 
 \begin_layout Plain Layout
-Solid formation enthalpies
+Solid formation enthalpies (kcal/mol)
 \end_layout
 
 \end_inset
@@ -2619,6 +2620,28 @@ Cases BOR2019, HAI2018, PER2018, THA2015 and ZAS2018 present cases with
  Predictions with the corresponding methods should probably be handled with
  circumspection, as some errors might stray far away from the MUE, at least
  more than one might expect from a normal distribution.
+ The largest 
+\begin_inset Formula $G$
+\end_inset
+
+ value in this study is 0.82 for method MP2 in the HAI2018 set 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Hait2018"
+literal "false"
+
+\end_inset
+
+.
+ The original authors point to a 
+\begin_inset Quotes eld
+\end_inset
+
+surprisingly poor performance
+\begin_inset Quotes erd
+\end_inset
+
+, which is very well rendered by the outlying Gini coefficient.
  An in-depth study has been published for case ZAS2019 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -2671,6 +2694,209 @@ noprefix "false"
  
 \end_layout
 
+\begin_layout Standard
+To validate the 
+\begin_inset Formula $G$
+\end_inset
+
+-scale interpretation, we compare the original 
+\begin_inset Formula $G$
+\end_inset
+
+ values with the ones obtained after centering of the distributions (resulting
+ in 
+\begin_inset Formula $MSE=0$
+\end_inset
+
+).
+ To facilitate the comparison, one flags the 
+\begin_inset Formula $G$
+\end_inset
+
+ values into three classes: using the uncertainty on 
+\begin_inset Formula $G$
+\end_inset
+
+ estimated by bootstrapping (available in Supplementary Information), the
+ methods are flagged as 
+\begin_inset Quotes eld
+\end_inset
+
+green
+\begin_inset Quotes erd
+\end_inset
+
+ if 
+\begin_inset Formula $P(G\le0.35)\ge0.05$
+\end_inset
+
+ and 
+\begin_inset Quotes eld
+\end_inset
+
+red
+\begin_inset Quotes erd
+\end_inset
+
+ if 
+\begin_inset Formula $P(G\ge0.5)\ge0.05$
+\end_inset
+
+, based on a normal distribution hypothesis for 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ The remaining class, corresponding to the blind zone of the 
+\begin_inset Formula $G$
+\end_inset
+
+ scale is represented as 
+\begin_inset Quotes eld
+\end_inset
+
+gray
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The shift due to centering for the three classes is shown in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-CV-Rank-Unbiased"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a).
+ For each class, the change of 
+\begin_inset Formula $G$
+\end_inset
+
+ value between the raw and the centered data is shown, along with the change
+ in class.
+ As expected, almost all sets with 
+\begin_inset Formula $G\le0.35$
+\end_inset
+
+ (green dots) shift after centering to larger 
+\begin_inset Formula $G$
+\end_inset
+
+ values and fall in the gray and red classes.
+ Considering the gray dots, a large portion shifts to the red class, confirming
+ the presence of a compensation between bias and shape factors in this class.
+ Finally, most of the red class remains unchanged, with a few points enduring
+ a significant reduction of 
+\begin_inset Formula $G$
+\end_inset
+
+ value.
+ The most spectacular example is the extreme point at 
+\begin_inset Formula $G=0.82$
+\end_inset
+
+, which shifts to a value of 0.53.
+ The corresponding set (MP2 from HAIT2018) contains a zero-centered sharp
+ peak, and a set of large outliers.
+ Its global centering pushes the main peak off-center, a move associated
+ with a smaller 
+\begin_inset Formula $G$
+\end_inset
+
+ value.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_Gini_vs_CV_unbiased.png
+	lyxscale 30
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 1200bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gini-vs-CV-Rank-Unbiased"
+
+\end_inset
+
+Effect of centering the error distributions on the 
+\begin_inset Formula $G$
+\end_inset
+
+ values: (a) change of 
+\begin_inset Formula $G$
+\end_inset
+
+ value and class between raw and centered datasets; (b) Excess kurtosis
+ vs.
+ 
+\begin_inset Formula $G.$
+\end_inset
+
+ for centered datasets (prefixed by 'c-').
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-CV-Rank-Unbiased"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b) shows the excess kurtosis for the unbiased datasets as a function of
+ their 
+\begin_inset Formula $G$
+\end_inset
+
+ value.
+ The strong correlation between these two statistics for centered distributions
+ is clearly visible.
+ 
+\end_layout
+
 \begin_layout Paragraph
 Ranking.
 \end_layout
@@ -2702,28 +2928,11 @@ noprefix "false"
 \end_inset
 
  value.
- Using the uncertainty on 
-\begin_inset Formula $G$
-\end_inset
-
- estimated by bootstrapping, the methods are flagged if either 
-\begin_inset Formula $P(G\le0.35)\ge0.05$
-\end_inset
-
- or 
-\begin_inset Formula $P(G\ge0.5)\ge0.05$
-\end_inset
-
-, based on a normal distribution hypothesis for 
-\begin_inset Formula $G$
-\end_inset
-
-.
  
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2843,23 +3052,28 @@ Conclusion
 \end_layout
 
 \begin_layout Standard
-The Lorenz curve and Gini coefficients present an interesting addition to
+The Lorenz curve and Gini coefficient present an interesting addition to
  the computational chemistry benchmarking statistical toolbox.
  We focused here on the Gini statistic to study its properties in relation
- with features of error distributions, such as bias and shape (kurtosis,
+ with features of the error distributions, such as bias and shape (kurtosis,
  asymmetry).
- We have shown that one can establish a scale of 
+ The interest of the Gini coefficient is that it correlates with all these
+ features, and offers a one-number summary.
+ This is also one of its weaknesses, as there is no unique mapping from
+ the Gini coefficient to these features.
+ Nevertheless, we have shown on analytical and real world examples that
+ one can establish a scale of 
 \begin_inset Formula $G$
 \end_inset
 
- values, with tree distinct zones.
- Values of the Gini coefficient outside the interval 
+ values with tree distinct zones, and that values of the Gini coefficient
+ outside the interval 
 \begin_inset Formula $0.35-0.5$
 \end_inset
 
- should raise an alert, as the corresponding datasets present features that
- might imped the unambiguous interpretation of popular benchmarking statistics
- such as the MUE.
+ should raise an alert.
+ The corresponding datasets present features that might impede the unambiguous
+ interpretation of popular benchmarking statistics such as the MUE.
  
 \end_layout
 

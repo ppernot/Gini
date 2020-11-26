@@ -7,7 +7,7 @@ lwd  = 4
 cex  = 4.5
 
 
-resultsTab = file.path('..', 'results', 'tables', 'allStatsXXX.csv')
+resultsTab = file.path('..', 'results', 'tables', 'allStats.csv')
 
 D = read.csv(resultsTab)
 
@@ -31,10 +31,9 @@ par(mfrow = c(2, 2),
 # (a) ####
 stat1 = 'gini'
 stat2 = 'z'
-xlim = c(0.1,0.7)
+xlim = c(0.1,0.9) # set for all four graphs
 ylim = c(-0.1,5.1)
-sel = D$ctd == -1 &
-  !D$out &
+sel = D$ctd == -1 & !D$out &
   substr(D$Dataset,1,4) == 'Ref_' &
   D$Methods != 'df=1' # Ignore, too unstable (Cauchy)
 
@@ -92,7 +91,6 @@ stat2 = 'kurtcs'
 x = D[[stat1]][sel]
 y = D[[stat2]][sel]
 
-xlim = c(0.1,0.7)
 ylim = c(-0.5,3)
 plot(
   x,
@@ -127,7 +125,6 @@ mtext(
 
 stat1 = 'gini'
 stat2 = 'z'
-xlim = c(0.1,0.7)
 ylim = c(-0.1,3)
 sel = D$ctd == -1 &
   !D$out &
@@ -202,7 +199,6 @@ sel = D$ctd == -1 &
   substr(D$Dataset,1,4) == 'Ref_'
 x = D[[stat1]][sel]
 y = D[[stat2]][sel]
-xlim = c(0.1,0.7)
 ylim = c(-1,6)
 plot(
   x,
@@ -246,6 +242,173 @@ points(
 box()
 mtext(
   text = '(d)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
+
+
+dev.off()
+
+
+
+# Unbiased Gini vs. Kurt ####
+png(file='../article/fig_Gini_vs_CV_unbiased.png', width=2400, height=1200)
+#
+par(mfrow = c(1, 2),
+    pty = pty,
+    mar = mar,
+    mgp = mgp,
+    tcl = tcl,
+    lwd = lwd,
+    cex = cex)
+
+# (a) ####
+
+sel = D$ctd == -1 & !D$out &
+  substr(D$Dataset,1,4) != 'Ref_'
+x1 = D$gini[sel]
+u_x1 = D$u_gini[sel]
+jcol= rep('gray80',length(sel))
+s1 = pnorm(0.35,x1,u_x1) > 0.05 
+s2 = pnorm(0.50,x1,u_x1) < 0.95 
+jcol[s1] = cols[4]
+jcol[s2] = cols[2]
+
+sel = D$ctd == 0 & !D$out &
+  substr(D$Dataset,1,4) != 'Ref_'
+x2 = D$gini[sel]
+u_x2 = D$u_gini[sel]
+jcol2= rep('gray80',length(sel))
+s12 = pnorm(0.35,x2,u_x2) > 0.05 
+s22 = pnorm(0.50,x2,u_x2) < 0.95 
+jcol2[s12] = cols[4]
+jcol2[s22] = cols[2]
+
+# Stats about shift sign
+dif = x2 - x1
+u_dif = sqrt(u_x1^2 + u_x2^2)
+print(mean(dif >0))
+print( mean( pnorm(0,dif,u_dif) < 0.05) ) # P(dif > 0)
+print( mean( pnorm(0,dif,u_dif) > 0.95) ) # P(dif < 0)
+
+
+icol = factor(D$Dataset[sel])
+
+y1 = 3 + rnorm(length(x1),0,0.05)
+y1[s1] = y1[s1] - 2
+y1[s2] = y1[s2] + 2
+
+y2 = 4 + rnorm(length(x2),0,0.05)
+y2[s1] = y2[s1] - 2
+y2[s2] = y2[s2] + 2
+
+
+xlim = c(0.1,0.9)
+plot(
+  x1, y1,
+  pch = 16, type = 'p', cex=0.7,
+  xlab = 'Gini',
+  xlim = xlim, xaxs = 'i',
+  yaxt = 'n', ylab = '',
+  ylim = c(0.5,6.5), yaxs = 'i',
+  col = jcol,
+  main = ''
+)
+grid()
+abline(v=c(0.35,0.5),lty=2,col=cols[1])
+segments(x1,y1,x2,y2,col='gray70',lty=2)
+points(
+  x1,y1,pch=16,col=jcol, cex=0.7
+)
+points(
+  x2,y2,pch=16,col=jcol2, cex=0.7
+)
+mtext(
+  c('Raw','Centered','Raw','Centered','Raw','Centered'),
+  side = 2,
+  at = 1:6,
+  las = 1,
+  cex = 3,
+  line= 0.2
+  )
+
+legend(
+  'bottomright',
+  bty = 'n', cex = 0.7,
+  legend = c('G < 0.35', '0.35 < G < 0.5', 'G > 0.5'),
+  pch = 19,
+  col = c(cols[4],'gray80',cols[2]),
+  y.intersp = 0.9
+)
+# box()
+mtext(
+  text = '(a)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
+
+# (b) ####
+stat1 = 'gini'
+stat2 = 'kurtcs'
+sel = D$ctd == -1 &
+  !D$out &
+  substr(D$Dataset,1,4) == 'Ref_'
+x = D[[stat1]][sel]
+y = D[[stat2]][sel]
+ylim = c(-1,6)
+plot(
+  x,
+  y, type = 'n',
+  xlab = 'Gini',
+  xlim = xlim, xaxs = 'i',
+  ylab = 'Excess kurtosis',
+  ylim = ylim, yaxs = 'i',
+  main = ''
+)
+grid()
+rect(0.35,-2,0.5,100,col = 'gray90',border = NA)
+
+sel = D$ctd == -1 &
+  !D$out &
+  D$Dataset == 'Ref_GandH'
+x = D[[stat1]][sel][-1]
+y = D[[stat2]][sel][-1]
+abline(lm(y~x),lty=2,lwd=lwd,col='grey50')
+
+sel = D$ctd == 0 &
+  !D$out &
+  substr(D$Dataset,1,4) != 'Ref_'
+x = D[[stat1]][sel]
+y = D[[stat2]][sel]
+icol = as.numeric(factor(D$Dataset[sel])) %% length(cols)
+icol[icol==0] = length(cols)
+pch = as.numeric(factor(D$Dataset[sel]))
+
+sel1 = pch<=length(cols)
+pch[sel1] = 16
+pch[!sel1]= 17
+points(
+  x, y,
+  pch = pch,
+  col = cols[icol]
+)
+
+pch = unique(as.numeric(factor(D$Dataset[sel])))
+sel1 = pch<=length(cols)
+pch[sel1] = 16
+pch[!sel1]= 17
+legend(
+  'topleft', bty = 'o', box.col = 'white', ncol = 1,
+  legend = paste0('c-',unique(D$Dataset[sel])),
+  col = unique(cols[icol]),
+  pch = pch,
+  cex=0.8
+)
+box()
+mtext(
+  text = '(b)',
   side = 3,
   adj = 1,
   cex = cex,

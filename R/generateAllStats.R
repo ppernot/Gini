@@ -31,20 +31,6 @@ lcp = function(X, index = 1:length(X), p=0.95, ...) {
 # }
 
 
-# kurtcs = function(X, index = 1:length(X), ...) {
-#   # Bonato2011 (cs: Crow and Siddiqui)
-#   x = X[index]
-#   q975 = hd(x, 0.975)
-#   q025 = hd(x, 0.025)
-#   q750 = hd(x, 0.750)
-#   q250 = hd(x, 0.250)
-#
-#   # Correction for normal estimated by MC
-#   # r=c(); for (i in 1:1000) r[i] = kurtcs(rnorm(1e6)); mean(r)
-#
-#   (q975-q025)/(q750-q250) - 2.905
-# }
-
 pmue = function(X, index = 1:length(X), ...) {
   # P(abs(X) >= 2*MUE)
   X = X[index]
@@ -69,16 +55,11 @@ dataSets = c(
   'Ref_GandHBias1',
   'Ref_GandHBias2',
   'BOR2019',
-  # 'DAS2019', # Too small
   'HAI2018',
   'NAR2019',
   'PER2018',
   'SCH2018',
   'THA2015', # Need relative errors
-  # 'VER2019_AE',
-  # 'VER2019_BL',
-  # 'VER2019_EXC',
-  # 'VER2019_REAC',
   'WU2015', # Need relative errors
   'ZAS2019',
   'ZHA2018'
@@ -86,7 +67,7 @@ dataSets = c(
 relSets = c('THA2015','WU2015') # Use relative errors
 
 for (removeGlobalOutliers in c(FALSE, TRUE))
-  for (correctTrendDegree in c(-1,0,1)[1:2])
+  for (correctTrendDegree in c(-1,0,1)[3])
     for (set in dataSets) {
       cat('\nData set : ', set, '\n')
 
