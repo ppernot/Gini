@@ -916,6 +916,20 @@ literal "false"
 
  value.
  
+\color blue
+For a centered normal distribution of errors, the distribution of absolute
+ errors is the folded normal distribution, with a 
+\begin_inset Formula $G$
+\end_inset
+
+ value 
+\begin_inset Formula $G_{FN}=\sqrt{2}-1\simeq0.41$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Note Note
 status collapsed
 
@@ -1374,12 +1388,12 @@ noprefix "false"
  In all cases, the distributions refer to signed errors.
  The statistics, probability density functions and Lorenz curves corresponding
  to these datasets are provided as Supplementary Information.
- 
+ Uncertainty on all the statistics was estimated by bootstrapping.
 \begin_inset Float table
 placement !t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -1657,17 +1671,17 @@ noprefix "false"
 \end_inset
 
  values (
-\begin_inset Formula $G\lesssim0.3$
+\begin_inset Formula $G\lesssim0.35$
 \end_inset
 
 ).
  At small bias values, the properties of the folded normal distribution
  take precedence, and the symbols deviate from the inverse law to converge
  to the value 
-\begin_inset Formula $G=\sqrt{2}-1\simeq0.41$
+\begin_inset Formula $G_{FN}=0.41$
 \end_inset
 
- for a centered normal distribution.
+.
 \end_layout
 
 \begin_layout Standard
@@ -1716,7 +1730,7 @@ The Student case (red squares) gives us milestones for centered symmetric
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -1745,6 +1759,16 @@ name "fig:Gini-vs-CV-K"
 Scatterplots between the Gini coefficient and the ratio |MSE|/RMSD (a,c),
  and the excess kurtosis (b,d), for reference error sets (a,b) and computational
  chemistry literature error sets (c,d).
+ 
+\color blue
+The dashed line in the right column is a linear fit of the GandH dataset,
+ to serve as a guide for the eyes between the top and bottom figure which
+ are not on the same scale.
+ The error bars correspond to 
+\begin_inset Formula $\pm2\sigma$
+\end_inset
+
+ intervals estimated by bootstrapping.
 \end_layout
 
 \end_inset
@@ -1755,6 +1779,12 @@ Scatterplots between the Gini coefficient and the ratio |MSE|/RMSD (a,c),
 \end_inset
 
 
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Comment on uncertainty of kurtosis
 \end_layout
 
 \begin_layout Standard
@@ -1799,7 +1829,7 @@ ht of the graph, implying that one cannot have large
 \begin_inset Formula $G$
 \end_inset
 
- values without a large kurtosis or asymmetry (heavy tails).
+ values without a large kurtosis or asymmetry.
  On the left of the graph, one sees again that the shape of distributions
  becomes less and less relevant when the bias increases (overlap of the
  red and blue triangles tracks).
@@ -1817,7 +1847,11 @@ Based on these observations, one might propose an interpretation for a
 \begin_inset Formula $G\le0.35$
 \end_inset
 
-: highly biased datasets; practically no information on distribution shape;
+: 
+\color red
+justify value
+\color inherit
+ highly biased datasets; practically no information on distribution shape;
 \end_layout
 
 \begin_layout Itemize
@@ -1894,13 +1928,13 @@ literal "false"
 placement !t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Tabular
-<lyxtabular version="3" rows="10" columns="5">
+<lyxtabular version="3" rows="9" columns="5">
 <features tabularvalignment="middle">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
@@ -2004,60 +2038,6 @@ Band gaps (eV)
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Borlido2019"
-literal "false"
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-</cell>
-</row>
-<row>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-HAI2018
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Dipole moments (Debye)
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-152
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-93
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="center" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Hait2018"
 literal "false"
 
 \end_inset
@@ -2611,8 +2591,15 @@ s cancellation.
 \end_layout
 
 \begin_layout Standard
-Cases BOR2019, HAI2018, PER2018, THA2015 and ZAS2018 present cases with
- large 
+
+\color red
+Cases
+\color inherit
+ BOR2019, PER2018, THA2015 and ZAS2018 present 
+\color red
+cases
+\color inherit
+ with large 
 \begin_inset Formula $G$
 \end_inset
 
@@ -2694,6 +2681,10 @@ noprefix "false"
  
 \end_layout
 
+\begin_layout Paragraph
+Centering.
+\end_layout
+
 \begin_layout Standard
 To validate the 
 \begin_inset Formula $G$
@@ -2709,11 +2700,12 @@ To validate the
 \end_inset
 
 ).
- To facilitate the comparison, one flags the 
+ To facilitate the comparison, the 
 \begin_inset Formula $G$
 \end_inset
 
- values into three classes: using the uncertainty on 
+ values are flagged into three classes based on the scale defined above:
+ using the uncertainty on 
 \begin_inset Formula $G$
 \end_inset
 
@@ -2760,10 +2752,7 @@ gray
 \end_inset
 
 .
-\end_layout
-
-\begin_layout Standard
-The shift due to centering for the three classes is shown in Fig.
+ The shifts due to centering for the three classes are shown in Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -2777,14 +2766,33 @@ noprefix "false"
 
 \end_inset
 
-(a).
- For each class, the change of 
+(a), where for each class, the change of 
 \begin_inset Formula $G$
 \end_inset
 
  value between the raw and the centered data is shown, along with the change
- in class.
- As expected, almost all sets with 
+ of class.
+ 
+\end_layout
+
+\begin_layout Standard
+Globally, this results in a contraction of the range of 
+\begin_inset Formula $G$
+\end_inset
+
+ values, from 
+\begin_inset Formula $(0.18,0.81)$
+\end_inset
+
+ to 
+\begin_inset Formula $(0.36,0.64)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+As expected, almost all sets with 
 \begin_inset Formula $G\le0.35$
 \end_inset
 
@@ -2815,10 +2823,14 @@ noprefix "false"
 
  value.
  
+\color red
+increase of mue
+\color inherit
+
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2932,7 +2944,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent

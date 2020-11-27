@@ -10,36 +10,19 @@ lcp = function(X, index = 1:length(X), p=0.95, ...) {
   ilo = iup - 1
   Lcp = lc[ilo]+ (p-pr[ilo])*
     (lc[iup]-lc[ilo])/(pr[iup]-pr[ilo])
-
+  
   return(1-Lcp)
 }
 
-# lcpmue = function(X, index = 1:length(X), ...) {
-#   # Lorenz curve
-#   X = sort(abs(X[index]))
-#   pr = (1:length(X)) / length(X)
-#   mue = mean(X)
-#   p = pr[which(X >= mue)[1]]
-#   lc = cumsum(X)/sum(X)
-#   # Linear interpolation
-#   iup = which(pr >= p)[1]
-#   ilo = iup - 1
-#   Lcp = lc[ilo]+ (p-pr[ilo])*
-#     (lc[iup]-lc[ilo])/(pr[iup]-pr[ilo])
-#
-#   return(1-Lcp)
+# pmue = function(X, index = 1:length(X), ...) {
+#   # P(abs(X) >= 2*MUE)
+#   X = X[index]
+#   sum(abs(X) >= 3*mue(X))/length(X)
 # }
-
-
-pmue = function(X, index = 1:length(X), ...) {
-  # P(abs(X) >= 2*MUE)
-  X = X[index]
-  sum(abs(X) >= 3*mue(X))/length(X)
-}
-p2med = function(X, index = 1:length(X), ...) {
-  X = abs(X[index])
-  sum(X >= 2*median(X))/length(X)
-}
+# p2med = function(X, index = 1:length(X), ...) {
+#   X = abs(X[index])
+#   sum(X >= 2*median(X))/length(X)
+# }
 
 resultsTab = file.path('..', 'results', 'tables', 'allStatsXXX.csv')
 # if (file.exists(resultsTab))
@@ -64,13 +47,14 @@ dataSets = c(
   'ZAS2019',
   'ZHA2018'
 )
+dataSets = 'HAI2018'
 relSets = c('THA2015','WU2015') # Use relative errors
 
-for (removeGlobalOutliers in c(FALSE, TRUE))
-  for (correctTrendDegree in c(-1,0,1)[3])
+for (removeGlobalOutliers in c(FALSE, TRUE)[1])
+  for (correctTrendDegree in c(-1,0,1)[1])
     for (set in dataSets) {
       cat('\nData set : ', set, '\n')
-
+      
       # Get data ####
       data = read.csv(
         file = file.path('..', 'data', paste0(set, '_Data.csv')),
@@ -85,8 +69,8 @@ for (removeGlobalOutliers in c(FALSE, TRUE))
       methList <- colnames(Data)
       Errors <- Ref - Data
       if(set %in% relSets)
-        Errors <- Errors / Ref
-
+        Errors <- 100 * Errors / Ref
+      
       if (removeGlobalOutliers) {
         # Global outliers  (out of 95% CI)  ####
         qlim = t(apply(Errors, 2, quantile, probs = c(0.025, 0.975)))
@@ -110,7 +94,7 @@ for (removeGlobalOutliers in c(FALSE, TRUE))
           systems = systems[!out]
         }
       }
-
+      
       if (correctTrendDegree >= 0) {
         if(correctTrendDegree == 0) {
           # Center ####
@@ -121,7 +105,7 @@ for (removeGlobalOutliers in c(FALSE, TRUE))
             Errors[, i] = y
           }
           colnames(Errors) = paste0('c-', colnames(Errors))
-
+          
         } else {
           # Correct linear trend ####
           for (i in 1:ncol(Errors)) {
@@ -133,7 +117,7 @@ for (removeGlobalOutliers in c(FALSE, TRUE))
           colnames(Errors) = paste0('lc-', colnames(Errors))
         }
       }
-
+      
       # Estimate stats ####
       stats = c(
         'mue',
@@ -162,12 +146,12 @@ for (removeGlobalOutliers in c(FALSE, TRUE))
         df[, paste0('u_', stat)] = signif(bs[[stat]]$unc, 2)
       }
       # rownames(df) = NULL
-
+      
       if(!exists('dft'))
         dft = df
       else
         dft = rbind(dft,df)
-
+      
     }
 
 # Save data

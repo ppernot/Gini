@@ -1,3 +1,10 @@
+# G scale thresholds ####
+eps1 = 0.35
+eps2 = 0.50
+
+# Graphics parameters ####
+showUnc = TRUE
+xlim = c(0.1,0.7) # set for all four graphs
 cols = rev(inlmisc::GetColors(8))[1:7]
 pty  = 's'
 mar  = c(3, 3, 1.1, 1)
@@ -6,16 +13,13 @@ tcl  = -0.5
 lwd  = 4
 cex  = 4.5
 
-
+# Get data ####
 resultsTab = file.path('..', 'results', 'tables', 'allStats.csv')
-
 D = read.csv(resultsTab)
-
-D[['z']]       = abs(D$mse / D$rmsd)
+D[['z']] = abs(D$mse / D$rmsd) # Relative bias
+D[['u_z']] = D[['z']] * sqrt(D$u_mse^2/D$mse^2 + D$u_rmsd^2/D$rmsd^2)
 # D[['logit_W']]  = boot::logit(D$W)
 
-
-# with(dft,{plot(gini,abs(mse/rmsd),col = as.numeric(factor(dft$Dataset)),pch=16)})
 
 # Gini vs. Kurt ####
 png(file='../article/fig_Gini_vs_CV.png', width=2400, height=2400)
@@ -31,9 +35,9 @@ par(mfrow = c(2, 2),
 # (a) ####
 stat1 = 'gini'
 stat2 = 'z'
-xlim = c(0.1,0.9) # set for all four graphs
 ylim = c(-0.1,5.1)
-sel = D$ctd == -1 & !D$out &
+sel = D$ctd == -1 & 
+  !D$out &
   substr(D$Dataset,1,4) == 'Ref_' &
   D$Methods != 'df=1' # Ignore, too unstable (Cauchy)
 
@@ -70,6 +74,13 @@ curve(
   col='grey50',
   add = TRUE
   )
+if(showUnc) {
+  ux = D[[paste0('u_',stat1)]][sel]
+  uy = D[[paste0('u_',stat2)]][sel]
+  segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+  segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+}
+
 legend(
   'topright', bty = 'o', box.col = 'white',
   legend = setsNames,
@@ -104,6 +115,13 @@ plot(
   main = ''
 )
 grid()
+
+if(showUnc) {
+  ux = D[[paste0('u_',stat1)]][sel]
+  uy = D[[paste0('u_',stat2)]][sel]
+  segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+  segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+}
 
 sel = D$ctd == -1 &
   !D$out &
@@ -145,7 +163,7 @@ plot(
   main = ''
 )
 grid()
-rect(0.35,-2,0.5,100,col = 'gray90',border = NA)
+rect(eps1,-2,eps2,100,col = 'gray90',border = NA)
 curve(
   1/(sqrt(pi)*x),
   from=0.01,
@@ -157,7 +175,8 @@ curve(
 
 sel = D$ctd == -1 &
   !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_' &
+  D$Dataset != 'HAI2018'
 x = D[[stat1]][sel]
 y = D[[stat2]][sel]
 icol = as.numeric(factor(D$Dataset[sel])) %% length(cols)
@@ -171,6 +190,13 @@ points(
   pch = pch,
   col = cols[icol]
 )
+
+if(showUnc) {
+  ux = D[[paste0('u_',stat1)]][sel]
+  uy = D[[paste0('u_',stat2)]][sel]
+  segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+  segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+}
 
 pch = unique(as.numeric(factor(D$Dataset[sel])))
 sel1 = pch<=length(cols)
@@ -210,7 +236,7 @@ plot(
   main = ''
 )
 grid()
-rect(0.35,-2,0.5,100,col = 'gray90',border = NA)
+rect(eps1,-2,eps2,100,col = 'gray90',border = NA)
 
 sel = D$ctd == -1 &
   !D$out &
@@ -223,7 +249,8 @@ abline(lm(y~x),lty=2,lwd=lwd,col='grey50')
 
 sel = D$ctd == -1 &
   !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 x = D[[stat1]][sel]
 y = D[[stat2]][sel]
 icol = as.numeric(factor(D$Dataset[sel])) %% length(cols)
@@ -238,6 +265,14 @@ points(
   pch = pch,
   col = cols[icol]
 )
+
+if(showUnc) {
+  ux = D[[paste0('u_',stat1)]][sel]
+  uy = D[[paste0('u_',stat2)]][sel]
+  segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+  segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+}
+
 
 box()
 mtext(
@@ -266,45 +301,47 @@ par(mfrow = c(1, 2),
 # (a) ####
 
 sel = D$ctd == -1 & !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 x1 = D$gini[sel]
 u_x1 = D$u_gini[sel]
 jcol= rep('gray80',length(sel))
-s1 = pnorm(0.35,x1,u_x1) > 0.05 
-s2 = pnorm(0.50,x1,u_x1) < 0.95 
+s1 = pnorm(eps1,x1,u_x1) > 0.05 
+s2 = pnorm(eps2,x1,u_x1) < 0.95 
 jcol[s1] = cols[4]
 jcol[s2] = cols[2]
 
 sel = D$ctd == 0 & !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 x2 = D$gini[sel]
 u_x2 = D$u_gini[sel]
 jcol2= rep('gray80',length(sel))
-s12 = pnorm(0.35,x2,u_x2) > 0.05 
-s22 = pnorm(0.50,x2,u_x2) < 0.95 
+s12 = pnorm(eps1,x2,u_x2) > 0.05 
+s22 = pnorm(eps2,x2,u_x2) < 0.95 
 jcol2[s12] = cols[4]
 jcol2[s22] = cols[2]
 
 # Stats about shift sign
+rho = 0.9
 dif = x2 - x1
-u_dif = sqrt(u_x1^2 + u_x2^2)
-print(mean(dif >0))
+u_dif = sqrt(u_x1^2 + u_x2^2 - 2*rho*u_x1*u_x2)
+print( mean(dif > 0) )
+print( mean(dif < 0) )
 print( mean( pnorm(0,dif,u_dif) < 0.05) ) # P(dif > 0)
 print( mean( pnorm(0,dif,u_dif) > 0.95) ) # P(dif < 0)
 
 
 icol = factor(D$Dataset[sel])
 
-y1 = 3 + rnorm(length(x1),0,0.05)
+y1 = 3 + rnorm(length(x1),0,0.10)
 y1[s1] = y1[s1] - 2
 y1[s2] = y1[s2] + 2
 
-y2 = 4 + rnorm(length(x2),0,0.05)
+y2 = 4 + rnorm(length(x2),0,0.10)
 y2[s1] = y2[s1] - 2
 y2[s2] = y2[s2] + 2
 
-
-xlim = c(0.1,0.9)
 plot(
   x1, y1,
   pch = 16, type = 'p', cex=0.7,
@@ -316,7 +353,7 @@ plot(
   main = ''
 )
 grid()
-abline(v=c(0.35,0.5),lty=2,col=cols[1])
+abline(v=c(eps1,eps2),lty=2,col=cols[1])
 segments(x1,y1,x2,y2,col='gray70',lty=2)
 points(
   x1,y1,pch=16,col=jcol, cex=0.7
@@ -324,6 +361,10 @@ points(
 points(
   x2,y2,pch=16,col=jcol2, cex=0.7
 )
+if(showUnc) {
+  segments(x1 - 2 * u_x1, y1, x1 + 2 * u_x1, y1, col = jcol)
+  segments(x2 - 2 * u_x2, y2, x2 + 2 * u_x2, y2, col = jcol2)
+}
 mtext(
   c('Raw','Centered','Raw','Centered','Raw','Centered'),
   side = 2,
@@ -334,9 +375,13 @@ mtext(
   )
 
 legend(
-  'bottomright',
+  'topleft',
   bty = 'n', cex = 0.7,
-  legend = c('G < 0.35', '0.35 < G < 0.5', 'G > 0.5'),
+  legend = c(
+    paste0('G < ',eps1), 
+    paste0(eps1,' < G < ',eps2), 
+    paste0('G > ',eps2)
+  ),
   pch = 19,
   col = c(cols[4],'gray80',cols[2]),
   y.intersp = 0.9
@@ -368,7 +413,7 @@ plot(
   main = ''
 )
 grid()
-rect(0.35,-2,0.5,100,col = 'gray90',border = NA)
+rect(eps1,-2,eps2,100,col = 'gray90',border = NA)
 
 sel = D$ctd == -1 &
   !D$out &
@@ -379,7 +424,8 @@ abline(lm(y~x),lty=2,lwd=lwd,col='grey50')
 
 sel = D$ctd == 0 &
   !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 x = D[[stat1]][sel]
 y = D[[stat2]][sel]
 icol = as.numeric(factor(D$Dataset[sel])) %% length(cols)
@@ -394,6 +440,13 @@ points(
   pch = pch,
   col = cols[icol]
 )
+
+if(showUnc) {
+  ux = D[[paste0('u_',stat1)]][sel]
+  uy = D[[paste0('u_',stat2)]][sel]
+  segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+  segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+}
 
 pch = unique(as.numeric(factor(D$Dataset[sel])))
 sel1 = pch<=length(cols)
@@ -430,7 +483,8 @@ par(mfrow = c(1, 2),
     cex = cex)
 
 sel = D$ctd == -1 & !D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 setsNames = unique(D$Dataset[sel])
 icol = as.numeric(factor(D$Dataset[sel]))
 d = D[sel,]
@@ -441,19 +495,23 @@ for(s in setsNames) {
 }
 
 jcol= rep('gray80',length(sel))
-s1 = pnorm(0.35,d$gini,d$u_gini) > 0.05 #d$gini <= 0.35
-s2 = pnorm(0.50,d$gini,d$u_gini) < 0.95 #d$gini >= 0.5
+s1 = pnorm(eps1,d$gini,d$u_gini) > 0.05 #d$gini <= 0.35
+s2 = pnorm(eps2,d$gini,d$u_gini) < 0.95 #d$gini >= 0.5
 jcol[s1] = cols[4]
 jcol[s2] = cols[2]
 
 plot(d$rmue, icol, pch=19, col=jcol,
      xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
-     yaxt = 'n', ylab ='', ylim = c(0.5,9.5))
+     yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
 mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
 legend(
-  6.5, 9.8,
+  6.5, 8.8,
   bty = 'n', cex = 0.7,
-  legend = c('G < 0.35', '0.35 < G < 0.5', 'G > 0.5'),
+  legend = c(
+    paste0('G < ',eps1), 
+    paste0(eps1,' < G < ',eps2), 
+    paste0('G > ',eps2)
+  ),
   pch = 19,
   col = c(cols[4],'gray80',cols[2]),
   y.intersp = 0.9
@@ -462,7 +520,8 @@ box()
 
 # Remove global outliers ####
 sel = D$ctd == -1 & D$out &
-  substr(D$Dataset,1,4) != 'Ref_'
+  substr(D$Dataset,1,4) != 'Ref_'&
+  D$Dataset != 'HAI2018'
 icol = as.numeric(factor(D$Dataset[sel]))
 setsNames = unique(D$Dataset[sel])
 d = D[sel,]
@@ -473,17 +532,17 @@ for(s in setsNames) {
 }
 
 jcol= rep('gray80',length(sel))
-s1 = pnorm(0.35,d$gini,d$u_gini) > 0.05 #d$gini <= 0.35
-s2 = pnorm(0.50,d$gini,d$u_gini) < 0.95 #d$gini >= 0.5
+s1 = pnorm(eps1,d$gini,d$u_gini) > 0.05 #d$gini <= 0.35
+s2 = pnorm(eps2,d$gini,d$u_gini) < 0.95 #d$gini >= 0.5
 jcol[s1] = cols[4]
 jcol[s2] = cols[2]
 
 plot(d$rmue, icol, pch=19, col=jcol,
      xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
-     yaxt = 'n', ylab ='', ylim = c(0.5,9.5))
+     yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
 mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
 legend(
-  6, 9.5,
+  6, 8.5,
   bty = 'n', cex = 0.7,
   title = 'Removed outliers',
   legend = '',
