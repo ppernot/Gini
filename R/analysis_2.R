@@ -501,12 +501,13 @@ jcol[s1] = cols[4]
 jcol[s2] = cols[2]
 
 plot(d$rmue, icol, pch=19, col=jcol,
-     xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
+     xaxt = 'n', xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
      yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
+axis(side = 1, at =1:10, gap.axis = 1/4) # Last arg enforces plot of "10"
 mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
 legend(
-  6.5, 8.8,
-  bty = 'n', cex = 0.7,
+  6.2, 8.8,
+  bty = 'n', cex = 0.75,
   legend = c(
     paste0('G < ',eps1), 
     paste0(eps1,' < G < ',eps2), 
@@ -538,12 +539,13 @@ jcol[s1] = cols[4]
 jcol[s2] = cols[2]
 
 plot(d$rmue, icol, pch=19, col=jcol,
-     xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
+     xaxt = 'n', xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
      yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
+axis(side = 1, at =1:10, gap.axis = 1/4)
 mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
 legend(
-  6, 8.5,
-  bty = 'n', cex = 0.7,
+  5.2, 8.5,
+  bty = 'n', cex = 0.9,
   title = 'Removed outliers',
   legend = '',
   pch = -1
