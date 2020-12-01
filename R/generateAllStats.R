@@ -14,6 +14,10 @@ lcp = function(X, index = 1:length(X), p=0.95, ...) {
   return(1-Lcp)
 }
 
+hrmode = function(X, index = 1:length(X), ...) {
+  genefilter::half.range.mode(X[index])
+}
+
 # pmue = function(X, index = 1:length(X), ...) {
 #   # P(abs(X) >= 2*MUE)
 #   X = X[index]
@@ -24,7 +28,7 @@ lcp = function(X, index = 1:length(X), p=0.95, ...) {
 #   sum(X >= 2*median(X))/length(X)
 # }
 
-resultsTab = file.path('..', 'results', 'tables', 'allStatsXXX.csv')
+resultsTab = file.path('..', 'results', 'tables', 'allStats_modeXXX.csv')
 # if (file.exists(resultsTab))
 #   file.remove(resultsTab)
 rm('dft')
@@ -38,7 +42,7 @@ dataSets = c(
   'Ref_GandHBias1',
   'Ref_GandHBias2',
   'BOR2019',
-  'HAI2018',
+  # 'HAI2018',
   'NAR2019',
   'PER2018',
   'SCH2018',
@@ -47,11 +51,11 @@ dataSets = c(
   'ZAS2019',
   'ZHA2018'
 )
-dataSets = 'HAI2018'
+# dataSets = 'HAI2018'
 relSets = c('THA2015','WU2015') # Use relative errors
 
-for (removeGlobalOutliers in c(FALSE, TRUE)[1])
-  for (correctTrendDegree in c(-1,0,1)[1])
+for (removeGlobalOutliers in c(FALSE, TRUE)[2])
+  for (correctTrendDegree in c(-2,-1,0,1)[1:2])
     for (set in dataSets) {
       cat('\nData set : ', set, '\n')
       
@@ -116,6 +120,13 @@ for (removeGlobalOutliers in c(FALSE, TRUE)[1])
           }
           colnames(Errors) = paste0('lc-', colnames(Errors))
         }
+      } else if (correctTrendDegree == -2) {
+        # Mode centering
+        for (i in 1:ncol(Errors)) {
+          y = Errors[, i]
+          Errors[, i] = y - hrmode(y) 
+        }
+        colnames(Errors) = paste0('mc-', colnames(Errors))
       }
       
       # Estimate stats ####
@@ -123,6 +134,7 @@ for (removeGlobalOutliers in c(FALSE, TRUE)[1])
         'mue',
         'mse',
         'rmsd',
+        'hrmode',
         'skew',
         'kurt',
         'kurtcs',

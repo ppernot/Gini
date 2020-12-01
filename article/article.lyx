@@ -604,7 +604,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -878,7 +878,7 @@ For sets of errors with normal distributions,
 \end_inset
 
  is proportional to the coefficient of variation 
-\begin_inset Formula $c_{v}=\sigma/\mu$
+\begin_inset Formula $c_{v}=\sigma/|\mu|$
 \end_inset
 
 , where 
@@ -908,7 +908,7 @@ literal "false"
 
  is also related to the relative precision.
  Note that this relationship does not hold for absolute errors, except if
- all errors are of the same sign, therefore with a small absolute 
+ all errors are of the same sign, therefore with a small 
 \begin_inset Formula $c_{v}$
 \end_inset
 
@@ -923,6 +923,30 @@ literal "false"
 \end_inset
 
 .
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+For asymmetric distributions, the means is not the most reliable location
+ statistic.
+ In combination with the Lorenz curve and Gini statistic, the mode is more
+ relevant, as it locates the part of the population with the highest density,
+ which is expected to bring a large contribution to 
+\begin_inset Formula $\mu_{F}$
+\end_inset
+
+.
+ In the following, we will thus consider a mode-based coefficient of variation,
+ 
+\begin_inset Formula $c_{vm}=\sigma/|\hat{\mu}|$
+\end_inset
+
+, where 
+\begin_inset Formula $\hat{\mu}$
+\end_inset
+
+ is the mode of the errors distribution.
 \end_layout
 
 \begin_layout Subsubsection
@@ -1244,6 +1268,24 @@ literal "false"
  
 \end_layout
 
+\begin_layout Subsubsection
+Mode
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+A robust method, Bickel's half-range mode estimator 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bickel2002,Hedges2003"
+literal "false"
+
+\end_inset
+
+, is used to estimate the location of the samples mode.
+\end_layout
+
 \begin_layout Subsection
 Codes
 \end_layout
@@ -1274,8 +1316,24 @@ literal "false"
 
 \end_inset
 
+ and the half-range mode estimator (HRM) from package 
+\family typewriter
+genefilter
+\family default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "genefilter"
+literal "false"
+
+\end_inset
+
 .
- Statistics and Lorenz curves are implemented in ErrViewLib (
+ Statistics and Lorenz curves are implemented in 
+\family typewriter
+ErrViewLib
+\family default
+ (
 \begin_inset Flex URL
 status open
 
@@ -1287,7 +1345,11 @@ https://doi.org/10.5281/zenodo.3628475
 \end_inset
 
 ).
- The datasets can also be analyzed with the ErrView code (
+ The datasets can also be analyzed with the 
+\family typewriter
+ErrView
+\family default
+ code (
 \begin_inset Flex URL
 status open
 
@@ -1619,12 +1681,15 @@ Reference datasets.
 \end_layout
 
 \begin_layout Standard
-The Gini coefficient was plotted against the inverse coefficient of variation
- (
-\begin_inset Formula $1/c_{v}$
+The Gini coefficient was plotted against the 
+\color orange
+inverse mode-based coefficient of variation (
+\begin_inset Formula $1/c_{vm}$
 \end_inset
 
-, see Sect.
+,
+\color inherit
+ see Sect.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:The-Gini-coefficient"
@@ -1634,11 +1699,15 @@ noprefix "false"
 
 \end_inset
 
-), estimated as |MSE|/RMSD, to avoid the singularity of 
-\begin_inset Formula $c_{v}$
+), to avoid the singularity of
+\color orange
+ 
+\begin_inset Formula $c_{vm}$
 \end_inset
 
- for unbiased distribution (Fig.
+ 
+\color inherit
+for unbiased distribution (Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -1653,10 +1722,14 @@ noprefix "false"
 \end_inset
 
 (a)).
- The dashed line in this figure represents the 
-\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
+ The dashed line in this figure represents the
+\color orange
+ 
+\begin_inset Formula $1/c_{vm}=1/(\sqrt{\pi}G)$
 \end_inset
 
+
+\color inherit
  relationship.
  It is closely followed by strongly biased normal distribution (black squares)
  at low 
@@ -1685,9 +1758,13 @@ The Student case (red squares) gives us milestones for centered symmetric
 
  values.
  The red squares lie on the 
-\begin_inset Formula $1/c_{v}=0$
+\color orange
+
+\begin_inset Formula $1/c_{vm}=0$
 \end_inset
 
+
+\color inherit
  axis, the rightmost value corresponding to a Student's-
 \begin_inset Formula $t$
 \end_inset
@@ -1729,7 +1806,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename fig_Gini_vs_CV.png
+	filename fig_Gini_vs_CV_mode.png
 	lyxscale 30
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 2400bp
@@ -1912,7 +1989,7 @@ literal "false"
 placement !t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2764,7 +2841,16 @@ noprefix "false"
 \end_layout
 
 \begin_layout Paragraph
-Centering experiment.
+
+\color orange
+Mode-centering.
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Centering vs debiasing.
+ MSE = 0 might imply a shift of the main peak due to outliers
 \end_layout
 
 \begin_layout Standard
@@ -2875,11 +2961,18 @@ Globally, centering leads to a contraction of the range of
 \begin_inset Formula $G$
 \end_inset
 
- values (as expected from a 
+ values (
+\color red
+as expected
+\color inherit
+ from a 
 \emph on
 debiasing
 \emph default
- of the distributions), but it is more surprising to observe several points
+ of the distributions), 
+\color red
+but it is more surprising to observe several points
+\color inherit
  for which the opposite occurs.
  However, many shifts are small compared to the uncertainties on 
 \begin_inset Formula $G$
@@ -3011,7 +3104,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename fig_Gini_vs_CV_unbiased.png
+	filename fig_Gini_vs_CV_unbiased_mode.png
 	lyxscale 30
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 1200bp
@@ -3125,7 +3218,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename fig_Gini_vs_Rank.png
+	filename fig_Gini_vs_Rank_mode.png
 	lyxscale 30
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 1200bp
@@ -3248,8 +3341,25 @@ The Lorenz curve and Gini coefficient present an interesting addition to
  features, and offers a one-number summary.
  This is also one of its weaknesses, as there is no unique mapping from
  the Gini coefficient to these features.
- Nevertheless, we have shown on analytical and real world examples that
- one can establish a scale of 
+ 
+\color orange
+To unscramble this situation, the Gini coefficient of the mode-centered
+ distributions 
+\begin_inset Formula $G_{mc}$
+\end_inset
+
+ offers a simpler, shape-based, measure of tailedness.
+\end_layout
+
+\begin_layout Standard
+Nevertheless, we have shown on analytical and real world examples that one
+ can establish an 
+\emph on
+\color orange
+ad hoc
+\emph default
+\color inherit
+ scale of 
 \begin_inset Formula $G$
 \end_inset
 
@@ -3259,7 +3369,28 @@ The Lorenz curve and Gini coefficient present an interesting addition to
 \end_inset
 
  (within estimation uncertainty) should raise an alert.
- The corresponding datasets present features that might impede the unambiguous
+ 
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+\begin_inset Formula $G_{mc}$
+\end_inset
+
+ scale ?
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Limited to homogeneous, unimodal datasets
+\color inherit
+ 
+\end_layout
+
+\begin_layout Standard
+The corresponding datasets present features that might impede the unambiguous
  interpretation of popular benchmarking statistics such as the MUE.
  
 \end_layout
