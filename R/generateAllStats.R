@@ -18,6 +18,13 @@ hrmode = function(X, index = 1:length(X), ...) {
   genefilter::half.range.mode(X[index])
 }
 
+skewgm = function(X, index = 1:length(X), ...) {
+  X = X[index]
+  m = hd(X,0.5)
+  s = (mean(X) - m) / mean(abs(X - m))
+  return(s)
+}
+  
 # pmue = function(X, index = 1:length(X), ...) {
 #   # P(abs(X) >= 2*MUE)
 #   X = X[index]
@@ -28,7 +35,7 @@ hrmode = function(X, index = 1:length(X), ...) {
 #   sum(X >= 2*median(X))/length(X)
 # }
 
-resultsTab = file.path('..', 'results', 'tables', 'allStats_modeXXX.csv')
+resultsTab = file.path('..', 'results', 'tables', 'allStats_modeAll.csv')
 # if (file.exists(resultsTab))
 #   file.remove(resultsTab)
 rm('dft')
@@ -42,7 +49,6 @@ dataSets = c(
   'Ref_GandHBias1',
   'Ref_GandHBias2',
   'BOR2019',
-  # 'HAI2018',
   'NAR2019',
   'PER2018',
   'SCH2018',
@@ -51,10 +57,9 @@ dataSets = c(
   'ZAS2019',
   'ZHA2018'
 )
-# dataSets = 'HAI2018'
 relSets = c('THA2015','WU2015') # Use relative errors
 
-for (removeGlobalOutliers in c(FALSE, TRUE)[2])
+for (removeGlobalOutliers in c(FALSE, TRUE))
   for (correctTrendDegree in c(-2,-1,0,1)[1:2])
     for (set in dataSets) {
       cat('\nData set : ', set, '\n')
@@ -136,12 +141,13 @@ for (removeGlobalOutliers in c(FALSE, TRUE)[2])
         'rmsd',
         'hrmode',
         'skew',
+        'skewgm',
         'kurt',
         'kurtcs',
         'q95hd',
-        'gini',
-        'lasym',
-        'pietra'
+        'gini' #,
+        # 'lasym',
+        # 'pietra'
       )
       bs = estBS1(
         Errors,

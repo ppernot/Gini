@@ -925,36 +925,17 @@ literal "false"
 .
 \end_layout
 
+\begin_layout Subsubsection
+
+\color orange
+Skewness and kurtosis
+\end_layout
+
 \begin_layout Standard
 
 \color orange
-For asymmetric distributions, the means is not the most reliable location
- statistic.
- In combination with the Lorenz curve and Gini statistic, the mode is more
- relevant, as it locates the part of the population with the highest density,
- which is expected to bring a large contribution to 
-\begin_inset Formula $\mu_{F}$
-\end_inset
-
-.
- In the following, we will thus consider a mode-based coefficient of variation,
- 
-\begin_inset Formula $c_{vm}=\sigma/|\hat{\mu}|$
-\end_inset
-
-, where 
-\begin_inset Formula $\hat{\mu}$
-\end_inset
-
- is the mode of the errors distribution.
-\end_layout
-
-\begin_layout Subsubsection
-Kurtosis
-\end_layout
-
-\begin_layout Standard
-Kurtosis is used as a measure either of 
+Skewness measures the asymmetry of a distribution, while kurtosis is used
+ as a measure either of its 
 \begin_inset Quotes eld
 \end_inset
 
@@ -970,7 +951,7 @@ tailedness
 \begin_inset Quotes erd
 \end_inset
 
- of a distribution 
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Ruppert1987"
@@ -978,13 +959,69 @@ literal "false"
 
 \end_inset
 
-, compared to a normal one.
- The moments-based formula for kurtosis is not robust to outliers, and a
- more robust quantile-based formula has been proposed by several authors
- 
+ The moments-based formulae for skewness and kurtosis are not robust to
+ outliers, and more robust quantile-based formula has been proposed by several
+ authors 
 \begin_inset CommandInset citation
-LatexCommand citep
-key "Ruppert1987,Bonato2011,Suaray2015"
+LatexCommand cite
+key "Groeneveld1984,Ruppert1987,Bonato2011,Suaray2015"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+For the skewness, we use a measure using the difference between the mean
+ and median
+\begin_inset Formula 
+\begin{equation}
+\beta_{GM}=\frac{\mu-q(0.5)}{<|e-q(0.5)|>}\label{eq:skewgm}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $q(0.5)$
+\end_inset
+
+ is the median of 
+\emph on
+signed
+\emph default
+ error, 
+\begin_inset Formula $e$
+\end_inset
+
+, and the 
+\begin_inset Formula $GM$
+\end_inset
+
+ subscript refers to Goeneveld and Meeden 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Groeneveld1984"
+literal "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Formula $\beta_{G}$
+\end_inset
+
+ takes its values between -1 and 1.
+ 
+\end_layout
+
+\begin_layout Standard
+For the kurtosis, an estimate based on quantiles is used 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bonato2011"
 literal "false"
 
 \end_inset
@@ -1018,19 +1055,11 @@ signed
 \begin_inset Formula $\kappa_{CS}$
 \end_inset
 
- measures an excess kurtosis.
-\end_layout
-
-\begin_layout Standard
-Note that a similar formula exists for a robust skewness 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Bonato2011"
-literal "false"
-
-\end_inset
-
-, but for brevity, we chose here to focus on the kurtosis.
+ measures an 
+\emph on
+excess
+\emph default
+ kurtosis.
 \end_layout
 
 \begin_layout Subsection
@@ -1238,11 +1267,25 @@ literal "false"
 \end_layout
 
 \begin_layout Subsubsection
-Kurtosis
+Skewness and kurtosis
 \end_layout
 
 \begin_layout Standard
-The direct application of Eq.
+Eq.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:skewgm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and Eq.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -1256,7 +1299,8 @@ noprefix "false"
 
 \end_inset
 
- is used, with the robust method for quantiles due to Harrel and Davis 
+ are applied directly, with the robust method for quantiles due to Harrel
+ and Davis 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Harrell1982,Wilcox2012,Pernot2020"
@@ -1275,7 +1319,23 @@ Mode
 \begin_layout Standard
 
 \color orange
-A robust method, Bickel's half-range mode estimator 
+As one is not dealing with necessarily symmetric distributions, the mode
+ is an interesting location statistic.
+ In combination with the Lorenz curve and Gini statistic, the mode locates
+ the part of the population with the highest density, which is expected
+ to bring a large contribution to 
+\begin_inset Formula $\mu_{F}$
+\end_inset
+
+.
+ As one cannot assume the unimodality of the underlying distributions, one
+ will consider the main mode.
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+A robust method, Bickel's half-range mode (HRM) estimator 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bickel2002,Hedges2003"
@@ -1283,7 +1343,7 @@ literal "false"
 
 \end_inset
 
-, is used to estimate the location of the samples mode.
+, is used to estimate the location of the error samples main mode.
 \end_layout
 
 \begin_layout Subsection
@@ -1316,7 +1376,7 @@ literal "false"
 
 \end_inset
 
- and the half-range mode estimator (HRM) from package 
+ and the HRM estimator from package 
 \family typewriter
 genefilter
 \family default
@@ -1345,7 +1405,7 @@ https://doi.org/10.5281/zenodo.3628475
 \end_inset
 
 ).
- The datasets can also be analyzed with the 
+ The datasets can be analyzed with the 
 \family typewriter
 ErrView
 \family default
@@ -1401,13 +1461,13 @@ Reference datasets
 \end_layout
 
 \begin_layout Standard
-It is important to note that we explore only distributions with a unique,
- more or less structured peak, such as the ones encountered in most computationa
-l chemistry error datasets.
+It is important to note that we explore only distributions with a single
+ dominant, more or less structured peak, such as the ones encountered in
+ most computational chemistry error datasets.
  It is easy to imagine multi-peaked distributions for which our conclusions
  on the Gini coefficient would not be valid.
- In fact, none of the usual summary statistics (MUE, MSE, RMSD) would describe
- properly such distributions.
+ In fact, none of the usual summary statistics (MUE, MSE, RMSD, skewness,
+ kurtosis...) would describe properly such distributions.
 \end_layout
 
 \begin_layout Subsection
@@ -1444,6 +1504,7 @@ noprefix "false"
  The statistics, cumulative density functions and Lorenz curves corresponding
  to these datasets are provided as Supplementary Information.
  Uncertainty on all the statistics was estimated by bootstrapping.
+ 
 \begin_inset Float table
 placement !t
 wide false
@@ -1681,15 +1742,12 @@ Reference datasets.
 \end_layout
 
 \begin_layout Standard
-The Gini coefficient was plotted against the 
-\color orange
-inverse mode-based coefficient of variation (
-\begin_inset Formula $1/c_{vm}$
+The Gini coefficient was plotted against the inverse coefficient of variation
+ (
+\begin_inset Formula $1/c_{v}$
 \end_inset
 
-,
-\color inherit
- see Sect.
+, see Sect.
 \begin_inset CommandInset ref
 LatexCommand ref
 reference "subsec:The-Gini-coefficient"
@@ -1699,15 +1757,11 @@ noprefix "false"
 
 \end_inset
 
-), to avoid the singularity of
-\color orange
- 
-\begin_inset Formula $c_{vm}$
+), to avoid the singularity of 
+\begin_inset Formula $c_{v}$
 \end_inset
 
- 
-\color inherit
-for unbiased distribution (Fig.
+ for unbiased distribution (Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -1722,16 +1776,12 @@ noprefix "false"
 \end_inset
 
 (a)).
- The dashed line in this figure represents the
-\color orange
- 
-\begin_inset Formula $1/c_{vm}=1/(\sqrt{\pi}G)$
+ The dashed line in this plot represents the 
+\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
 \end_inset
 
-
-\color inherit
  relationship.
- It is closely followed by strongly biased normal distribution (black squares)
+ It is closely followed by strongly biased normal distribution (black squares),
  at low 
 \begin_inset Formula $G$
 \end_inset
@@ -1741,13 +1791,85 @@ noprefix "false"
 \end_inset
 
 ).
- At small bias values, the properties of the folded normal distribution
+ At smaller bias values, the properties of the folded normal distribution
  take precedence, and the symbols deviate from the inverse law to converge
  to the value 
 \begin_inset Formula $G_{FN}=0.41$
 \end_inset
 
 .
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_Gini_vs_CV_KCS_BGM.png
+	lyxscale 20
+	width 99text%
+	BoundingBox 0bp 0bp 3600bp 2400bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gini-vs-CV-K"
+
+\end_inset
+
+Scatterplots between the Gini coefficient 
+\begin_inset Formula $G$
+\end_inset
+
+ and the inverse coefficient of variation 
+\begin_inset Formula $1/c_{v}$
+\end_inset
+
+ (a,d), the excess kurtosis 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+ (b,e), and the absolute value of the skewness 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+ (c,f), for reference error sets (a-c) and computational chemistry literature
+ error sets (d-f).
+ The dashed line in the (a,d) plots represents the 
+\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
+\end_inset
+
+ relationship.
+ right column is a linear fit of the GandH dataset, to serve as a guide
+ for the eyes between the top and bottom figure which have different ordinate
+ scales.
+ The error bars correspond to 
+\begin_inset Formula $\pm2\sigma$
+\end_inset
+
+ intervals estimated by bootstrapping.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -1758,13 +1880,9 @@ The Student case (red squares) gives us milestones for centered symmetric
 
  values.
  The red squares lie on the 
-\color orange
-
-\begin_inset Formula $1/c_{vm}=0$
+\begin_inset Formula $1/c_{v}=0$
 \end_inset
 
-
-\color inherit
  axis, the rightmost value corresponding to a Student's-
 \begin_inset Formula $t$
 \end_inset
@@ -1796,57 +1914,12 @@ The Student case (red squares) gives us milestones for centered symmetric
 \end_inset
 
  in this case.
- 
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename fig_Gini_vs_CV_mode.png
-	lyxscale 30
-	width 95text%
-	BoundingBox 0bp 0bp 2400bp 2400bp
-
-\end_inset
-
-
 \end_layout
 
-\begin_layout Plain Layout
-\begin_inset Caption Standard
+\begin_layout Standard
 
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Gini-vs-CV-K"
-
-\end_inset
-
-Scatterplots between the Gini coefficient and the ratio |MSE|/RMSD (a,c),
- and the excess kurtosis (b,d), for reference error sets (a,b) and computational
- chemistry literature error sets (c,d).
- The dashed line in the right column is a linear fit of the GandH dataset,
- to serve as a guide for the eyes between the top and bottom figure which
- have different ordinate scales.
- The error bars correspond to 
-\begin_inset Formula $\pm2\sigma$
-\end_inset
-
- intervals estimated by bootstrapping.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
+\color orange
+Skewness
 \end_layout
 
 \begin_layout Standard
@@ -2594,12 +2667,14 @@ noprefix "false"
 \begin_inset Formula $1/c_{v}$
 \end_inset
 
-) plane., and the excluded zone in the (
+) plane, and the excluded zone in the (
 \begin_inset Formula $G,\kappa_{CS}$
 \end_inset
 
 ) plane is clearly visible.
  
+\color orange
+Skewness ?
 \end_layout
 
 \begin_layout Paragraph
@@ -3105,9 +3180,9 @@ status open
 \align center
 \begin_inset Graphics
 	filename fig_Gini_vs_CV_unbiased_mode.png
-	lyxscale 30
+	lyxscale 25
 	width 95text%
-	BoundingBox 0bp 0bp 2400bp 1200bp
+	BoundingBox 0bp 0bp 3600bp 1200bp
 
 \end_inset
 
@@ -3124,7 +3199,7 @@ name "fig:Gini-vs-CV-Rank-Unbiased"
 
 \end_inset
 
-Effect of centering the error distributions on the 
+Effect of mode-centering the error distributions on their 
 \begin_inset Formula $G$
 \end_inset
 
@@ -3133,12 +3208,40 @@ Effect of centering the error distributions on the
 \end_inset
 
  value and class between raw and centered datasets; (b) Excess kurtosis
- vs.
+ 
+\emph on
+vs.
+
+\emph default
  
 \begin_inset Formula $G.$
 \end_inset
 
- for centered datasets (prefixed by 'c-').
+ for centered datasets (prefixed by 'mc-', for 'mode-centered').
+ The error bars are similar to those in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-CV-K"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+; they have been omitted for clarity.
+ The dashed line is a regression line passing through the reference point
+ 
+\begin_inset Formula $(0.41,0)$
+\end_inset
+
+ corresponding to a normal distribution.
+ 
+\color orange
++ skewness
 \end_layout
 
 \end_inset
@@ -3175,6 +3278,262 @@ noprefix "false"
  The strong correlation between these two statistics for centered distributions
  is clearly visible.
  
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+For mode-centered error sets, 
+\begin_inset Formula $G$
+\end_inset
+
+ is correlated to both 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+.
+ The correlation is best visible in 3 -dimensional plots.
+ Instead of considering the properties of the errors distributions, one
+ might consider directly the shape properties of the absolute errors distributio
+n after mode-centering.
+ In this case, one expects that the importance of the tail should be measured
+ by a skewness coefficient.
+ We name 
+\begin_inset Formula $\beta_{GMF}$
+\end_inset
+
+ the skewness of the folded mode-centered distribution.
+ The correlation between 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{GMF}$
+\end_inset
+
+ is displayed in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ for reference and literature sets.
+ In this case, the reference sets have been changed to unbiased Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ distributions with a denser set of parameters.
+ Large sets (
+\begin_inset Formula $N=10^{5}$
+\end_inset
+
+) have been used Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a) to reveal the correlation, and smaller sets (
+\begin_inset Formula $N=150$
+\end_inset
+
+) in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b) to appreciate the effect of sample-size uncertainty on the correlation.
+ The literature datasets are reported in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(c), and one can see that they match well the correlation pattern observed
+ for the reference sets.
+ This strong correlation would considerably lessen the interest of the Gini
+ coefficient, were it not for the respective uncertainties of both statistics.
+ As can be seen in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(d), the uncertainty of 
+\begin_inset Formula $\beta_{GMF}$
+\end_inset
+
+ is between 2 and 5 times larger than the uncertainty on 
+\begin_inset Formula $G$
+\end_inset
+
+ for the same dataset.
+ 
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-SkewGM_mode"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(c) can also help us to define the alert value for 
+\begin_inset Formula $G$
+\end_inset
+
+.
+ It seems that below 
+\begin_inset Formula $G\simeq0.47$
+\end_inset
+
+ there is some instability on the skewness values leading to a weak correlation.
+ In contrast, the correlation is much more stable above 
+\begin_inset Formula $G=0.5$
+\end_inset
+
+, and we propose, in agreement with the 
+\begin_inset Formula $G$
+\end_inset
+
+-scale defined above, to retain this value as a limit above which one would
+ have a non-negligible risk of large prediction errors.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_G_vs_Skew_mode.png
+	lyxscale 25
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 2400bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gini-vs-SkewGM_mode"
+
+\end_inset
+
+
+\color orange
+Correlation between 
+\begin_inset Formula $G$
+\end_inset
+
+ and 
+\begin_inset Formula $|\beta_{GMF}|$
+\end_inset
+
+ for large (
+\begin_inset Formula $N=10^{5}$
+\end_inset
+
+) and small (
+\begin_inset Formula $N=150$
+\end_inset
+
+) samples of the Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ and mode-centered 
+\begin_inset Formula $g\text{-and-\ensuremath{h}}$
+\end_inset
+
+ distributions covering a large range of shape and asymmetry parameters
+ (a,b).
+ The lower row presents the same correlation for the mode-centered literature
+ datasets (c), and compares the uncertainties of both estimators (d).
+ The points are bracketed by lines of slopes 2 and 5.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph
@@ -3238,24 +3597,8 @@ name "fig:Gini-vs-CV-Rank"
 
 \end_inset
 
-Gini-scale classification of 10 lowest MUE-ranked methods in each case.
- Red dots depict methods with large 
-\begin_inset Formula $G$
-\end_inset
-
- values, green dots methods with small 
-\begin_inset Formula $G$
-\end_inset
-
- values, and gray dots methods in the 
-\begin_inset Quotes eld
-\end_inset
-
-blind zone
-\begin_inset Quotes erd
-\end_inset
-
-.
+Gini-scale classification after mode-centering of 10 lowest MUE-ranked methods
+ in each case.
  
 \end_layout
 
@@ -3313,7 +3656,7 @@ noprefix "false"
  situation, with much less red-flagged methods.
  In the other cases, no effect is observed, which might be due to either
  the absence of global outliers (NAR2019, PER2018, SCH2018, WU2015), or
- the intrinsic shape of the distributions (BOR2019, SAZ2019, WU2015).
+ the intrinsic shape of the distributions (BOR2019, WU2015, ZAS2019).
  In all these cases, it might be worth to investigate if the distorted shape
  of the distribution is due to systematic trends in the errors, as they
  could be profitably corrected 
@@ -3335,8 +3678,8 @@ Conclusion
 The Lorenz curve and Gini coefficient present an interesting addition to
  the computational chemistry benchmarking statistical toolbox.
  We focused here on the Gini statistic to study its properties in relation
- with features of the error distributions, such as bias and shape (kurtosis,
- asymmetry).
+ with features of the error distributions, such as bias and shape (skewness
+ and kurtosis).
  The interest of the Gini coefficient is that it correlates with all these
  features, and offers a one-number summary.
  This is also one of its weaknesses, as there is no unique mapping from
@@ -3392,6 +3735,17 @@ Limited to homogeneous, unimodal datasets
 \begin_layout Standard
 The corresponding datasets present features that might impede the unambiguous
  interpretation of popular benchmarking statistics such as the MUE.
+ 
+\end_layout
+
+\begin_layout Section*
+Acknowledgments
+\end_layout
+
+\begin_layout Standard
+This work is dedicated to Ramon Carbó-Dorca to his 80th birthday.
+ It reflects his interest for cross-disciplinary aspects of science, especially
+ the role of mathematics in chemistry.
  
 \end_layout
 
