@@ -509,6 +509,50 @@ noprefix "false"
  
 \end_layout
 
+\begin_layout Subsection
+
+\color orange
+Logic
+\end_layout
+
+\begin_layout Enumerate
+The Gini coefficient is based on the folded distribution.
+ Folding affects the shape of the distribution, and might notably truncate
+ one of the tails.
+ One might therefore attempt to link Gini with the descriptive stats of
+ the unfolded distribution.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+The problem is that G is affected by the bias, and shape params such as
+ skewness and kurtosis.
+ No strong correlation with any of these stats.
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+As one is interested in the tails, we propose to center and fold the distributio
+n around its main mode.
+ 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+This way, the heaviest tail is preserved, and a single stat is necessary
+ (skewness) to describe it.
+ Gini less uncertain than skewness.
+\end_layout
+
+\begin_layout Enumerate
+Or, mode-center the distribution, estimate the Gini coef for the minus and
+ plus tails and keep the max.
+ Pb.: loose large part of sample...
+\end_layout
+
+\end_deeper
 \begin_layout Section
 Statistical methods
 \begin_inset CommandInset label
@@ -721,7 +765,7 @@ The Lorenz curve gives the percentage of cumulated absolute errors due to
 \begin_layout Standard
 \begin_inset Formula 
 \begin{equation}
-L(p)=\frac{1}{\mu_{F}}\int_{0}^{p}q_{F}(t)\thinspace dt
+L_{F}(p)=\frac{1}{\mu_{F}}\int_{0}^{p}q_{F}(t)\thinspace dt
 \end{equation}
 
 \end_inset
@@ -773,7 +817,7 @@ literal "false"
 \end_inset
 
 , with the following properties: 
-\begin_inset Formula $L(p)$
+\begin_inset Formula $L_{F}(p)$
 \end_inset
 
  is concave, increasing with 
@@ -781,24 +825,24 @@ literal "false"
 \end_inset
 
 , such as 
-\begin_inset Formula $0\le L(p)\le p\le1$
+\begin_inset Formula $0\le L_{F}(p)\le p\le1$
 \end_inset
 
 , 
-\begin_inset Formula $L(0)=0$
+\begin_inset Formula $L_{F}(0)=0$
 \end_inset
 
  and 
-\begin_inset Formula $L(1)=1$
+\begin_inset Formula $L_{F}(1)=1$
 \end_inset
 
 .
  
-\begin_inset Formula $L(p)$
+\begin_inset Formula $L_{F}(p)$
 \end_inset
 
  lies one the identity line (
-\begin_inset Formula $L(p)=p$
+\begin_inset Formula $L_{F}(p)=p$
 \end_inset
 
 ) when all the errors are equal, 
@@ -834,7 +878,7 @@ name "subsec:The-Gini-coefficient"
 
 \begin_layout Standard
 It is related to the area between 
-\begin_inset Formula $L(p)$
+\begin_inset Formula $L_{F}(p)$
 \end_inset
 
  and the identity line (Fig.
@@ -854,27 +898,41 @@ noprefix "false"
 (right))
 \begin_inset Formula 
 \begin{equation}
-G=2\int_{0}^{1}\left\{ p-L(p)\right\} \thinspace dp
+G_{F}=2\int_{0}^{1}\left\{ p-L(p)\right\} \thinspace dp
 \end{equation}
 
 \end_inset
 
 where the factor two is used to scale 
-\begin_inset Formula $G$
+\begin_inset Formula $G_{F}$
 \end_inset
 
  between 0 and 1.
  The smaller 
-\begin_inset Formula $G$
+\begin_inset Formula $G_{F}$
 \end_inset
 
 , the closer the Lorenz curve to the identity line.
- 
+ The Gini coefficient, noted 
+\begin_inset Formula $G$
+\end_inset
+
+, is usually used for distributions with positive support.
+ Our notation 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ is a reminder that we are working here folded distributions of absolute
+ errors 
+\begin_inset Formula $f_{F}(\varepsilon)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
 For sets of errors with normal distributions, 
-\begin_inset Formula $G$
+\begin_inset Formula $G_{F}$
 \end_inset
 
  is proportional to the coefficient of variation 
@@ -885,12 +943,16 @@ For sets of errors with normal distributions,
 \begin_inset Formula $\mu$
 \end_inset
 
- is the mean, and 
+ is the mean value, and 
 \begin_inset Formula $\sigma$
 \end_inset
 
- the standard deviation of the signed errors; 
-\begin_inset Formula $G=c_{v}/\sqrt{\pi}$
+ the standard deviation of the 
+\emph on
+signed
+\emph default
+ errors; 
+\begin_inset Formula $G_{F}=c_{v}/\sqrt{\pi}$
 \end_inset
 
  
@@ -903,22 +965,18 @@ literal "false"
 
 .
  Usually seen as a measure of inequality in a distribution, 
-\begin_inset Formula $G$
+\begin_inset Formula $G_{F}$
 \end_inset
 
  is also related to the relative precision.
- Note that this relationship does not hold for absolute errors, except if
- all errors are of the same sign, therefore with a small 
+ Note that this relationship does hold for absolute errors only when all
+ errors are of the same sign, therefore with a small 
 \begin_inset Formula $c_{v}$
 \end_inset
 
  value.
  For a centered normal distribution of errors, the distribution of absolute
- errors is the folded normal distribution, with a 
-\begin_inset Formula $G$
-\end_inset
-
- value 
+ errors is the folded normal distribution, with a value 
 \begin_inset Formula $G_{FN}=\sqrt{2}-1\simeq0.41$
 \end_inset
 
@@ -1010,10 +1068,10 @@ literal "false"
 
 .
  
-\begin_inset Formula $\beta_{G}$
+\begin_inset Formula $\beta_{GM}$
 \end_inset
 
- takes its values between -1 and 1.
+ takes its values between -1 and 1, and is 0 for symmetric distributions.
  
 \end_layout
 
@@ -1034,7 +1092,11 @@ literal "false"
 
 \end_inset
 
-, hence the 'CS' subscript)
+, hence the 
+\begin_inset Formula $CS$
+\end_inset
+
+ subscript)
 \begin_inset Formula 
 \begin{equation}
 \kappa_{CS}=\frac{q(0.975)-q(0.025)}{q(0.75)-q(0.25)}-2.91\label{eq:kurtcs}
@@ -1445,6 +1507,10 @@ name "sec:Applications"
 
 \end_layout
 
+\begin_layout Subsection
+Datasets
+\end_layout
+
 \begin_layout Standard
 Before applying the Gini coefficient to literature datasets, one explores
  its properties on error sets generated from distributions with controlled
@@ -1457,11 +1523,7 @@ Reference datasets
 \end_inset
 
 ).
- 
-\end_layout
-
-\begin_layout Standard
-It is important to note that we explore only distributions with a single
+ It is important to note that we explore only distributions with a single
  dominant, more or less structured peak, such as the ones encountered in
  most computational chemistry error datasets.
  It is easy to imagine multi-peaked distributions for which our conclusions
@@ -1470,7 +1532,7 @@ It is important to note that we explore only distributions with a single
  kurtosis...) would describe properly such distributions.
 \end_layout
 
-\begin_layout Subsection
+\begin_layout Subsubsection
 Reference datasets
 \end_layout
 
@@ -1741,285 +1803,7 @@ Reference datasets.
 
 \end_layout
 
-\begin_layout Standard
-The Gini coefficient was plotted against the inverse coefficient of variation
- (
-\begin_inset Formula $1/c_{v}$
-\end_inset
-
-, see Sect.
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:The-Gini-coefficient"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-), to avoid the singularity of 
-\begin_inset Formula $c_{v}$
-\end_inset
-
- for unbiased distribution (Fig.
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Gini-vs-CV-K"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-(a)).
- The dashed line in this plot represents the 
-\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
-\end_inset
-
- relationship.
- It is closely followed by strongly biased normal distribution (black squares),
- at low 
-\begin_inset Formula $G$
-\end_inset
-
- values (
-\begin_inset Formula $G\lesssim0.3$
-\end_inset
-
-).
- At smaller bias values, the properties of the folded normal distribution
- take precedence, and the symbols deviate from the inverse law to converge
- to the value 
-\begin_inset Formula $G_{FN}=0.41$
-\end_inset
-
-.
- 
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename fig_Gini_vs_CV_KCS_BGM.png
-	lyxscale 20
-	width 99text%
-	BoundingBox 0bp 0bp 3600bp 2400bp
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:Gini-vs-CV-K"
-
-\end_inset
-
-Scatterplots between the Gini coefficient 
-\begin_inset Formula $G$
-\end_inset
-
- and the inverse coefficient of variation 
-\begin_inset Formula $1/c_{v}$
-\end_inset
-
- (a,d), the excess kurtosis 
-\begin_inset Formula $\kappa_{CS}$
-\end_inset
-
- (b,e), and the absolute value of the skewness 
-\begin_inset Formula $\beta_{GM}$
-\end_inset
-
- (c,f), for reference error sets (a-c) and computational chemistry literature
- error sets (d-f).
- The dashed line in the (a,d) plots represents the 
-\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
-\end_inset
-
- relationship.
- right column is a linear fit of the GandH dataset, to serve as a guide
- for the eyes between the top and bottom figure which have different ordinate
- scales.
- The error bars correspond to 
-\begin_inset Formula $\pm2\sigma$
-\end_inset
-
- intervals estimated by bootstrapping.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-The Student case (red squares) gives us milestones for centered symmetric
- distributions with different kurtosis (
-\begin_inset Formula $\kappa_{CS})$
-\end_inset
-
- values.
- The red squares lie on the 
-\begin_inset Formula $1/c_{v}=0$
-\end_inset
-
- axis, the rightmost value corresponding to a Student's-
-\begin_inset Formula $t$
-\end_inset
-
- distribution with 2 degree of freedom, at 
-\begin_inset Formula $G\simeq0.55$
-\end_inset
-
-.
- As expected, when the number of degrees of freedom increases, the points
- shift towards the centered normal case.
- For the GandH case (light blue squares), the asymmetry/skewness is explored,
- in a series starting from the normal distribution (
-\begin_inset Formula $g=0$
-\end_inset
-
-), and acquiring a small bias as the asymmetry parameter increases up to
- 
-\begin_inset Formula $g=1$
-\end_inset
-
-.
- As for the Student case, 
-\begin_inset Formula $G$
-\end_inset
-
- increases when the shape of the normal distribution is altered, up to 
-\begin_inset Formula $G\simeq0.62$
-\end_inset
-
- in this case.
-\end_layout
-
-\begin_layout Standard
-
-\color orange
-Skewness
-\end_layout
-
-\begin_layout Standard
-Combining bias with kurtosis and asymmetry is explored in sets StudentBias1
- (red dots), StudentBias2 (red triangles), GandHBias1 (blue dots) and GandHBias2
- (blue triangles).
- All series converge to the corresponding biased normal case, the higher
- 
-\begin_inset Formula $G$
-\end_inset
-
- values corresponding to the higher values of asymmetry or kurtosis.
- For a bias value of 1, the series follow distinct trajectories, but when
- the bias increases to 2, they strongly overlap.
- For large bias, the distribution shape becomes unimportant.
- 
-\end_layout
-
-\begin_layout Standard
-A similar analysis is presented in Fig.
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Gini-vs-CV-K"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-(b) for the correlation between 
-\begin_inset Formula $G$
-\end_inset
-
- and kurtosis.
- The dashed line is a linear fit to the points of the GandH set.
- The most striking feature in this plot, is the exclusion zone at the bottom-rig
-ht of the graph, implying that, in the class of distributions studied here,
- one cannot have large 
-\begin_inset Formula $G$
-\end_inset
-
- values without a large kurtosis or asymmetry.
- On the left of the graph, one sees again that the shape of distributions
- becomes less and less relevant when the bias increases (overlap of the
- red and blue triangles tracks).
-\end_layout
-
-\begin_layout Paragraph
-Uncertainty.
-\end_layout
-
-\begin_layout Standard
-We note on these figures that, even with a sample of 
-\begin_inset Formula $N=10^{3}$
-\end_inset
-
- points, the uncertainty on excess kurtosis can be very large: the relative
- uncertainty for this property lies between 20
-\begin_inset space \thinspace{}
-\end_inset
-
-% and 100
-\begin_inset space \thinspace{}
-\end_inset
-
-%, with a few points even larger.
- For skewness (not shown), the relative errors lie between 10
-\begin_inset space \thinspace{}
-\end_inset
-
-% and 100
-\begin_inset space \thinspace{}
-\end_inset
-
-%.
- In comparison, the relative uncertainty on the Gini coefficient is ten
- times smaller, 
-\emph on
-i.e.
-
-\emph default
- about 2
-\begin_inset space \thinspace{}
-\end_inset
-
-% (with a few points up to 10
-\begin_inset space \thinspace{}
-\end_inset
-
-%).
- This is an interesting point in favor of using the Gini coefficient as
- a proxy for shape statistics, notably for smaller samples as the ones studied
- in the next section.
-\end_layout
-
-\begin_layout Subsection
+\begin_layout Subsubsection
 Literature datasets
 \end_layout
 
@@ -2062,7 +1846,7 @@ literal "false"
 placement !t
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2598,6 +2382,302 @@ Case studies:
 
 \end_layout
 
+\begin_layout Subsection
+Gini coefficient 
+\emph on
+vs.
+
+\emph default
+ kurtosis and skewness
+\end_layout
+
+\begin_layout Standard
+The Gini coefficient was plotted against the inverse coefficient of variation
+ (
+\begin_inset Formula $1/c_{v}$
+\end_inset
+
+, see Sect.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:The-Gini-coefficient"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), to avoid the singularity of 
+\begin_inset Formula $c_{v}$
+\end_inset
+
+ for unbiased distribution (Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-CV-K"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a)).
+ The dashed line in this plot represents the 
+\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
+\end_inset
+
+ relationship.
+ It is closely followed by strongly biased normal distribution (black squares),
+ at low 
+\begin_inset Formula $G$
+\end_inset
+
+ values (
+\begin_inset Formula $G\lesssim0.3$
+\end_inset
+
+).
+ At smaller bias values, the properties of the folded normal distribution
+ take precedence, and the symbols deviate from the inverse law to converge
+ to the value 
+\begin_inset Formula $G_{FN}=0.41$
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_Gini_vs_CV_KCS_BGM.png
+	lyxscale 20
+	width 99text%
+	BoundingBox 0bp 0bp 3600bp 2400bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gini-vs-CV-K"
+
+\end_inset
+
+Scatterplots between the Gini coefficient 
+\begin_inset Formula $G$
+\end_inset
+
+ and the inverse coefficient of variation 
+\begin_inset Formula $1/c_{v}$
+\end_inset
+
+ (a,d), the excess kurtosis 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+ (b,e), and the absolute value of the skewness 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+ (c,f), for reference error sets (a-c) and computational chemistry literature
+ error sets (d-f).
+ The dashed line in the (a,d) plots represents the 
+\begin_inset Formula $1/c_{v}=1/(\sqrt{\pi}G)$
+\end_inset
+
+ relationship.
+ right column is a linear fit of the GandH dataset, to serve as a guide
+ for the eyes between the top and bottom figure which have different ordinate
+ scales.
+ The error bars correspond to 
+\begin_inset Formula $\pm2\sigma$
+\end_inset
+
+ intervals estimated by bootstrapping.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Student case (red squares) gives us milestones for centered symmetric
+ distributions with different kurtosis (
+\begin_inset Formula $\kappa_{CS})$
+\end_inset
+
+ values.
+ The red squares lie on the 
+\begin_inset Formula $1/c_{v}=0$
+\end_inset
+
+ axis, the rightmost value corresponding to a Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ distribution with 2 degree of freedom, at 
+\begin_inset Formula $G\simeq0.55$
+\end_inset
+
+.
+ As expected, when the number of degrees of freedom increases, the points
+ shift towards the centered normal case.
+ For the GandH case (light blue squares), the asymmetry/skewness is explored,
+ in a series starting from the normal distribution (
+\begin_inset Formula $g=0$
+\end_inset
+
+), and acquiring a small bias as the asymmetry parameter increases up to
+ 
+\begin_inset Formula $g=1$
+\end_inset
+
+.
+ As for the Student case, 
+\begin_inset Formula $G$
+\end_inset
+
+ increases when the shape of the normal distribution is altered, up to 
+\begin_inset Formula $G\simeq0.62$
+\end_inset
+
+ in this case.
+\end_layout
+
+\begin_layout Standard
+
+\color orange
+Skewness vs.
+ Gini 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bendel1989"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Combining bias with kurtosis and asymmetry is explored in sets StudentBias1
+ (red dots), StudentBias2 (red triangles), GandHBias1 (blue dots) and GandHBias2
+ (blue triangles).
+ All series converge to the corresponding biased normal case, the higher
+ 
+\begin_inset Formula $G$
+\end_inset
+
+ values corresponding to the higher values of asymmetry or kurtosis.
+ For a bias value of 1, the series follow distinct trajectories, but when
+ the bias increases to 2, they strongly overlap.
+ For large bias, the distribution shape becomes unimportant.
+ 
+\end_layout
+
+\begin_layout Standard
+A similar analysis is presented in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-CV-K"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b) for the correlation between 
+\begin_inset Formula $G$
+\end_inset
+
+ and kurtosis.
+ The dashed line is a linear fit to the points of the GandH set.
+ The most striking feature in this plot, is the exclusion zone at the bottom-rig
+ht of the graph, implying that, in the class of distributions studied here,
+ one cannot have large 
+\begin_inset Formula $G$
+\end_inset
+
+ values without a large kurtosis or asymmetry.
+ On the left of the graph, one sees again that the shape of distributions
+ becomes less and less relevant when the bias increases (overlap of the
+ red and blue triangles tracks).
+\end_layout
+
+\begin_layout Subsubsection
+Uncertainty
+\end_layout
+
+\begin_layout Standard
+We note on these figures that, even with a sample of 
+\begin_inset Formula $N=10^{3}$
+\end_inset
+
+ points, the uncertainty on excess kurtosis can be very large: the relative
+ uncertainty for this property lies between 20
+\begin_inset space \thinspace{}
+\end_inset
+
+% and 100
+\begin_inset space \thinspace{}
+\end_inset
+
+%, with a few points even larger.
+ For skewness (not shown), the relative errors lie between 10
+\begin_inset space \thinspace{}
+\end_inset
+
+% and 100
+\begin_inset space \thinspace{}
+\end_inset
+
+%.
+ In comparison, the relative uncertainty on the Gini coefficient is ten
+ times smaller, 
+\emph on
+i.e.
+
+\emph default
+ about 2
+\begin_inset space \thinspace{}
+\end_inset
+
+% (with a few points up to 10
+\begin_inset space \thinspace{}
+\end_inset
+
+%).
+ This is an interesting point in favor of using the Gini coefficient as
+ a proxy for shape statistics, notably for smaller samples as the ones studied
+ in the next section.
+\end_layout
+
 \begin_layout Standard
 Fig.
 \begin_inset space \thinspace{}
@@ -2673,16 +2753,20 @@ noprefix "false"
 
 ) plane is clearly visible.
  
+\end_layout
+
+\begin_layout Standard
+
 \color orange
 Skewness ?
 \end_layout
 
-\begin_layout Paragraph
-The 
+\begin_layout Subsubsection
+A 
 \begin_inset Formula $G$
 \end_inset
 
- scale.
+ scale ?
 \end_layout
 
 \begin_layout Standard
@@ -2915,10 +2999,10 @@ noprefix "false"
  
 \end_layout
 
-\begin_layout Paragraph
+\begin_layout Subsection
 
 \color orange
-Mode-centering.
+Mode-centering
 \end_layout
 
 \begin_layout Standard
@@ -3280,6 +3364,11 @@ noprefix "false"
  
 \end_layout
 
+\begin_layout Subsubsection
+Gini coefficient vs.
+ skewness
+\end_layout
+
 \begin_layout Standard
 
 \color orange
@@ -3473,7 +3562,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename fig_G_vs_Skew_mode.png
+	filename fig_G_vs_Skew_mcf.png
 	lyxscale 25
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 2400bp
@@ -3536,8 +3625,8 @@ Correlation between
 
 \end_layout
 
-\begin_layout Paragraph
-Ranking.
+\begin_layout Subsection
+Ranking
 \end_layout
 
 \begin_layout Standard
@@ -3739,7 +3828,7 @@ The corresponding datasets present features that might impede the unambiguous
 \end_layout
 
 \begin_layout Section*
-Acknowledgments
+Dedication
 \end_layout
 
 \begin_layout Standard

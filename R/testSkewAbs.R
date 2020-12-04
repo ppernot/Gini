@@ -1,3 +1,11 @@
+cols = rev(inlmisc::GetColors(8))[1:7]
+pty  = 's'
+mar  = c(3, 3, 1.5, 1)
+mgp  = c(2, .75, 0)
+tcl  = -0.5
+lwd  = 4
+cex  = 4.5
+
 
 gh = function(N = 1000,
               g = 0,
@@ -20,7 +28,15 @@ skewgm = function(X, index = 1:length(X), ...) {
   return(s)
 }
 
-skewgmf = function(X, index = 1:length(X), ...) {
+skewgm_f = function(X, index = 1:length(X), ...) {
+  X = X[index]
+  X = abs(X) # Absolute mode-centered errors
+  m = hd(X,0.5) # Median
+  s = (mean(X) - m) / mean(abs(X - m))
+  return(s)
+}
+
+skewgm_mcf = function(X, index = 1:length(X), ...) {
   X = X[index]
   X = abs(X - hrmode(X)) # Absolute mode-centered errors
   m = hd(X,0.5) # Median
@@ -28,21 +44,144 @@ skewgmf = function(X, index = 1:length(X), ...) {
   return(s)
 }
 
-gimc = function(X, index = 1:length(X), ...) {
+gimc_f = function(X, index = 1:length(X), ...) {
   X = X[index]
-  ErrViewLib::gini(X - hrmode(X))
+  ErrViewLib::gini(abs(X - hrmode(X)))
 }
 
-cols = rev(inlmisc::GetColors(8))[1:7]
-pty  = 's'
-mar  = c(3, 3, 1.5, 1)
-mgp  = c(2, .75, 0)
-tcl  = -0.5
-lwd  = 4
-cex  = 4.5
+gimc_pm = function(X, index = 1:length(X), ...) {
+  X = X[index]
+  X = X - hrmode(X)
+  Gm = ErrViewLib::gini(X[X<=0]) 
+  Gp = ErrViewLib::gini(X[X>=0]) 
+  return(max(Gm,Gp))
+}
 
-png(file = file.path('..', 'article', 'fig_G_vs_Skew_mode.png'), 
-    width=2400, height=2400)
+
+# Pre-calculate stats for lit datasets ----
+
+dataSets = c(
+  'BOR2019',
+  'NAR2019',
+  'PER2018',
+  'SCH2018',
+  'THA2015', # Need relative errors
+  'WU2015',  # Need relative errors
+  'ZAS2019',
+  'ZHA2018'
+)
+relSets = c('THA2015','WU2015') # Use relative errors
+
+rm('dft')
+for (set in dataSets) {
+  cat('\nData set : ', set, '\n')
+  # Get data
+  data = read.csv(
+    file = file.path('..', 'data', paste0(set, '_Data.csv')),
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  systems <- data[, 1]
+  rownames(data) = systems
+  Ref <- data[, 2]
+  Data <- data[, -c(1, 2), drop = FALSE]
+  methList <- colnames(Data)
+  Errors <- Ref - Data
+  if(set %in% relSets)
+    Errors <- 100 * Errors / Ref
+  
+  # Bootstrapping
+  stats = c( 'gini','skewgm_f','gimc','skewgm_mcf','gimc_pm')
+
+  bs = estBS1(
+    Errors,
+    props = stats,
+    eps = 1,
+    do.sip = FALSE,
+    silent = TRUE
+  )
+  df = data.frame(Dataset = set, Methods = methList)
+  for (stat in stats) {
+    df[, stat] = bs[[stat]]$val
+    df[, paste0('u_', stat)] = bs[[stat]]$unc
+  }
+  if(!exists('dft'))
+    dft = df
+  else
+    dft = rbind(dft,df)
+}
+
+par(
+  mfrow = c(2, 2),
+  mar = mar,
+  pty = pty,
+  mgp = mgp,
+  tcl = tcl,
+  lwd = 1,
+  cex = 1
+)
+
+x = dft$gini
+y = dft$gimc
+plot(x, y, pch=16,
+     xlim = c(0.1,0.7),
+     ylim = c(0.4,0.7), 
+     col = cols[icol]
+)
+ux = dft$u_gini
+uy = dft$u_gimc
+segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+abline(a=0,b=1)
+
+x = dft$gini
+y = dft$gimc_pm
+plot(x, y,pch=16,
+     xlim = c(0.1,0.7),
+     ylim = c(0.4,0.7), 
+     col = cols[icol]
+)
+abline(a=0,b=1)
+ux = dft$u_gini
+uy = dft$u_gimc_pm
+segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+
+x = dft$gimc
+y = dft$gimc_pm
+plot(x, y,pch=16,
+     xlim = c(0.45,0.55),
+     ylim = c(0.4,0.7), 
+     col = cols[icol]
+)
+abline(a=0,b=1)
+ux = dft$u_gimc
+uy = dft$u_gimc_pm
+segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+
+plot(ux, uy, pch=16,
+     xlim = c(0,0.04),
+     ylim = c(0,0.08), 
+     col = cols[icol]
+)
+abline(a=0,b=1)
+abline(a=0,b=3)
+
+# Plot ----
+
+mc = TRUE
+
+
+if(mc) {
+  png(file = file.path('..', 'article', 'fig_G_vs_Skew_mcf.png'), 
+      width=2400, height=2400)
+} else {
+  png(file = file.path('..', 'article', 'fig_G_vs_Skew_f.png'), 
+      width=2400, height=2400)
+}
+
 par(
   mfrow = c(2, 2),
   mar = mar,
@@ -65,15 +204,16 @@ for (g in seq(0,1,by=0.1)) {
     # Tails
     i = i + 1
     X = gh(N, g, h)
-    X = X - hrmode(X)
+    if(mc)
+      X = X - hrmode(X)
     gi[i] = ErrViewLib::gini(X)
-    sk[i] = skewgm(abs(X))
+    sk[i] = skewgm_f(X)
   }
 }
 
 plot(
   gi, sk, pch=16, col = cols[2],
-  xlim = c(0.4,0.7), xlab = 'G',
+  xlim = c(0.4,0.7), xlab = expression(G[F]),
   ylim = c(0.2,0.8), ylab = expression(beta[GMF]),
   main = paste0('Ref / N=',N)
 )
@@ -84,9 +224,10 @@ gi = sk = c()
 for (nu in seq(2,20,by=1)) {
   i = i + 1
   X = rt(N, df=nu)
-  X = X - hrmode(X)
+  if(mc)
+    X = X - hrmode(X)
   gi[i] = ErrViewLib::gini(X)
-  sk[i] = skewgm(abs(X))
+  sk[i] = skewgm_f(X)
 }
 
 points(
@@ -120,14 +261,15 @@ for (g in seq(0,1,by=0.1)) {
     # Tails
     i = i + 1
     X = gh(N, g, h)
-    X = X - hrmode(X)
+    if(mc)
+      X = X - hrmode(X)
     gi[i] = ErrViewLib::gini(X)
-    sk[i] = skewgm(abs(X))
+    sk[i] = skewgm_f(X)
   }
 }
 plot(
   gi, sk, pch=16, col = cols[2],
-  xlim = c(0.4,0.7), xlab = 'G',
+  xlim = c(0.4,0.7), xlab = expression(G[F]),
   ylim = c(0.2,0.8), ylab = expression(beta[GMF]),
   main = paste0('Ref / N=',N)
 )
@@ -138,9 +280,10 @@ gi = sk = c()
 for (nu in seq(2,20,by=1)) {
   i = i + 1
   X = rt(N, df=nu)
-  X = X - hrmode(X)
+  if(mc)
+    X = X - hrmode(X)
   gi[i] = ErrViewLib::gini(X)
-  sk[i] = skewgm(abs(X))
+  sk[i] = skewgm_f(X)
 }
 
 points(
@@ -158,62 +301,6 @@ mtext(
 
 
 # c ----
-dataSets = c(
-  'BOR2019',
-  'NAR2019',
-  'PER2018',
-  'SCH2018',
-  'THA2015', # Need relative errors
-  'WU2015',  # Need relative errors
-  'ZAS2019',
-  'ZHA2018'
-)
-relSets = c('THA2015','WU2015') # Use relative errors
-units = c('eV','kcal/mol','kcal/mol',
-          'eV','%','%','kcal/mol','eV/atom')
-names(units) = dataSets
-
-tcols = rep(cols,6)
-
-rm('dft')
-for (set in dataSets) {
-  cat('\nData set : ', set, '\n')
-  # Get data
-  data = read.csv(
-    file = file.path('..', 'data', paste0(set, '_Data.csv')),
-    header = TRUE,
-    stringsAsFactors = FALSE,
-    check.names = FALSE
-  )
-  systems <- data[, 1]
-  rownames(data) = systems
-  Ref <- data[, 2]
-  Data <- data[, -c(1, 2), drop = FALSE]
-  methList <- colnames(Data)
-  Errors <- Ref - Data
-  if(set %in% relSets)
-    Errors <- 100 * Errors / Ref
-  
-  # Bootstrapping
-  stats = c( 'gimc','skewgmf')
-  bs = estBS1(
-    Errors,
-    props = stats,
-    eps = 1,
-    do.sip = FALSE,
-    silent = TRUE
-  )
-  df = data.frame(Dataset = set, Methods = methList)
-  for (stat in stats) {
-    df[, stat] = bs[[stat]]$val
-    df[, paste0('u_', stat)] = bs[[stat]]$unc
-  }
-  if(!exists('dft'))
-    dft = df
-  else
-    dft = rbind(dft,df)
-}
-
 icol = as.numeric(factor(dft$Dataset)) %% length(cols)
 icol[icol==0] = length(cols)
 pch = as.numeric(factor(dft$Dataset))
@@ -221,11 +308,22 @@ sel1 = pch<=length(cols)
 pch[sel1] = 16
 pch[!sel1]= 17
 
+if(mc) {
+  x = dft$gimc
+  y = dft$skewgm_mcf
+  ux = dft$u_gimc
+  uy = dft$u_skewgm_mcf
+} else {
+  x = dft$gini
+  y = dft$skewgm_f
+  ux = dft$u_gini
+  uy = dft$u_skewgm_f
+}
 plot(
-  dft$gimc, dft$skewgmf,
+  x, y,
   col=cols[icol], 
   pch=pch,
-  xlim = c(0.4,0.7), xlab = 'G',
+  xlim = c(0.4,0.7), xlab = expression(G[F]),
   ylim = c(0.2,0.8), ylab = expression(beta[GMF]),
   main = 'Literature'
 )
@@ -251,13 +349,12 @@ mtext(
   line = 0.3)
 
 # d ----
-ux = dft$u_gimc
-uy = dft$u_skewgmf
+
 plot(
   ux,uy,
   pch=16,
   col = cols[icol],
-  xlim = c(0.,0.03), xlab = 'u(G)',
+  xlim = c(0.,0.03), xlab = expression(u(G[F])),
   ylim = c(0.,0.12), ylab = expression(u(beta[GMF]))
 )
 grid()
