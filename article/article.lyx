@@ -510,8 +510,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-
-\color orange
 Logic
 \end_layout
 
@@ -951,11 +949,7 @@ For sets of errors with normal distributions,
 \emph on
 signed
 \emph default
- errors; 
-\begin_inset Formula $G_{F}=c_{v}/\sqrt{\pi}$
-\end_inset
-
- 
+ errors 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Bendel1989"
@@ -963,7 +957,14 @@ literal "false"
 
 \end_inset
 
-.
+
+\begin_inset Formula 
+\begin{equation}
+G_{F}=c_{v}/\sqrt{\pi}\label{eq:GcsCv}
+\end{equation}
+
+\end_inset
+
  Usually seen as a measure of inequality in a distribution, 
 \begin_inset Formula $G_{F}$
 \end_inset
@@ -984,14 +985,10 @@ literal "false"
 \end_layout
 
 \begin_layout Subsubsection
-
-\color orange
 Skewness and kurtosis
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 Skewness measures the asymmetry of a distribution, while kurtosis is used
  as a measure either of its 
 \begin_inset Quotes eld
@@ -1031,8 +1028,6 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 For the skewness, we use a measure using the difference between the mean
  and median
 \begin_inset Formula 
@@ -1379,8 +1374,6 @@ Mode
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 As one is not dealing with necessarily symmetric distributions, the mode
  is an interesting location statistic.
  In combination with the Lorenz curve and Gini statistic, the mode locates
@@ -1395,8 +1388,6 @@ As one is not dealing with necessarily symmetric distributions, the mode
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 A robust method, Bickel's half-range mode (HRM) estimator 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1497,17 +1488,6 @@ http://upsa.shinyapps.io/ErrView
 \end_layout
 
 \begin_layout Section
-Applications
-\begin_inset CommandInset label
-LatexCommand label
-name "sec:Applications"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Subsection
 Datasets
 \end_layout
 
@@ -1532,7 +1512,7 @@ Reference datasets
  kurtosis...) would describe properly such distributions.
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Reference datasets
 \end_layout
 
@@ -1803,7 +1783,7 @@ Reference datasets.
 
 \end_layout
 
-\begin_layout Subsubsection
+\begin_layout Subsection
 Literature datasets
 \end_layout
 
@@ -1846,7 +1826,7 @@ literal "false"
 placement !t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2382,7 +2362,267 @@ Case studies:
 
 \end_layout
 
+\begin_layout Section
+Applications
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Applications"
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
+Gini coefficient 
+\emph on
+vs.
+
+\emph default
+ bias
+\end_layout
+
+\begin_layout Standard
+The link between the Gini coefficient and the coefficient of variation (Eq.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:GcsCv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) tells us that, for a normal distribution of given standard deviation,
+ an increasing bias should result in decreasing values of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+.
+ At some point, this relation is broken by the folding operation: as noted
+ earlier, for a centered normal distribution, one has 
+\begin_inset Formula $G_{F}=0.41$
+\end_inset
+
+ which does not verify Eq.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:GcsCv"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ The dependence between a shift of a distribution and 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ has been plotted in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-bias"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a) for a normal 
+\begin_inset Formula $N(0,1)$
+\end_inset
+
+, Student's 
+\begin_inset Formula $t(\nu=2)$
+\end_inset
+
+, lognormal 
+\begin_inset Formula $LN(1,0.5)$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ 
+\begin_inset Formula $GH(g=1,h=0)$
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename biasCompensation.png
+	lyxscale 30
+	width 99text%
+	BoundingBox 0bp 0bp 2400bp 1200bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Gini-vs-bias"
+
+\end_inset
+
+Variation of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ with a bias value added to several model distributions.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The symmetric distributions (normal and Student's) have their maximal 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ value when the bias is null.
+ Having heavier tails, the Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ distribution has a larger Gini coefficient than the normal.
+ Any added bias leads to a decrease of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+.
+ The decay curves are symmetric with respect to the sign of the bias.
+ 
+\end_layout
+
+\begin_layout Standard
+This is no longer the case for asymmetric distributions (lognormal and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+), for which the peak is reached for non-null values of the bias and the
+ decay curves are non-symmetric.
+ In Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-bias"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b) we plotted identical curves for distributions centered on their mode
+ before adding bias.
+ This shows that the maximal value of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ are reached when the mode of the distribution is at, or close to, the origin.
+\end_layout
+
+\begin_layout Standard
+Another important aspect illustrated by these curves is that a given value
+ of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ does not inform us on the shape of a distribution.
+ For instance, 
+\begin_inset Formula $G_{F}=0.41$
+\end_inset
+
+ might as well occur for a centered normal distribution than for positively
+ or negatively biased Student's-
+\begin_inset Formula $t$
+\end_inset
+
+, lognormal of 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ distributions.
+ One might although infer that small values of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ (
+\emph on
+e.g.
+
+\emph default
+ 
+\begin_inset Formula $G_{F}\lesssim0.3$
+\end_inset
+
+) are likely to reveal biased error distribution, while large values (
+\emph on
+e.g.
+
+\emph default
+ 
+\begin_inset Formula $G_{F}\gtrsim0.5$
+\end_inset
+
+) are likely to point to heavy-tailed distributions.
+ In between compensations between bias and shape factors prevent any inference.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 Gini coefficient 
 \emph on
 vs.
@@ -2391,7 +2631,7 @@ vs.
  kurtosis and skewness
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The Gini coefficient was plotted against the inverse coefficient of variation
  (
 \begin_inset Formula $1/c_{v}$
@@ -2452,7 +2692,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2522,7 +2762,7 @@ Scatterplots between the Gini coefficient
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 The Student case (red squares) gives us milestones for centered symmetric
  distributions with different kurtosis (
 \begin_inset Formula $\kappa_{CS})$
@@ -2566,7 +2806,7 @@ The Student case (red squares) gives us milestones for centered symmetric
  in this case.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \color orange
 Skewness vs.
@@ -2581,7 +2821,7 @@ literal "false"
 .
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Combining bias with kurtosis and asymmetry is explored in sets StudentBias1
  (red dots), StudentBias2 (red triangles), GandHBias1 (blue dots) and GandHBias2
  (blue triangles).
@@ -2597,7 +2837,7 @@ Combining bias with kurtosis and asymmetry is explored in sets StudentBias1
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 A similar analysis is presented in Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -2630,11 +2870,17 @@ ht of the graph, implying that, in the class of distributions studied here,
  red and blue triangles tracks).
 \end_layout
 
-\begin_layout Subsubsection
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 Uncertainty
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 We note on these figures that, even with a sample of 
 \begin_inset Formula $N=10^{3}$
 \end_inset
@@ -2678,7 +2924,7 @@ i.e.
  in the next section.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -2755,13 +3001,19 @@ noprefix "false"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \color orange
 Skewness ?
 \end_layout
 
-\begin_layout Subsubsection
+\end_inset
+
+
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 A 
 \begin_inset Formula $G$
 \end_inset
@@ -2769,7 +3021,7 @@ A
  scale ?
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 One observes in Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -2862,7 +3114,7 @@ blind zone
  this might also reveal a dominant role of outliers.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Some datasets fall fully within the blind zone, between 0.35 and 0.5 (NAR2019,
  ZHA2018), but most have some elements outside, that would require some
  attention.
@@ -2904,7 +3156,7 @@ s cancellation.
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Cases BOR2019, PER2018, THA2015 and ZAS2019 present points with large 
 \begin_inset Formula $G$
 \end_inset
@@ -2961,7 +3213,7 @@ literal "false"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 On Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -2999,20 +3251,20 @@ noprefix "false"
  
 \end_layout
 
-\begin_layout Subsection
+\end_inset
 
-\color orange
-Mode-centering
-\end_layout
 
-\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 
 \color red
 Centering vs debiasing.
  MSE = 0 might imply a shift of the main peak due to outliers
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 To validate the 
 \begin_inset Formula $G$
 \end_inset
@@ -3102,7 +3354,7 @@ noprefix "false"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Globally, centering leads to a contraction of the range of 
 \begin_inset Formula $G$
 \end_inset
@@ -3221,7 +3473,7 @@ A contrario
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 This centering experiment therefore confirms our interpretation that points
  with 
 \begin_inset Formula $G$
@@ -3257,7 +3509,7 @@ blind zone
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -3338,7 +3590,7 @@ noprefix "false"
 
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -3361,15 +3613,277 @@ noprefix "false"
  value.
  The strong correlation between these two statistics for centered distributions
  is clearly visible.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+Mode-centering
+\end_layout
+
+\begin_layout Standard
+We have seen above that without some form of unbiasing, the Gini scale has
+ a central blind zone where bias and shape effects compensate.
+ As we are interested in characterizing the shape of the distributions,
+ mode-centering relieves this ambiguity.
+ 
+\end_layout
+
+\begin_layout Standard
+We note the new Gini coefficient of mode-centered folded distributions 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+.
+ In Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GF-vs-GMCF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a), we plotted 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ versus 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ for the literature datasets.
+ It is clear that mode-centering increases all 
+\begin_inset Formula $G$
+\end_inset
+
+ values, 
+\emph on
+i.e.
+
+\emph default
+ 
+\begin_inset Formula $G_{MCF}\geq G_{F}$
+\end_inset
+
+ for all datasets, within the estimation uncertainties.
+ The 
+\begin_inset Formula $G$
+\end_inset
+
+-scale is now reduced to values above 0.4.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename G_vs_GMC.png
+	lyxscale 30
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 2400bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GF-vs-GMCF"
+
+\end_inset
+
+(a) correlation of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ for the literature datasets, and (b) comparison of their uncertainties
+ (the dashed line has a slope of 2); (c) correlation of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ and 
+\begin_inset Formula $\beta_{MCF}$
+\end_inset
+
+, (b) and comparison of their uncertainties (the points are bracketed by
+ lines of slope 2 and 5).
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The uncertainties are reported in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GF-vs-GMCF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b), showing that the uncertainty on 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ is up to twice as large as the uncertainty on 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+, which is due to the mode uncertainty.
+ Note also that there is a notable size effect on these uncertainties, the
+ smallest datasets (THA2015, 
+\begin_inset Formula $N=145$
+\end_inset
+
+) having the largest uncertainty, and the largest dataset (ZHA2019, 
+\begin_inset Formula $N=6211)$
+\end_inset
+
+, the smallest uncertainty.
+ 
+\end_layout
+
+\begin_layout Standard
+Centering a distribution before folding it mixes the contributions of both
+ tails, but ensures that the contribution of the heaviest tail will be accounted
+ for.
  
 \end_layout
 
 \begin_layout Subsubsection
-Gini coefficient vs.
- skewness
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ as a shape estimator
 \end_layout
 
 \begin_layout Standard
+In parallel with the Gini coefficient, the skewness of the distribution
+ has also been considered as an estimator of inequality 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Bendel1989"
+literal "false"
+
+\end_inset
+
+.
+ One is interested here in comparing 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ with 
+\begin_inset Formula $\beta_{MCF}$
+\end_inset
+
+, which is the skewness 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+ (Eq.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:skewgm"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+) of the mode-centered folded distribution.
+ The values for our selection of literature datasets is shown in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GF-vs-GMCF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(c).
+ There is an excellent correlation between those statistics, considering
+ the uncertainties reported in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GF-vs-GMCF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(d).
+ Using model datasets of large size, one observes a practically perfect
+ non-linear correlation, meaning that 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ is apt at estimating the heaviness of the distributions tails.
+ It is important to note that the uncertainty on 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ is a factor two to five smaller than the uncertainty on 
+\begin_inset Formula $\beta_{MCF}$
+\end_inset
+
+, and therefore performs better for smaller datasets.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Note
+status collapsed
+
+\begin_layout Plain Layout
 
 \color orange
 For mode-centered error sets, 
@@ -3513,7 +4027,7 @@ noprefix "false"
  
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 
 \color orange
 Fig.
@@ -3552,7 +4066,7 @@ noprefix "false"
  have a non-negligible risk of large prediction errors.
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 \begin_inset Float figure
 wide false
 sideways false
@@ -3613,6 +4127,11 @@ Correlation between
  The lower row presents the same correlation for the mode-centered literature
  datasets (c), and compares the uncertainties of both estimators (d).
  The points are bracketed by lines of slopes 2 and 5.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -3773,9 +4292,7 @@ The Lorenz curve and Gini coefficient present an interesting addition to
  features, and offers a one-number summary.
  This is also one of its weaknesses, as there is no unique mapping from
  the Gini coefficient to these features.
- 
-\color orange
-To unscramble this situation, the Gini coefficient of the mode-centered
+ To unscramble this situation, the Gini coefficient of the mode-centered
  distributions 
 \begin_inset Formula $G_{mc}$
 \end_inset
@@ -3787,10 +4304,8 @@ To unscramble this situation, the Gini coefficient of the mode-centered
 Nevertheless, we have shown on analytical and real world examples that one
  can establish an 
 \emph on
-\color orange
 ad hoc
 \emph default
-\color inherit
  scale of 
 \begin_inset Formula $G$
 \end_inset
@@ -3805,8 +4320,6 @@ ad hoc
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 \begin_inset Formula $G_{mc}$
 \end_inset
 
@@ -3814,11 +4327,7 @@ ad hoc
 \end_layout
 
 \begin_layout Standard
-
-\color red
-Limited to homogeneous, unimodal datasets
-\color inherit
- 
+Limited to homogeneous, unimodal datasets 
 \end_layout
 
 \begin_layout Standard
