@@ -1491,32 +1491,62 @@ http://upsa.shinyapps.io/ErrView
 Datasets
 \end_layout
 
+\begin_layout Subsection
+Model datasets
+\end_layout
+
 \begin_layout Standard
 Before applying the Gini coefficient to literature datasets, one explores
  its properties on error sets generated from distributions with controlled
- properties (
-\begin_inset Quotes eld
+ properties: normal, Student's-
+\begin_inset Formula $t$
 \end_inset
 
-Reference datasets
-\begin_inset Quotes erd
+, lognormal 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Evans2000"
+literal "false"
+
 \end_inset
 
-).
- It is important to note that we explore only distributions with a single
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Hoaglin1985,Wilcox2012,Pernot2020"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+It is important to note that we explore only distributions with a single
  dominant, more or less structured peak, such as the ones encountered in
  most computational chemistry error datasets.
  It is easy to imagine multi-peaked distributions for which our conclusions
  on the Gini coefficient would not be valid.
  In fact, none of the usual summary statistics (MUE, MSE, RMSD, skewness,
  kurtosis...) would describe properly such distributions.
-\end_layout
+ 
+\begin_inset Note Note
+status collapsed
 
-\begin_layout Subsection
+\begin_layout Plain Layout
 Reference datasets
 \end_layout
 
-\begin_layout Standard
+\begin_layout Plain Layout
 As underlined above, the Gini coefficient is influenced both by the position
  and shape of the distribution.
  In order to map the correlations of the Gini coefficient with other statistics,
@@ -1783,6 +1813,11 @@ Reference datasets.
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Literature datasets
 \end_layout
@@ -1792,7 +1827,7 @@ In order to test the interpretation of the links between
 \begin_inset Formula $G$
 \end_inset
 
-and the bias and shape parameters of distributions, an analysis similar
+ and the bias and shape parameters of distributions, an analysis similar
  to the one for the reference datasets is performed on datasets gathered
  in the computational chemistry literature.
  These are described in Table
@@ -1826,7 +1861,7 @@ literal "false"
 placement !t
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -2373,6 +2408,20 @@ name "sec:Applications"
 
 \end_layout
 
+\begin_layout Standard
+In its usual application fields, the Gini coefficient is applied to distribution
+s with positive support.
+ Our application to computational chemistry error sets involves the intermediate
+ folding operation, which is not reversible.
+ In a first part, we show how this limits the information on the errors
+ distribution that can be inferred from the Gini coefficient.
+ We propose a mode-centering operation before folding, which should better
+ preserve some of the tail properties of the original distributions.
+ The Gini coefficient is compared to other tails statistics, notably at
+ the level of statistical uncertainty.
+ 
+\end_layout
+
 \begin_layout Subsection
 Gini coefficient 
 \emph on
@@ -2423,7 +2472,7 @@ noprefix "false"
 \end_inset
 
 .
- The dependence between a shift of a distribution and 
+ The dependence between a distribution shift and 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -2470,13 +2519,13 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
 \align center
 \begin_inset Graphics
-	filename biasCompensation.png
+	filename fig_biasCompensation.png
 	lyxscale 30
 	width 99text%
 	BoundingBox 0bp 0bp 2400bp 1200bp
@@ -2500,7 +2549,8 @@ Variation of
 \begin_inset Formula $G_{F}$
 \end_inset
 
- with a bias value added to several model distributions.
+ with a bias value added to several model distributions: (a) no centering
+ applied; (b) mode-centering applied before adding bias.
 \end_layout
 
 \end_inset
@@ -2514,7 +2564,8 @@ Variation of
 \end_layout
 
 \begin_layout Standard
-The symmetric distributions (normal and Student's) have their maximal 
+The zero-centered symmetric distributions (normal and Student's) have their
+ maximal 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -2530,11 +2581,8 @@ The symmetric distributions (normal and Student's) have their maximal
 
 .
  The decay curves are symmetric with respect to the sign of the bias.
+ This is no longer the case for asymmetric distributions (lognormal and
  
-\end_layout
-
-\begin_layout Standard
-This is no longer the case for asymmetric distributions (lognormal and 
 \begin_inset Formula $g$
 \end_inset
 
@@ -2559,21 +2607,22 @@ noprefix "false"
 \end_inset
 
 (b) we plotted identical curves for distributions centered on their mode
- before adding bias.
+ before adding a bias.
  This shows that the maximal value of 
 \begin_inset Formula $G_{F}$
 \end_inset
 
- are reached when the mode of the distribution is at, or close to, the origin.
+ is reached when the mode of the distribution is at, or near, the origin.
 \end_layout
 
 \begin_layout Standard
-Another important aspect illustrated by these curves is that a given value
- of 
+Another important point illustrated by these curves is that the level of
+ information that can be recovered from 
 \begin_inset Formula $G_{F}$
 \end_inset
 
- does not inform us on the shape of a distribution.
+ depends on its value, and does not necessarily inform us on the shape of
+ the distribution.
  For instance, 
 \begin_inset Formula $G_{F}=0.41$
 \end_inset
@@ -2592,7 +2641,8 @@ Another important aspect illustrated by these curves is that a given value
 \end_inset
 
  distributions.
- One might although infer that small values of 
+ However, within the restrictions on the distributions shapes we considered
+ above, one might infer that small values of 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -2605,7 +2655,7 @@ e.g.
 \begin_inset Formula $G_{F}\lesssim0.3$
 \end_inset
 
-) are likely to reveal biased error distribution, while large values (
+) are likely to reveal biased error distributions, while large values (
 \emph on
 e.g.
 
@@ -2614,8 +2664,20 @@ e.g.
 \begin_inset Formula $G_{F}\gtrsim0.5$
 \end_inset
 
-) are likely to point to heavy-tailed distributions.
- In between compensations between bias and shape factors prevent any inference.
+) are likely to distributions with an extended tail.
+ Between these limits, compensations between bias and shape factors prevent
+ any inference.
+\end_layout
+
+\begin_layout Standard
+The Gini scale of folded error distributions has a central blind zone where
+ bias and shape effects compensate.
+ In order to characterize the shape of the distributions, mode-centering
+ might be an interesting way to relieve this ambiguity.
+ Centering a distribution before folding it mixes the contributions of both
+ tails, but ensures that the contribution of the heaviest tail will be accounted
+ for.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -2692,7 +2754,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -3509,7 +3571,7 @@ blind zone
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -3625,20 +3687,12 @@ Mode-centering
 \end_layout
 
 \begin_layout Standard
-We have seen above that without some form of unbiasing, the Gini scale has
- a central blind zone where bias and shape effects compensate.
- As we are interested in characterizing the shape of the distributions,
- mode-centering relieves this ambiguity.
- 
-\end_layout
-
-\begin_layout Standard
 We note the new Gini coefficient of mode-centered folded distributions 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
 .
- In Fig.
+ Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -3652,7 +3706,7 @@ noprefix "false"
 
 \end_inset
 
-(a), we plotted 
+(a) displays 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -3679,7 +3733,8 @@ i.e.
 \begin_inset Formula $G$
 \end_inset
 
--scale is now reduced to values above 0.4.
+-scale is now reduced to values above 0.4, in conformity with our conservative
+ estimate that all values below 0.3 were due to bias.
  
 \begin_inset Float figure
 wide false
@@ -3710,7 +3765,11 @@ name "fig:GF-vs-GMCF"
 
 \end_inset
 
-(a) correlation of 
+Comparison of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ with other statistics: (a) correlation of 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -3727,8 +3786,25 @@ name "fig:GF-vs-GMCF"
 \begin_inset Formula $\beta_{MCF}$
 \end_inset
 
-, (b) and comparison of their uncertainties (the points are bracketed by
- lines of slope 2 and 5).
+ for the literature datasets (points) and a series of large samples (
+\begin_inset Formula $N=10^{6}$
+\end_inset
+
+) of Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ distributions with a range of shape parameters (dotted line), and (d) compariso
+n of their uncertainties (the points are bracketed by lines of slope 2 and
+ 5).
 \end_layout
 
 \end_inset
@@ -3760,13 +3836,13 @@ noprefix "false"
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- is up to twice as large as the uncertainty on 
+ is larger than the uncertainty on 
 \begin_inset Formula $G_{F}$
 \end_inset
 
-, which is due to the mode uncertainty.
- Note also that there is a notable size effect on these uncertainties, the
- smallest datasets (THA2015, 
+, up to a factor two.
+ This extra uncertainty is due to the mode estimation.
+ We note also a size effect, the smallest datasets (THA2015, 
 \begin_inset Formula $N=145$
 \end_inset
 
@@ -3774,22 +3850,15 @@ noprefix "false"
 \begin_inset Formula $N=6211)$
 \end_inset
 
-, the smallest uncertainty.
+, the smallest one.
  
 \end_layout
 
-\begin_layout Standard
-Centering a distribution before folding it mixes the contributions of both
- tails, but ensures that the contribution of the heaviest tail will be accounted
- for.
- 
-\end_layout
-
-\begin_layout Subsubsection
+\begin_layout Subsection
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- as a shape estimator
+ as a shape statistic
 \end_layout
 
 \begin_layout Standard
@@ -3861,12 +3930,35 @@ noprefix "false"
 \end_inset
 
 (d).
- Using model datasets of large size, one observes a practically perfect
- non-linear correlation, meaning that 
+ Using model datasets of large size (
+\begin_inset Formula $N=10^{6}$
+\end_inset
+
+) for Student's-
+\begin_inset Formula $t$
+\end_inset
+
+ and 
+\begin_inset Formula $g$
+\end_inset
+
+-and-
+\begin_inset Formula $h$
+\end_inset
+
+ distributions with a range of shape parameters, one observes a nearly perfect
+ non-linear correlation (dotted line).
+ The dispersion of the points for the literature datasets about this curve
+ is due to statistical uncertainty.
+ 
+\end_layout
+
+\begin_layout Standard
+We can therefore conclude that 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- is apt at estimating the heaviness of the distributions tails.
+ is apt at estimating the heaviness of the error distributions tails.
  It is important to note that the uncertainty on 
 \begin_inset Formula $G_{MCF}$
 \end_inset
@@ -3876,6 +3968,230 @@ noprefix "false"
 \end_inset
 
 , and therefore performs better for smaller datasets.
+ 
+\end_layout
+
+\begin_layout Standard
+In order to appreciate the information about the original error distribution
+ that can be extracted from 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+, we plotted it against their skewness 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+ and excess kurtosis 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+ (Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GMCF-vs-skew"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_GMCF_vs_Kurt_Skew.png
+	lyxscale 30
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 1200bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:GMCF-vs-skew"
+
+\end_inset
+
+Comparison of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ with other statistics: (a) absolute value of skewness 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+; (b) excess kurtosis 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Considering skewness (Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GMCF-vs-skew"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a)), the shape of the points cloud indicate that 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ provides only an upper limit to 
+\begin_inset Formula $|\beta_{GM}|$
+\end_inset
+
+.
+ For instance, a Gini coefficient of 0.5 provides an upper limit of about
+ 0.3 on the absolute skewness.
+ For kurtosis (Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GMCF-vs-skew"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(b)), there is a lax positive trend between both statistics, and, globally,
+ large values of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ are associated with large excess kurtosis, which might be due to heavy
+ tails or outliers.
+ In both graphs, values of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ below 0.45 are associated with low skewness 
+\emph on
+and
+\emph default
+ excess kurtosis.
+\end_layout
+
+\begin_layout Standard
+We see in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:GMCF-vs-skew"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ that most points fall between 0.4 and 0.55, but a few methods reach higher
+ values.
+ The largest 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ value in this study is 0.66 (orange dot) for method CAM-B3LYP in the PER2018
+ set 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Pernot2018"
+literal "false"
+
+\end_inset
+
+.
+ This corresponds to large values of both 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+ and 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+.
+ The authors discussed how this DFA is in the head group of two methods
+ with similar MUE values, but does not minimize the risk of large errors
+ (Sect.
+\begin_inset space \thinspace{}
+\end_inset
+
+II.A 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Pernot2018"
+literal "false"
+
+\end_inset
+
+).
+ From the same set, B3LYP has the second largest 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ value (0.61) and presents the same tail features than CAM-B3LYP.
+ The third largest 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ value (0.61, violet dot) belongs to the ZAS2019 dataset, and presents a
+ null skewness and a large kurtosis.
+ An in-depth study has been published for this case 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Pernot2020b"
+literal "false"
+
+\end_inset
+
+, where the errors distribution for the SLATM-L2 method was shown to have
+ problematic large tails, despite having the smallest MUE among the compared
+ methods.
+ In the same set, the MP2 method has a practically normal errors distribution
+ and can be found in the lower part of the Gini scale (0.42).
  
 \end_layout
 
@@ -4149,12 +4465,12 @@ Ranking
 \end_layout
 
 \begin_layout Standard
-In order to evaluate the interest of the 
-\begin_inset Formula $G$
+In order to evaluate the interest of 
+\begin_inset Formula $G_{MCF}$
 \end_inset
 
--scale in practical scenarios, one might consider it as an alert mechanism
- to complement a MUE ranking.
+ in a practical scenario, one might consider it as an alert mechanism to
+ complement a MUE ranking.
  Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -4169,12 +4485,12 @@ noprefix "false"
 
 \end_inset
 
- shows how, for each dataset, the methods with best ranking are tagged by
- their 
-\begin_inset Formula $G$
+ shows how, for each dataset, the ten methods with best ranking are flagged
+ if their 
+\begin_inset Formula $G_{MCF}$
 \end_inset
 
- value.
+ value is larger or equal to 0.5.
  
 \begin_inset Float figure
 wide false
@@ -4185,7 +4501,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename fig_Gini_vs_Rank_mode.png
+	filename fig_GMCF_vs_Rank.png
 	lyxscale 30
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 1200bp
@@ -4208,6 +4524,12 @@ name "fig:Gini-vs-CV-Rank"
 Gini-scale classification after mode-centering of 10 lowest MUE-ranked methods
  in each case.
  
+\color red
+REGENERATE for 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -4221,8 +4543,9 @@ Gini-scale classification after mode-centering of 10 lowest MUE-ranked methods
 \end_layout
 
 \begin_layout Standard
-If one considers the first rank, about half of the methods are in the blind
- zone, but four methods are flagged as heavy-tailed.
+
+\color orange
+If one considers the first rank, five methods are flagged as heavy-tailed.
  In case ZAS2019, the flagged method has indeed very heavy tails, as has
  been reviewed in previous studies 
 \begin_inset CommandInset citation
@@ -4294,36 +4617,11 @@ The Lorenz curve and Gini coefficient present an interesting addition to
  the Gini coefficient to these features.
  To unscramble this situation, the Gini coefficient of the mode-centered
  distributions 
-\begin_inset Formula $G_{mc}$
+\begin_inset Formula $G_{MCF}$
 \end_inset
 
  offers a simpler, shape-based, measure of tailedness.
-\end_layout
-
-\begin_layout Standard
-Nevertheless, we have shown on analytical and real world examples that one
- can establish an 
-\emph on
-ad hoc
-\emph default
- scale of 
-\begin_inset Formula $G$
-\end_inset
-
- values with tree distinct zones, and that values of the Gini coefficient
- outside the interval 
-\begin_inset Formula $0.35-0.5$
-\end_inset
-
- (within estimation uncertainty) should raise an alert.
  
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula $G_{mc}$
-\end_inset
-
- scale ?
 \end_layout
 
 \begin_layout Standard

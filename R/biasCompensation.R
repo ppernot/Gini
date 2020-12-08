@@ -71,7 +71,7 @@ for (b in seq(-bl, bl, by = db)) {
 }
 
 
-png(file = '../article/biasCompensation.png', width=2400, height=1200)
+png(file = '../article/fig_biasCompensation.png', width=2400, height=1200)
 cols = rev(inlmisc::GetColors(8))[1:7]
 pty  = 's'
 mar  = c(3, 3, 1.5, 1)

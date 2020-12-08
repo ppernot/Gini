@@ -48,7 +48,7 @@ kurtcs_mcf = function(X, index = 1:length(X), ...) {
   return( ErrViewLib::kurtcs(X) )
 }
 
-gimc_f = function(X, index = 1:length(X), ...) {
+gimc = function(X, index = 1:length(X), ...) {
   X = X[index]
   ErrViewLib::gini(abs(X - hrmode(X)))
 }
@@ -125,6 +125,26 @@ for (set in dataSets) {
     dft = rbind(dft,df)
 }
 
+# Precalculate for G vs. Skew  ----
+N = 1e6
+gi = sk = c()
+i = 0
+for (g in seq(0,1,by=0.1)) {
+  # Asymmetry
+  for (h in seq(0,0.5,by=0.1)) {
+    # Tails
+    i = i + 1
+    X = gh(N, g, h)
+    gi[i] = gimc(X)
+    sk[i] = skewgm_mcf(X)
+  }
+}
+for (nu in seq(2,20,by=1)) {
+  i = i + 1
+  X = rt(N, df=nu)
+  gi[i] = gimc(X)
+  sk[i] = skewgm_mcf(X)
+}
 
 # GF vs GMCF & BMCF ----
 icol = as.numeric(factor(dft$Dataset)) %% length(cols)
@@ -133,7 +153,8 @@ pch = as.numeric(factor(dft$Dataset))
 sel1 = pch<=length(cols)
 pch[sel1] = 16
 pch[!sel1]= 17
-png(file = '../article/G_vs_GMC.png', width = 2400, height=2400)
+png(file = '../article/fig_G_vs_GMC.png', 
+    width = 2400, height=2400)
 
 par(
   mfrow = c(2, 2),
@@ -202,7 +223,7 @@ x = dft$gimc
 y = dft$skewgm_mcf
 ux = dft$u_gimc
 uy = dft$u_skewgm_mcf
-plot(x, y, pch=pch,
+plot(x, y, pch=pch, type ='n',
      xlim = c(0.4,0.7), xlab = expression(G[MCF]),
      ylim = c(0.0,0.8), ylab = expression(beta[MCF]),
      col = cols[icol]
@@ -210,6 +231,9 @@ plot(x, y, pch=pch,
 grid()
 # segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
 # segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+io = order(gi)
+lines(gi[io],sk[io],col='gray50',lty=3,lwd=4)
+points(x, y, pch=pch, col = cols[icol])
 box()
 mtext(
   text = '(c)',
@@ -237,6 +261,152 @@ mtext(
 
 dev.off()
   
+png(file = '../article/fig_GMCF_vs_Kurt_Skew.png', 
+    width = 2400, height=1200)
+
+par(
+  mfrow = c(1, 2),
+  mar = mar,
+  pty = pty,
+  mgp = mgp,
+  tcl = tcl,
+  lwd = 4,
+  cex = 4.5,
+  xaxs = 'i',
+  yaxs = 'i'
+)
+
+x = dft$gimc
+y = abs(dft$skewgm)
+ux = dft$u_gini
+uy = dft$u_skewgm
+plot(x, y, pch=pch,
+     xlim = c(0.4,0.7), xlab = expression(G[MCF]),
+     ylim = c(-0.02,0.6), ylab = expression(abs(beta[GM])),
+     col = cols[icol]
+)
+grid()
+# segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+# segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+pch1 = unique(as.numeric(factor(dft$Dataset)))
+sel1 = pch1 <= length(cols)
+pch1[sel1] = 16
+pch1[!sel1]= 17
+legend(
+  'topleft', bty = 'o', box.col = 'white', ncol = 1,
+  legend = unique(dft$Dataset),
+  col = unique(cols[icol]),
+  pch = pch1,
+  cex=0.8
+)
+box()
+mtext(
+  text = '(a)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
+
+y =  dft$kurtcs
+uy = dft$u_kurtcs
+plot(x, y, pch=pch,
+     xlim = c(0.4,0.7), xlab = expression(G[MCF]),
+     ylim = c(-0.5,6.0), ylab = expression(kappa[CS]),
+     col = cols[icol]
+)
+grid()
+# segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
+# segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
+box()
+mtext(
+  text = '(b)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
+
+dev.off()
+
+resultsTab = file.path('..', 'results', 'tables', 'allStats_modeNew.csv')
+D = read.csv(resultsTab)
+
+# Ranking -----
+png(file='../article/fig_GMCF_vs_Rank.png', 
+    width=2400, height=1200)
+mar  = c(3, 5, 1.1, 1)
+par(mfrow = c(1, 2),
+    pty = pty,
+    mar = mar,
+    mgp = mgp,
+    tcl = tcl,
+    lwd = lwd,
+    cex = cex)
+
+eps2 = 0.5
+
+sel = D$ctd == -1 & !D$out & substr(D$Dataset,1,4) != 'Ref_'
+setsNames = unique(D$Dataset[sel])
+icol = as.numeric(factor(D$Dataset[sel]))
+d = D[sel,]
+d[['rmue']] = d$mue
+for(s in setsNames) {
+  s1 = which(d$Dataset == s)
+  d$rmue[s1] = rank(d$mue[s1])
+}
+
+jcol= rep('gray80',length(sel))
+s2 = pnorm(eps2,d$gimc,d$u_gimc) < 0.95 #d$gini >= 0.5
+jcol[s2] = cols[2]
+
+plot(d$rmue, icol, pch=19, col=jcol,
+     xaxt = 'n', xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
+     yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
+axis(side = 1, at =1:10, gap.axis = 1/4) # Last arg enforces plot of "10"
+mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
+legend(
+  6.2, 8.8,
+  bty = 'n', cex = 0.75,
+  legend = c(
+    paste0('G < ',eps2), 
+    paste0('G > ',eps2)
+  ),
+  pch = 19,
+  col = c('gray80',cols[2]),
+  y.intersp = 0.9
+)
+box()
+
+# Remove global outliers ####
+sel = D$ctd == -1 & D$out & substr(D$Dataset,1,4) != 'Ref_'
+icol = as.numeric(factor(D$Dataset[sel]))
+setsNames = unique(D$Dataset[sel])
+d = D[sel,]
+d[['rmue']] = d$mue
+for(s in setsNames) {
+  s1 = which(d$Dataset == s)
+  d$rmue[s1] = rank(d$mue[s1])
+}
+
+jcol= rep('gray80',length(sel))
+s2 = pnorm(eps2,d$gimc,d$u_gimc) < 0.95 #d$gini >= 0.5
+jcol[s2] = cols[2]
+
+plot(d$rmue, icol, pch=19, col=jcol,
+     xaxt = 'n', xlim = c(0.8, 10.2), xlab = 'rank(MUE)',
+     yaxt = 'n', ylab ='', ylim = c(0.5,8.5))
+axis(side = 1, at =1:10, gap.axis = 1/4)
+mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
+legend(
+  5.2, 8.5,
+  bty = 'n', cex = 0.9,
+  title = 'Removed outliers',
+  legend = '',
+  pch = -1
+)
+box()
+
+
+dev.off()
 
 #####################################
 
