@@ -161,9 +161,13 @@ The distribution of errors is a central object in the assesment and benchmarking
  The popular and often blind use of the mean unsigned error as a benchmarking
  statistic leads to ignore distributions features that impact the reliability
  of the tested methods.
- We explore how the Gini coefficient offers a global apprehension of the
- errors distribution that can usefully complement the mean unsigned error
- and alert on possibly problematic error sets.
+ We explore how the Gini coefficient offers a global representation of the
+ errors distribution, but, except for extreme values, does not enable an
+ unambiguous diagnostic.
+ We propose to relieve the ambiguity by applying the Gini coefficient to
+ mode-centered error distributions.
+ This version can usefully complement the mean unsigned error and alert
+ on possibly problematic error sets.
 \end_layout
 
 \begin_layout Standard
@@ -490,8 +494,8 @@ noprefix "false"
 
 \end_inset
 
-, and apply them to a series of datasets to illustrate the pertinence of
- the Gini coefficient in Section
+, and apply them to a series of datasets to illustrate the interest and
+ limitations of the Gini coefficient in Section
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -506,51 +510,10 @@ noprefix "false"
 \end_inset
 
 .
- 
+ An adaptation if the Gini coefficient is proposed to relieve its main drawbacks
+ when applied to error datasets.
 \end_layout
 
-\begin_layout Subsection
-Logic
-\end_layout
-
-\begin_layout Enumerate
-The Gini coefficient is based on the folded distribution.
- Folding affects the shape of the distribution, and might notably truncate
- one of the tails.
- One might therefore attempt to link Gini with the descriptive stats of
- the unfolded distribution.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-The problem is that G is affected by the bias, and shape params such as
- skewness and kurtosis.
- No strong correlation with any of these stats.
- 
-\end_layout
-
-\end_deeper
-\begin_layout Enumerate
-As one is interested in the tails, we propose to center and fold the distributio
-n around its main mode.
- 
-\end_layout
-
-\begin_deeper
-\begin_layout Enumerate
-This way, the heaviest tail is preserved, and a single stat is necessary
- (skewness) to describe it.
- Gini less uncertain than skewness.
-\end_layout
-
-\begin_layout Enumerate
-Or, mode-center the distribution, estimate the Gini coef for the minus and
- plus tails and keep the max.
- Pb.: loose large part of sample...
-\end_layout
-
-\end_deeper
 \begin_layout Section
 Statistical methods
 \begin_inset CommandInset label
@@ -4485,12 +4448,17 @@ noprefix "false"
 
 \end_inset
 
- shows how, for each dataset, the ten methods with best ranking are flagged
- if their 
+ shows, for each dataset, the ten methods with best ranking, flagged when
+ their 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- value is larger or equal to 0.5.
+ value is larger or equal to 0.5, which is rounded from the median values
+ of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ over our selection of datasets (0.51).
  
 \begin_inset Float figure
 wide false
@@ -4521,15 +4489,12 @@ name "fig:Gini-vs-CV-Rank"
 
 \end_inset
 
-Gini-scale classification after mode-centering of 10 lowest MUE-ranked methods
- in each case.
- 
-\color red
-REGENERATE for 
+Flagging of large 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
-
+ values after mode-centering of 10 lowest MUE-ranked methods in each dataset.
+ 
 \end_layout
 
 \end_inset
@@ -4543,31 +4508,25 @@ REGENERATE for
 \end_layout
 
 \begin_layout Standard
-
-\color orange
-If one considers the first rank, five methods are flagged as heavy-tailed.
- In case ZAS2019, the flagged method has indeed very heavy tails, as has
- been reviewed in previous studies 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Pernot2020a,Pernot2020b"
-literal "false"
-
-\end_inset
-
-.
- For case THA2015, the five lowest ranked methods have 
-\begin_inset Formula $G$
-\end_inset
-
- values around 0.5, which might point to the existence of global outliers
- in the reference dataset, 
+If one considers the first rank, five methods are flagged by the test.
+ Cases ZAS2019 and PER2018 have been evoked above.
+ ZHA2018 is at the limit, SCAN errors with notable excess kurtosis, but
+ nothing exceptional.
+ For BOR2019, all methods present some excess kurtosis and variable levels
+ of skewness.
+ The first ranked method (mBJ) has the largest skewness in the set.
+ For case THA2015, all methods are flagged, which might point to the existence
+ of global outliers in the reference dataset, 
 \emph on
 i.e.
  
 \emph default
 data that no method in the panel is able to predict correctly.
- This can be checked in Fig.
+ 
+\end_layout
+
+\begin_layout Standard
+This can be checked in Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -4583,14 +4542,16 @@ noprefix "false"
 
 (b), where the same analysis has been performed after the removal of global
  outliers, if any.
- Removal of global outliers (6 systems) for THA2015 changes remarkably the
- situation, with much less red-flagged methods.
+ Removal of global outliers (6 systems) for THA2015 changes the situation,
+ with three less flagged methods.
+ For case BOR2019, the leading method is unflagged after removal of the
+ global outliers.
  In the other cases, no effect is observed, which might be due to either
  the absence of global outliers (NAR2019, PER2018, SCH2018, WU2015), or
- the intrinsic shape of the distributions (BOR2019, WU2015, ZAS2019).
- In all these cases, it might be worth to investigate if the distorted shape
- of the distribution is due to systematic trends in the errors, as they
- could be profitably corrected 
+ the intrinsic shape of the distributions (WU2015, ZAS2019).
+ In all these cases, it might also be worth to investigate if the distorted
+ shape of the distribution is due to systematic trends in the errors, as
+ they could be profitably corrected 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Lejaeghere2014,Pernot2015,Lejaeghere2016,Proppe2016,Proppe2017"
@@ -4620,18 +4581,21 @@ The Lorenz curve and Gini coefficient present an interesting addition to
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- offers a simpler, shape-based, measure of tailedness.
- 
-\end_layout
+ offers a simpler to interpret, shape-based, measure of tailedness.
+ Large 
+\begin_inset Formula $G_{MCF}$
+\end_inset
 
-\begin_layout Standard
-Limited to homogeneous, unimodal datasets 
-\end_layout
+ values, 
+\emph on
+e.g.
 
-\begin_layout Standard
-The corresponding datasets present features that might impede the unambiguous
- interpretation of popular benchmarking statistics such as the MUE.
- 
+\emph default
+ above 0.5, alert about large tails that might be due to large skewness,
+ kurtosis and/or the presence of outliers.
+ For high ranking methods, this is an incentive to inspect closely the error
+ distributions and check if the selected methods have problems of reliability
+ in their predictions.
 \end_layout
 
 \begin_layout Section*

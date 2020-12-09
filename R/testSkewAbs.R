@@ -367,8 +367,8 @@ legend(
   6.2, 8.8,
   bty = 'n', cex = 0.75,
   legend = c(
-    paste0('G < ',eps2), 
-    paste0('G > ',eps2)
+    expression(G < 0.5), 
+    expression(G >= 0.5)
   ),
   pch = 19,
   col = c('gray80',cols[2]),
@@ -397,9 +397,9 @@ plot(d$rmue, icol, pch=19, col=jcol,
 axis(side = 1, at =1:10, gap.axis = 1/4)
 mtext(setsNames,side =2, at =1:max(icol), las=1, adj=1.1, cex=cex)
 legend(
-  5.2, 8.5,
+  3.5, 8.5,
   bty = 'n', cex = 0.9,
-  title = 'Removed outliers',
+  title = 'Global outliers removed',
   legend = '',
   pch = -1
 )
