@@ -2392,6 +2392,13 @@ vs.
 
 \emph default
  bias
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Gini-coefficient-vs."
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3647,6 +3654,13 @@ noprefix "false"
 
 \begin_layout Subsection
 Mode-centering
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Mode-centering"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -3815,6 +3829,229 @@ noprefix "false"
 
 , the smallest one.
  
+\end_layout
+
+\begin_layout Subsection
+Does mode-centering maximize 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ ?
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Does-mode-centering-maximize"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In Section
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:Gini-coefficient-vs."
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we considered that mode centering provided close to maximal Gini coefficients.
+ In order to test this assertion, we compare here the results for mode-centering
+ with those obtained by explicitly maximizing the Gini coefficient with
+ respect to a bias value.
+ We define 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+ as the value of the bias which maximizes 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+b_{max}=\max_{b}G_{F}(|E-b|)
+\end{equation}
+
+\end_inset
+
+ and note 
+\begin_inset Formula $G_{Fmax}=G_{F}(|E-b_{max}|)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The values of 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{Fmax}$
+\end_inset
+
+ were computed for the literature datasets and compared to the mode 
+\begin_inset Formula $m(E)$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ respectively, through 
+\begin_inset Formula $z$
+\end_inset
+
+-scores
+\begin_inset Formula 
+\begin{equation}
+z_{b}=\frac{m(E)-b_{max}}{\sqrt{u(m(E))^{2}+u(b_{max})^{2}}}
+\end{equation}
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{equation}
+z_{G}=\frac{G_{MCF}-G_{Fmax}}{\sqrt{u(G_{MCF})^{2}+u(G_{Fmax})^{2}}}
+\end{equation}
+
+\end_inset
+
+where the uncertainties are estimated by bootstrap.
+ Histograms for the 
+\begin_inset Formula $z$
+\end_inset
+
+-scores are shown in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mode-vs-bmax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_hrmode_vs_bmax.png
+	lyxscale 30
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 1200bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mode-vs-bmax"
+
+\end_inset
+
+Histograms of 
+\begin_inset Formula $z$
+\end_inset
+
+-scores for (a) the position of the mode versus the 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ maximizer; and (b) the values of the corresponding Gini coefficients.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+At the exception of one point, the absolute value of all 
+\begin_inset Formula $z$
+\end_inset
+
+-score values are smaller than 3, and we have therefore no reason to reject
+ the hypothesis that the values are equal considering their uncertainty.
+ The outlying point, with 
+\begin_inset Formula $z_{b}=-3.8$
+\end_inset
+
+ corresponds to the MP2 method in dataset ZAS2019, which is practically
+ normal.
+ The corresponding value of 
+\begin_inset Formula $z_{G}$
+\end_inset
+
+ remains below the limit of significance.
+ One has 
+\begin_inset Formula $G_{MCF}=0.418(6)$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{Fmax}=0.436(3)$
+\end_inset
+
+ for a distance of 1.07 between the mode and 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+, to be compared to the standard deviation of the distribution, 1.7.
+ As seen in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-bias"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a), there is a flat area near the top of the curve for a normal distribution,
+ which explains the low sensitivity of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ to a sizable change of bias in this area.
+\end_layout
+
+\begin_layout Standard
+For all practical purposes, one can therefore estimate that mode-centering
+ maximizes the value of the Gini coefficient.
 \end_layout
 
 \begin_layout Subsection
