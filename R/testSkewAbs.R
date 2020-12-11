@@ -23,7 +23,7 @@ hrmode = function(X, index = 1:length(X), ...) {
 
 skewgm = function(X, index = 1:length(X), ...) {
   X = X[index]
-  m = hd(X,0.5)
+  m = ErrViewLib::hd(X,0.5)
   s = (mean(X) - m) / mean(abs(X - m))
   return(s)
 }
@@ -107,7 +107,7 @@ for (set in dataSets) {
     'kurtcs_f',
     'kurtcs_mcf')
 
-  bs = estBS1(
+  bs = ErrViewLib::estBS1(
     Errors,
     props = stats,
     eps = 1,
@@ -124,6 +124,39 @@ for (set in dataSets) {
   else
     dft = rbind(dft,df)
 }
+
+
+# Table ----
+numDig = 2
+io = order(dft$gimc, decreasing = TRUE)[1:10]
+df = data.frame(
+  Dataset = dft$Dataset[io], 
+  Methods = dft$Methods[io])
+stats = c('gimc','skewgm','kurtcs')
+for(s in stats) {
+  v = dft[[s]][io]
+  vu = matrix(apply(cbind(v, dft[[paste0('u_', s)]][io]), 1,
+                    function(x)
+                      ErrViewLib::prettyUnc(
+                        x[1], x[2], numDig = numDig)),
+              ncol = 1)
+  colnames(vu) = s
+  df = cbind(df, vu)
+}
+
+sink(file.path('..', 'results', 'tables', 'statsOrdered.tex'))
+print(
+  xtable::xtable(
+    df,
+    type = 'latex',
+    caption = 'Statistics of the literature datasets',
+    label = "tab:statsLit"
+  ),
+  comment = FALSE,
+  include.rownames = FALSE,
+  caption.placement ='bottom'
+)
+sink()
 
 # Precalculate for G vs. Skew  ----
 N = 1e6
@@ -145,6 +178,10 @@ for (nu in seq(2,20,by=1)) {
   gi[i] = gimc(X)
   sk[i] = skewgm_mcf(X)
 }
+
+
+
+
 
 # GF vs GMCF & BMCF ----
 icol = as.numeric(factor(dft$Dataset)) %% length(cols)
@@ -231,8 +268,11 @@ plot(x, y, pch=pch, type ='n',
 grid()
 # segments(x, y - 2 * uy, x, y + 2 * uy, col = cols[icol])
 # segments(x - 2 * ux, y, x + 2 * ux, y, col = cols[icol])
-io = order(gi)
-lines(gi[io],sk[io],col='gray50',lty=3,lwd=4)
+reg = lm(sk ~ 1 + gi + I(gi^2))
+pr = predict(reg)
+io = order(pr)
+lines(gi[io],pr[io],col='gray50',lty=2,lwd=5)
+
 points(x, y, pch=pch, col = cols[icol])
 box()
 mtext(

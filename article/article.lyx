@@ -167,7 +167,7 @@ The distribution of errors is a central object in the assesment and benchmarking
  We propose to relieve the ambiguity by applying the Gini coefficient to
  mode-centered error distributions.
  This version can usefully complement the mean unsigned error and alert
- on possibly problematic error sets.
+ on problematic error sets.
 \end_layout
 
 \begin_layout Standard
@@ -206,85 +206,8 @@ literal "false"
 \end_inset
 
 .
- Cases might also occur where bias adds even more complexity to the comparison
- of MUE values.
- As summarized in Fig.
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:ambiguity"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, the duality of the MUE as a location and dispersion statistic prevents
- its use to predict the risk of large errors.
  It would therefore be very useful to complement the MUE with a statistic
  indicating or quantifying the risk of large errors.
- 
-\begin_inset Float figure
-wide false
-sideways false
-status collapsed
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename fig_ambiguity.png
-	lyxscale 50
-	height 8cm
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:ambiguity"
-
-\end_inset
-
-Example of different error distributions having the same MUE (1.0) and offering
- contradictory results for some tail statistics.
- The probability to have 
-\emph on
-absolute
-\emph default
- errors larger than 1.0 is 
-\begin_inset Formula $P_{1}=0.50$
-\end_inset
-
- for the blue curve and 0.43 for the red curve, hiding the fact that the
- red distribution contains much worse results that the blue one.
- In this case, the problem is solved by the values of 
-\begin_inset Formula $Q_{95}$
-\end_inset
-
-, giving 1.16 for the blue curve, and 2.46 for the red one.
- Shape statistics, such as the kurtosis, would not enable to discriminate
- between both normal distributions.
- 
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Standard
@@ -510,7 +433,7 @@ noprefix "false"
 \end_inset
 
 .
- An adaptation if the Gini coefficient is proposed to relieve its main drawbacks
+ An adaptation of the Gini coefficient is proposed to relieve its main drawbacks
  when applied to error datasets.
 \end_layout
 
@@ -641,8 +564,8 @@ Schematic cumulative density function (CDF; left) and Lorenz curve (right)
 \begin_inset Formula $p'$
 \end_inset
 
-, the ratio of the unshaded area to the total area gives the value of the
- Lorenz curve 
+, the ratio of the unshaded area to the total slanted area gives the value
+ of the Lorenz curve 
 \begin_inset Formula $L_{p'}=L(p')$
 \end_inset
 
@@ -769,7 +692,15 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-The Lorenz curve provides a scale-invariant representation of the CDF 
+The Lorenz curve provides a 
+\emph on
+scale-invariant
+\emph default
+ representation of the CDF 
+\begin_inset Formula $C_{F}(z)$
+\end_inset
+
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Kleiber2005"
@@ -822,8 +753,8 @@ i.e.
 \end_inset
 
 .
- The deviation of the error distributions from this extreme case can be
- estimated by the Gini coefficient.
+ The deviation of an error distribution from this extreme case can be measured
+ by the Gini coefficient.
 \end_layout
 
 \begin_layout Subsubsection
@@ -874,16 +805,16 @@ where the factor two is used to scale
 \end_inset
 
 , the closer the Lorenz curve to the identity line.
- The Gini coefficient, noted 
+ The Gini coefficient, usually noted 
 \begin_inset Formula $G$
 \end_inset
 
-, is usually used for distributions with positive support.
+, is used for distributions with positive support.
  Our notation 
 \begin_inset Formula $G_{F}$
 \end_inset
 
- is a reminder that we are working here folded distributions of absolute
+ is a reminder that we are working here with folded distributions of absolute
  errors 
 \begin_inset Formula $f_{F}(\varepsilon)$
 \end_inset
@@ -892,27 +823,23 @@ where the factor two is used to scale
 \end_layout
 
 \begin_layout Standard
-For sets of errors with normal distributions, 
+For sets of 
+\emph on
+absolute
+\emph default
+ errors with a normal distribution 
+\begin_inset Formula $N(\varepsilon;\mu_{F},\sigma_{F})$
+\end_inset
+
+, 
 \begin_inset Formula $G_{F}$
 \end_inset
 
  is proportional to the coefficient of variation 
-\begin_inset Formula $c_{v}=\sigma/|\mu|$
+\begin_inset Formula $c_{v}=\sigma_{F}/\mu_{F}$
 \end_inset
 
-, where 
-\begin_inset Formula $\mu$
-\end_inset
-
- is the mean value, and 
-\begin_inset Formula $\sigma$
-\end_inset
-
- the standard deviation of the 
-\emph on
-signed
-\emph default
- errors 
+ 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Bendel1989"
@@ -920,7 +847,11 @@ literal "false"
 
 \end_inset
 
+, where 
+\begin_inset Formula $\sigma_{F}$
+\end_inset
 
+ the standard deviation of the absolute errors 
 \begin_inset Formula 
 \begin{equation}
 G_{F}=c_{v}/\sqrt{\pi}\label{eq:GcsCv}
@@ -928,23 +859,62 @@ G_{F}=c_{v}/\sqrt{\pi}\label{eq:GcsCv}
 
 \end_inset
 
- Usually seen as a measure of inequality in a distribution, 
-\begin_inset Formula $G_{F}$
+Note that this relationship does hold only when all errors are of the same
+ sign (
+\begin_inset Formula $\mu_{F}\gg\sigma_{F}$
 \end_inset
 
- is also related to the relative precision.
- Note that this relationship does hold for absolute errors only when all
- errors are of the same sign, therefore with a small 
+), therefore with small 
 \begin_inset Formula $c_{v}$
 \end_inset
 
- value.
- For a centered normal distribution of errors, the distribution of absolute
- errors is the folded normal distribution, with a value 
+ values.
+\end_layout
+
+\begin_layout Standard
+Typical values of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ will be useful in the following: 
+\end_layout
+
+\begin_layout Itemize
+for any zero-centered normal distribution of errors, the distribution of
+ absolute errors is the folded normal distribution, with value 
 \begin_inset Formula $G_{FN}=\sqrt{2}-1\simeq0.41$
 \end_inset
 
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Appendix"
+key "Dixon1987"
+literal "false"
+
+\end_inset
+
+; 
+\end_layout
+
+\begin_layout Itemize
+for any zero-centered uniform distribution or uniform distribution with
+ its minimal value at zero, the folding creates a uniform distribution with
+ a minimal value at zero, with value 
+\begin_inset Formula $G_{FU}=1/3$
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Appendix"
+key "Dixon1987"
+literal "false"
+
+\end_inset
+
 .
+ 
 \end_layout
 
 \begin_layout Subsubsection
@@ -978,8 +948,8 @@ literal "false"
 \end_inset
 
  The moments-based formulae for skewness and kurtosis are not robust to
- outliers, and more robust quantile-based formula has been proposed by several
- authors 
+ outliers, and more robust quantile-based formulae have been proposed by
+ several authors 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Groeneveld1984,Ruppert1987,Bonato2011,Suaray2015"
@@ -1034,7 +1004,7 @@ literal "false"
 \end_layout
 
 \begin_layout Standard
-For the kurtosis, an estimate based on quantiles is used 
+For kurtosis, an estimate based on quantiles is used 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "Bonato2011"
@@ -1082,6 +1052,12 @@ excess
  kurtosis.
 \end_layout
 
+\begin_layout Standard
+Specific notations will be introduced below when these statistics are applied
+ to sets of absolute errors.
+ 
+\end_layout
+
 \begin_layout Subsection
 Estimation
 \end_layout
@@ -1111,7 +1087,24 @@ We consider in this section the application of the previous statistics to
 
 .
  The absolute errors are noted 
-\begin_inset Formula $\varepsilon=\left\{ \epsilon_{i}=|e_{i}|\right\} _{i=1}^{N}$
+\begin_inset Formula $\varXi=\left\{ \varepsilon_{i}=|e_{i}|\right\} _{i=1}^{N}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Paragraph
+MSE, MUE and mode.
+\end_layout
+
+\begin_layout Standard
+The mean signed error (MSE) is estimated as 
+\begin_inset Formula $\mu=\frac{\text{1}}{N}\sum_{i=1}^{N}e_{i}$
+\end_inset
+
+, and the mean unsigned error (MUE) as 
+\begin_inset Formula $\mu_{F}=\frac{\text{1}}{N}\sum_{i=1}^{N}\varepsilon_{i}$
 \end_inset
 
 .
@@ -1119,18 +1112,41 @@ We consider in this section the application of the previous statistics to
 \end_layout
 
 \begin_layout Standard
-The Mean Signed Error (MSE), Mean Unsigned Error (MUE) and Root Mean Squared
- Error (RMSD) are estimated as 
-\begin_inset Formula 
-\begin{align}
-MSE & =\frac{\text{1}}{N}\sum_{i=1}^{N}e_{i}\\
-MUE & =\frac{\text{1}}{N}\sum_{i=1}^{N}\epsilon_{i}\\
-RMSD & =\sqrt{\frac{1}{N-1}\sum_{i=1}^{N}(e_{i}-MSE)^{2}}
-\end{align}
+As one is not dealing with necessarily symmetric distributions, the mode
+ is an interesting location statistic, notably in correspondence to the
+ tails of a distribution.
+ The mode locates the part of the population with the highest density, which
+ is expected to bring a large contribution to 
+\begin_inset Formula $\mu_{F}$
+\end_inset
+
+, and therefore influence the Lorenz curve and Gini coefficient.
+ As one cannot assume the unimodality of the underlying distributions, one
+ will consider the main mode.
+ A robust method, Bickel's half-range mode (HRM) estimator 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Bickel2002,Hedges2003"
+literal "false"
 
 \end_inset
 
-Let us also introduce the cumulated sum of the 
+, is used to estimate the location of the error samples main mode.
+\end_layout
+
+\begin_layout Paragraph
+\begin_inset Formula $L(p)$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Let us introduce the cumulated sum of the 
 \begin_inset Formula $n\le N$
 \end_inset
 
@@ -1141,13 +1157,13 @@ smallest
  absolute errors
 \begin_inset Formula 
 \begin{equation}
-S_{n}=\sum_{i=1}^{n}\epsilon_{[i]}
+S_{n}=\sum_{i=1}^{n}\varepsilon_{[i]}
 \end{equation}
 
 \end_inset
 
 where 
-\begin_inset Formula $\epsilon_{[i]}$
+\begin_inset Formula $\varepsilon_{[i]}$
 \end_inset
 
  is the 
@@ -1169,10 +1185,6 @@ i.e.
 
 .
  
-\end_layout
-
-\begin_layout Subsubsection
-The Lorenz curve
 \end_layout
 
 \begin_layout Standard
@@ -1200,10 +1212,6 @@ where
 .
 \end_layout
 
-\begin_layout Subsubsection
-The Gini coefficient
-\end_layout
-
 \begin_layout Standard
 Using a fast sorting of the sample of absolute errors, an efficient estimation
  of 
@@ -1221,7 +1229,7 @@ literal "false"
 
 \begin_inset Formula 
 \begin{equation}
-G=\frac{\sum_{i=1}^{N}(2i-N-1)\epsilon_{[i]}}{N\sum_{i=1}^{N}\epsilon_{[i]}}
+G=\frac{\sum_{i=1}^{N}(2i-N-1)\varepsilon_{[i]}}{N\sum_{i=1}^{N}\varepsilon_{[i]}}
 \end{equation}
 
 \end_inset
@@ -1258,40 +1266,19 @@ where
  
 \end_layout
 
-\begin_layout Standard
-Uncertainty on 
-\begin_inset Formula $G$
+\begin_layout Paragraph
+\begin_inset Formula $\beta_{GM}$
 \end_inset
 
- is generally estimated by bootstrapping 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Efron1979"
-literal "false"
-
-\end_inset
-
-, with a known risk of underestimation for small samples (
-\begin_inset Formula $N<100$
-\end_inset
-
-) 
-\begin_inset CommandInset citation
-LatexCommand citep
-key "Dixon1987"
-literal "false"
-
+ and 
+\begin_inset Formula $\kappa_{CS}$
 \end_inset
 
 .
 \end_layout
 
-\begin_layout Subsubsection
-Skewness and kurtosis
-\end_layout
-
 \begin_layout Standard
-Eq.
+For skewness and kurtosis, Eq.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -1319,7 +1306,7 @@ noprefix "false"
 
 \end_inset
 
- are applied directly, with the robust method for quantiles due to Harrel
+ are applied directly, with the robust method for quantiles due to Harrell
  and Davis 
 \begin_inset CommandInset citation
 LatexCommand citep
@@ -1332,38 +1319,49 @@ literal "false"
  
 \end_layout
 
-\begin_layout Subsubsection
-Mode
+\begin_layout Paragraph
+Uncertainty.
 \end_layout
 
 \begin_layout Standard
-As one is not dealing with necessarily symmetric distributions, the mode
- is an interesting location statistic.
- In combination with the Lorenz curve and Gini statistic, the mode locates
- the part of the population with the highest density, which is expected
- to bring a large contribution to 
-\begin_inset Formula $\mu_{F}$
+Uncertainty on any statistic 
+\begin_inset Formula $X$
 \end_inset
 
-.
- As one cannot assume the unimodality of the underlying distributions, one
- will consider the main mode.
-\end_layout
+, noted 
+\begin_inset Formula $u(X)$
+\end_inset
 
-\begin_layout Standard
-A robust method, Bickel's half-range mode (HRM) estimator 
+, is estimated by bootstrapping 
 \begin_inset CommandInset citation
-LatexCommand cite
-key "Bickel2002,Hedges2003"
+LatexCommand citep
+key "Efron1979"
 literal "false"
 
 \end_inset
 
-, is used to estimate the location of the error samples main mode.
+ with 1000 samples.
+ Note that there is a known risk of underestimation of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ for small datasets (
+\begin_inset Formula $N<100$
+\end_inset
+
+) 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "Dixon1987"
+literal "false"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Subsection
-Codes
+Implementation
 \end_layout
 
 \begin_layout Standard
@@ -1379,8 +1377,7 @@ literal "true"
 
 \end_inset
 
-, using several packages, notably for the Gini coefficient from package
- 
+, using several packages, notably for the Gini coefficient (package 
 \family typewriter
 ineq
 \family default
@@ -1392,7 +1389,7 @@ literal "false"
 
 \end_inset
 
- and the HRM estimator from package 
+), the HRM estimator (package 
 \family typewriter
 genefilter
 \family default
@@ -1404,8 +1401,36 @@ literal "false"
 
 \end_inset
 
-.
- Statistics and Lorenz curves are implemented in 
+) and bootstrapping 
+\family typewriter
+(boot
+\family default
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "boot"
+literal "false"
+
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+The Gini coefficient, Lorenz curves, 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+, 
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+, 
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+ and mode estimations have also been implemented in 
 \family typewriter
 ErrViewLib
 \family default
@@ -1425,7 +1450,7 @@ https://doi.org/10.5281/zenodo.3628475
 \family typewriter
 ErrView
 \family default
- code (
+ graphical interface (source: 
 \begin_inset Flex URL
 status open
 
@@ -1436,7 +1461,7 @@ https://doi.org/10.5281/zenodo.3628489
 
 \end_inset
 
-), or its web interface (
+; web interface: 
 \begin_inset Flex URL
 status open
 
@@ -1461,7 +1486,7 @@ Model datasets
 \begin_layout Standard
 Before applying the Gini coefficient to literature datasets, one explores
  its properties on error sets generated from distributions with controlled
- properties: normal, Student's-
+ properties: uniform, normal, Student's-
 \begin_inset Formula $t$
 \end_inset
 
@@ -1497,10 +1522,10 @@ literal "false"
 It is important to note that we explore only distributions with a single
  dominant, more or less structured peak, such as the ones encountered in
  most computational chemistry error datasets.
- It is easy to imagine multi-peaked distributions for which our conclusions
+ It is easy to design multi-peaked distributions for which our conclusions
  on the Gini coefficient would not be valid.
- In fact, none of the usual summary statistics (MUE, MSE, RMSD, skewness,
- kurtosis...) would describe properly such distributions.
+ In fact, none of the usual summary statistics (MUE, MSE, skewness, kurtosis...)
+ would describe properly such distributions.
  
 \begin_inset Note Note
 status collapsed
@@ -1786,14 +1811,9 @@ Literature datasets
 \end_layout
 
 \begin_layout Standard
-In order to test the interpretation of the links between 
-\begin_inset Formula $G$
-\end_inset
-
- and the bias and shape parameters of distributions, an analysis similar
- to the one for the reference datasets is performed on datasets gathered
- in the computational chemistry literature.
- These are described in Table
+The statistical tools described above are applied to datasets gathered in
+ the computational chemistry literature.
+ These are summarized in Table
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -2339,7 +2359,7 @@ name "tab:Case-studies"
 
 \end_inset
 
-Case studies: 
+Literature datasets: 
 \begin_inset Formula $N$
 \end_inset
 
@@ -2378,10 +2398,11 @@ s with positive support.
  folding operation, which is not reversible.
  In a first part, we show how this limits the information on the errors
  distribution that can be inferred from the Gini coefficient.
- We propose a mode-centering operation before folding, which should better
- preserve some of the tail properties of the original distributions.
- The Gini coefficient is compared to other tails statistics, notably at
- the level of statistical uncertainty.
+ To relieve this difficulty, we propose a mode-centering operation before
+ folding, which better preserves some of the tail properties of the original
+ distributions.
+ The Gini coefficient is then compared to other tails statistics, notably
+ at the level of statistical uncertainty.
  
 \end_layout
 
@@ -2417,7 +2438,7 @@ noprefix "false"
 \end_inset
 
 ) tells us that, for a normal distribution of given standard deviation,
- an increasing bias should result in decreasing values of 
+ an decreasing bias should result in increasing values of 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -2460,7 +2481,11 @@ noprefix "false"
 
 \end_inset
 
-(a) for a normal 
+(a) for uniform 
+\begin_inset Formula $U(-1,1),$
+\end_inset
+
+ normal 
 \begin_inset Formula $N(0,1)$
 \end_inset
 
@@ -2484,7 +2509,7 @@ noprefix "false"
 \begin_inset Formula $GH(g=1,h=0)$
 \end_inset
 
-.
+ distrubutions.
  
 \begin_inset Float figure
 wide false
@@ -2534,12 +2559,33 @@ Variation of
 \end_layout
 
 \begin_layout Standard
-The zero-centered symmetric distributions (normal and Student's) have their
- maximal 
+The zero-centered unimodal symmetric distributions (normal and Student's)
+ have their maximal 
 \begin_inset Formula $G_{F}$
 \end_inset
 
  value when the bias is null.
+ The 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ curve for the uniform distribution reaches 
+\begin_inset Formula $G_{FU}=1/3$
+\end_inset
+
+ when the distribution is centered or shifted by 
+\begin_inset Formula $\pm1$
+\end_inset
+
+.
+ For smaller absolute values of the bias, the folded distribution is not
+ uniform and presents higher values of 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+.
+ The value decreases when the bias is large enough to exclude zero from
+ the range of non-null densities.
  Having heavier tails, the Student's-
 \begin_inset Formula $t$
 \end_inset
@@ -2551,8 +2597,11 @@ The zero-centered symmetric distributions (normal and Student's) have their
 
 .
  The decay curves are symmetric with respect to the sign of the bias.
- This is no longer the case for asymmetric distributions (lognormal and
  
+\end_layout
+
+\begin_layout Standard
+This is no longer the case for asymmetric distributions (lognormal and 
 \begin_inset Formula $g$
 \end_inset
 
@@ -2577,7 +2626,8 @@ noprefix "false"
 \end_inset
 
 (b) we plotted identical curves for distributions centered on their mode
- before adding a bias.
+ before adding a bias (except for the uniform distribution which has been
+ left unchanged).
  This shows that the maximal value of 
 \begin_inset Formula $G_{F}$
 \end_inset
@@ -2611,43 +2661,24 @@ Another important point illustrated by these curves is that the level of
 \end_inset
 
  distributions.
- However, within the restrictions on the distributions shapes we considered
- above, one might infer that small values of 
-\begin_inset Formula $G_{F}$
-\end_inset
-
- (
-\emph on
-e.g.
-
-\emph default
  
-\begin_inset Formula $G_{F}\lesssim0.3$
-\end_inset
-
-) are likely to reveal biased error distributions, while large values (
-\emph on
-e.g.
-
-\emph default
- 
-\begin_inset Formula $G_{F}\gtrsim0.5$
-\end_inset
-
-) are likely to distributions with an extended tail.
- Between these limits, compensations between bias and shape factors prevent
- any inference.
 \end_layout
 
 \begin_layout Standard
-The Gini scale of folded error distributions has a central blind zone where
- bias and shape effects compensate.
- In order to characterize the shape of the distributions, mode-centering
- might be an interesting way to relieve this ambiguity.
- Centering a distribution before folding it mixes the contributions of both
- tails, but ensures that the contribution of the heaviest tail will be accounted
- for.
- 
+However, within the restrictions on the distributions shapes we considered
+ above, and if one considers the centered uniform distribution as an extreme
+ case of unimodality, one might infer that values smaller than 
+\begin_inset Formula $G_{FU}=1/3$
+\end_inset
+
+ are likely to reveal biased error distributions, while values above 
+\begin_inset Formula $G_{FN}=0.41$
+\end_inset
+
+ are likely to signal distributions with (at least) an extended tail compared
+ to normal tails, and a possible bias.
+ Between these limits, compensations between bias and shape factors prevent
+ any inference on either of them.
 \end_layout
 
 \begin_layout Standard
@@ -3653,7 +3684,304 @@ noprefix "false"
 \end_layout
 
 \begin_layout Subsection
-Mode-centering
+Does mode-centering maximize 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ ?
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Does-mode-centering-maximize"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In order to avoid the blind zone effect observed above and be able to characteri
+ze the shape of a distribution, mode-centering seems to offer an interesting
+ way to relieve the bias/shape compensation.
+ Centering a distribution before folding it mixes the contributions of both
+ tails, but ensures that the contribution of the heaviest tail will be accounted
+ for.
+ This might not be the case when a tail is folded around zero.
+ For asymmetric distribution, centering on other location statistics (mean
+ or median) would not maximize the 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ value and therefore preserve some ambiguity.
+ 
+\end_layout
+
+\begin_layout Standard
+The assertion that mode-centering maximizes 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ is tested here by comparing the results for mode-centering with those obtained
+ by explicitly maximizing the Gini coefficient with respect to a bias value.
+ We define 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+ as the value of the bias which maximizes 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ 
+\begin_inset Formula 
+\begin{equation}
+b_{max}=\max_{b}G_{F}(|E-b|)
+\end{equation}
+
+\end_inset
+
+ and note 
+\begin_inset Formula $G_{Fmax}=G_{F}(|E-b_{max}|)$
+\end_inset
+
+.
+ This equation is solved numerically by the Nelder and Mead optimizer 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Nelder1965"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+The values of 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{Fmax}$
+\end_inset
+
+ were computed for the literature datasets and compared to the mode 
+\begin_inset Formula $m(E)$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ respectively, through 
+\begin_inset Formula $z$
+\end_inset
+
+-scores 
+\begin_inset Formula 
+\begin{equation}
+z_{b}=\frac{m(E)-b_{max}}{\sqrt{u(m(E))^{2}+u(b_{max})^{2}}}
+\end{equation}
+
+\end_inset
+
+ and 
+\begin_inset Formula 
+\begin{equation}
+z_{G}=\frac{G_{MCF}-G_{Fmax}}{\sqrt{u(G_{MCF})^{2}+u(G_{Fmax})^{2}}}
+\end{equation}
+
+\end_inset
+
+where the uncertainties are estimated by bootstrap.
+ 
+\end_layout
+
+\begin_layout Standard
+In the hypothesis of a normal distribution of 
+\begin_inset Formula $z$
+\end_inset
+
+-scores, a test threshold of 2 is generally chosen for the absolute value
+ of the 
+\begin_inset Formula $z$
+\end_inset
+
+-score 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Kacker2010"
+literal "false"
+
+\end_inset
+
+.
+ For absolute values above 2, there is less than 5 percent of probability
+ that the difference is due to sampling effects.
+ For values below, one does not reject the hypothesis that the compared
+ values are equal 
+\begin_inset CommandInset citation
+LatexCommand cite
+after "Sect. V.A"
+key "Pernot2020"
+literal "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Histograms for the 
+\begin_inset Formula $z$
+\end_inset
+
+-scores are shown in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:mode-vs-bmax"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ At the exception of one point, the absolute value of all 
+\begin_inset Formula $z$
+\end_inset
+
+-score values are smaller than 2, and we have therefore no reason to reject
+ the hypothesis that these values are equal considering their uncertainty.
+ The outlying point, with 
+\begin_inset Formula $z_{b}=-3.8$
+\end_inset
+
+ and 
+\begin_inset Formula $z_{G}=-2.5$
+\end_inset
+
+ corresponds to the MP2 method in dataset ZAS2019, which is has a practically
+ normal distribution 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pernot2020b"
+literal "false"
+
+\end_inset
+
+.
+ One has 
+\begin_inset Formula $G_{MCF}=0.418(6)$
+\end_inset
+
+ and 
+\begin_inset Formula $G_{Fmax}=0.436(3)$
+\end_inset
+
+ for a distance of 1.07 between the mode and 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+, to be compared to the standard deviation of the distribution, 1.7.
+ As seen in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:Gini-vs-bias"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+(a), there is a flat area near the top of the 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ curve as a function of bias for a normal distribution: very small deviations
+ from a perfect normal distribution (as hinted to by the value of 
+\begin_inset Formula $G_{Fmax}$
+\end_inset
+
+ being larger than 0.41) can deviate the optimal point over a wide range.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_hrmode_vs_bmax.png
+	lyxscale 30
+	width 95text%
+	BoundingBox 0bp 0bp 2400bp 1200bp
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:mode-vs-bmax"
+
+\end_inset
+
+Histograms of 
+\begin_inset Formula $z$
+\end_inset
+
+-scores for (a) the position of the mode versus the 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+ maximizer; and (b) the values of the corresponding Gini coefficients.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For all practical purposes in the present study, one can therefore estimate
+ that mode-centering maximizes the value of the Gini coefficient, at a fraction
+ of the computing cost for the search for 
+\begin_inset Formula $b_{max}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ versus 
+\begin_inset Formula $G_{F}$
+\end_inset
+
+
 \begin_inset CommandInset label
 LatexCommand label
 name "subsec:Mode-centering"
@@ -3664,7 +3992,7 @@ name "subsec:Mode-centering"
 \end_layout
 
 \begin_layout Standard
-We note the new Gini coefficient of mode-centered folded distributions 
+We note the Gini coefficient of mode-centered folded distributions 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -3710,8 +4038,12 @@ i.e.
 \begin_inset Formula $G$
 \end_inset
 
--scale is now reduced to values above 0.4, in conformity with our conservative
- estimate that all values below 0.3 were due to bias.
+-scale is now reduced to values above 0.4, in conformity with our interpretation
+ that all values below 
+\begin_inset Formula $G_{FU}=1/3$
+\end_inset
+
+ were due to bias.
  
 \begin_inset Float figure
 wide false
@@ -3722,7 +4054,7 @@ status open
 \noindent
 \align center
 \begin_inset Graphics
-	filename G_vs_GMC.png
+	filename fig_G_vs_GMC.png
 	lyxscale 30
 	width 95text%
 	BoundingBox 0bp 0bp 2400bp 2400bp
@@ -3809,7 +4141,7 @@ noprefix "false"
 
 \end_inset
 
-(b), showing that the uncertainty on 
+(b), showing that for some datasets the uncertainty on 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -3818,7 +4150,7 @@ noprefix "false"
 \end_inset
 
 , up to a factor two.
- This extra uncertainty is due to the mode estimation.
+ This extra uncertainty is due to the uncertainty on the mode value.
  We note also a size effect, the smallest datasets (THA2015, 
 \begin_inset Formula $N=145$
 \end_inset
@@ -3829,229 +4161,6 @@ noprefix "false"
 
 , the smallest one.
  
-\end_layout
-
-\begin_layout Subsection
-Does mode-centering maximize 
-\begin_inset Formula $G_{F}$
-\end_inset
-
- ?
-\begin_inset CommandInset label
-LatexCommand label
-name "subsec:Does-mode-centering-maximize"
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-In Section
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "subsec:Gini-coefficient-vs."
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-, we considered that mode centering provided close to maximal Gini coefficients.
- In order to test this assertion, we compare here the results for mode-centering
- with those obtained by explicitly maximizing the Gini coefficient with
- respect to a bias value.
- We define 
-\begin_inset Formula $b_{max}$
-\end_inset
-
- as the value of the bias which maximizes 
-\begin_inset Formula $G_{F}$
-\end_inset
-
- 
-\begin_inset Formula 
-\begin{equation}
-b_{max}=\max_{b}G_{F}(|E-b|)
-\end{equation}
-
-\end_inset
-
- and note 
-\begin_inset Formula $G_{Fmax}=G_{F}(|E-b_{max}|)$
-\end_inset
-
-.
-\end_layout
-
-\begin_layout Standard
-The values of 
-\begin_inset Formula $b_{max}$
-\end_inset
-
- and 
-\begin_inset Formula $G_{Fmax}$
-\end_inset
-
- were computed for the literature datasets and compared to the mode 
-\begin_inset Formula $m(E)$
-\end_inset
-
- and 
-\begin_inset Formula $G_{MCF}$
-\end_inset
-
- respectively, through 
-\begin_inset Formula $z$
-\end_inset
-
--scores
-\begin_inset Formula 
-\begin{equation}
-z_{b}=\frac{m(E)-b_{max}}{\sqrt{u(m(E))^{2}+u(b_{max})^{2}}}
-\end{equation}
-
-\end_inset
-
- and 
-\begin_inset Formula 
-\begin{equation}
-z_{G}=\frac{G_{MCF}-G_{Fmax}}{\sqrt{u(G_{MCF})^{2}+u(G_{Fmax})^{2}}}
-\end{equation}
-
-\end_inset
-
-where the uncertainties are estimated by bootstrap.
- Histograms for the 
-\begin_inset Formula $z$
-\end_inset
-
--scores are shown in Fig.
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:mode-vs-bmax"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-.
- 
-\begin_inset Float figure
-wide false
-sideways false
-status open
-
-\begin_layout Plain Layout
-\noindent
-\align center
-\begin_inset Graphics
-	filename fig_hrmode_vs_bmax.png
-	lyxscale 30
-	width 95text%
-	BoundingBox 0bp 0bp 2400bp 1200bp
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-\begin_inset CommandInset label
-LatexCommand label
-name "fig:mode-vs-bmax"
-
-\end_inset
-
-Histograms of 
-\begin_inset Formula $z$
-\end_inset
-
--scores for (a) the position of the mode versus the 
-\begin_inset Formula $G_{F}$
-\end_inset
-
- maximizer; and (b) the values of the corresponding Gini coefficients.
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-At the exception of one point, the absolute value of all 
-\begin_inset Formula $z$
-\end_inset
-
--score values are smaller than 3, and we have therefore no reason to reject
- the hypothesis that the values are equal considering their uncertainty.
- The outlying point, with 
-\begin_inset Formula $z_{b}=-3.8$
-\end_inset
-
- corresponds to the MP2 method in dataset ZAS2019, which is practically
- normal.
- The corresponding value of 
-\begin_inset Formula $z_{G}$
-\end_inset
-
- remains below the limit of significance.
- One has 
-\begin_inset Formula $G_{MCF}=0.418(6)$
-\end_inset
-
- and 
-\begin_inset Formula $G_{Fmax}=0.436(3)$
-\end_inset
-
- for a distance of 1.07 between the mode and 
-\begin_inset Formula $b_{max}$
-\end_inset
-
-, to be compared to the standard deviation of the distribution, 1.7.
- As seen in Fig.
-\begin_inset space \thinspace{}
-\end_inset
-
-
-\begin_inset CommandInset ref
-LatexCommand ref
-reference "fig:Gini-vs-bias"
-plural "false"
-caps "false"
-noprefix "false"
-
-\end_inset
-
-(a), there is a flat area near the top of the curve for a normal distribution,
- which explains the low sensitivity of 
-\begin_inset Formula $G_{F}$
-\end_inset
-
- to a sizable change of bias in this area.
-\end_layout
-
-\begin_layout Standard
-For all practical purposes, one can therefore estimate that mode-centering
- maximizes the value of the Gini coefficient.
 \end_layout
 
 \begin_layout Subsection
@@ -4099,7 +4208,11 @@ noprefix "false"
 \end_inset
 
 ) of the mode-centered folded distribution.
- The values for our selection of literature datasets is shown in Fig.
+ 
+\end_layout
+
+\begin_layout Standard
+The values for our selection of literature datasets is shown in Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -4149,16 +4262,12 @@ noprefix "false"
  distributions with a range of shape parameters, one observes a nearly perfect
  non-linear correlation (dotted line).
  The dispersion of the points for the literature datasets about this curve
- is due to statistical uncertainty.
- 
-\end_layout
-
-\begin_layout Standard
-We can therefore conclude that 
-\begin_inset Formula $G_{MCF}$
+ is mostly due to statistical uncertainty (the points for the largest dataset
+ (ZAS2019, 
+\begin_inset Formula $N=6211$
 \end_inset
 
- is apt at estimating the heaviness of the error distributions tails.
+) are very close to the curve).
  It is important to note that the uncertainty on 
 \begin_inset Formula $G_{MCF}$
 \end_inset
@@ -4167,17 +4276,25 @@ We can therefore conclude that
 \begin_inset Formula $\beta_{MCF}$
 \end_inset
 
-, and therefore performs better for smaller datasets.
- 
+, and therefore performs better for smaller datasets .
 \end_layout
 
 \begin_layout Standard
-In order to appreciate the information about the original error distribution
- that can be extracted from 
+We can therefore conclude that 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
-, we plotted it against their skewness 
+ is apt at estimating the heaviness of the errors distribution tail after
+ mode-centering and folding.
+ In order to appreciate the information about the 
+\emph on
+signed
+\emph default
+ error distribution that can be extracted from 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+, we plotted it against the skewness 
 \begin_inset Formula $\beta_{GM}$
 \end_inset
 
@@ -4204,7 +4321,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -4270,7 +4387,18 @@ noprefix "false"
 
 \end_inset
 
-(a)), the shape of the points cloud indicate that 
+(a)), all the points seem to lie within an angular sector, indicating that
+ distributions with large skewness have large 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+.
+ For instance, if the skewness is above 0.3, 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ is larger than 0.5.
+ Reciprocally, 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -4278,9 +4406,11 @@ noprefix "false"
 \begin_inset Formula $|\beta_{GM}|$
 \end_inset
 
-.
- For instance, a Gini coefficient of 0.5 provides an upper limit of about
- 0.3 on the absolute skewness.
+ (for 
+\begin_inset Formula $G_{MCF}=0.55$
+\end_inset
+
+, the absolute value of the skewness cannot be above 0.4).
  For kurtosis (Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -4311,10 +4441,17 @@ noprefix "false"
 and
 \emph default
  excess kurtosis.
+ Although information is list because of folding, 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ can still provide some information about the shape of the distribution
+ of signed errors, and notably about the kurtosis.
 \end_layout
 
 \begin_layout Standard
-We see in Fig.
+Let us consider a few examples to illustrate this point.
+ We see in Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -4343,7 +4480,26 @@ literal "false"
 
 \end_inset
 
-.
+ (
+\emph on
+cf.
+
+\emph default
+ Table
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:statsLit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+).
  This corresponds to large values of both 
 \begin_inset Formula $\beta_{GM}$
 \end_inset
@@ -4392,7 +4548,618 @@ literal "false"
  methods.
  In the same set, the MP2 method has a practically normal errors distribution
  and can be found in the lower part of the Gini scale (0.42).
+ This analysis can be repeated for the ten methods with largest 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ values (Table
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:statsLit"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), showing that large 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ values point indeed towards error sets with high kurtosis and/or skewness.
  
+\begin_inset Float table
+placement ht
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="11" columns="5">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Dataset 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Methods 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+CAM-B3LYP 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.663(16) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.572(57) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.1(1.3) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B3LYP 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.614(20) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.301(74) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.93(96) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+ZAS2019 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SLATM_L2 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.6086(59) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.052(22) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.48(25) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+LC-
+\begin_inset Formula $\omega$
+\end_inset
+
+PBE 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.602(20) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.447(64) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.82(82) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PBE0 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.568(24) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.349(63) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.99(86) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BH&HLYP 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.561(20) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.416(52) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.60(48) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WU2015 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+tHCTHhyb 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.560(24) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.273(84) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.45(83) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BOR2019 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+HLE16 + SOC 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.560(19) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.372(43) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.64(47) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PER2018 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+BLYP 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.555(20) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.241(67) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.47(78) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+WU2015 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+B97-2 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.552(22) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.281(80) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2.33(77) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:statsLit"
+
+\end_inset
+
+The ten methods with the larges 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ values, and the corresponding skewness and kurtosis.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A question remains: 
+\begin_inset Quotes eld
+\end_inset
+
+What is the threshold for 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ one should use to detect problematic error distributions ?
+\begin_inset Quotes erd
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -4661,6 +5428,56 @@ Correlation between
 \end_layout
 
 \begin_layout Subsection
+Defining a 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ alert threshold
+\end_layout
+
+\begin_layout Standard
+The interpretation of a 
+\begin_inset Formula $G$
+\end_inset
+
+-scale depends on the observed property.
+ For instance, the median value of 
+\begin_inset Formula $G$
+\end_inset
+
+ for income inequality in OECD countries is about 0.32 (for Greece and Portugal,
+ 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://data.oecd.org/inequality/income-inequality.htm
+\end_layout
+
+\end_inset
+
+), which is outside of our range of interest, and unlikely corresponds to
+ a uniform distribution.
+ 
+\end_layout
+
+\begin_layout Standard
+We have seen above that the ten largest 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ values, above 0.55, point to distributions with notable tails.
+ We propose for the present study to adopt an alert value based on the median
+ of the 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ values for our full dataset (0.51) and round it to 0.5.
+ This might be reevaluated when more data are analyzed.
+\end_layout
+
+\begin_layout Subsection
 Ranking
 \end_layout
 
@@ -4690,17 +5507,12 @@ noprefix "false"
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- value is larger or equal to 0.5, which is rounded from the median values
- of 
-\begin_inset Formula $G_{MCF}$
-\end_inset
-
- over our selection of datasets (0.51).
+ exceeds the 0.5 threshold.
  
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -4745,10 +5557,21 @@ Flagging of large
 \end_layout
 
 \begin_layout Standard
+
+\color red
+Discuss sets where all flagged first...
+ outliers, heterogeneous datasets, systematic trends? 
+\end_layout
+
+\begin_layout Standard
 If one considers the first rank, five methods are flagged by the test.
- Cases ZAS2019 and PER2018 have been evoked above.
- ZHA2018 is at the limit, SCAN errors with notable excess kurtosis, but
- nothing exceptional.
+ Cases ZAS2019 and PER2018 have been discussed above.
+ 
+\color red
+ZHA2018 is at the limit, SCAN errors with notable excess kurtosis, but nothing
+ exceptional.
+
+\color inherit
  For BOR2019, all methods present some excess kurtosis and variable levels
  of skewness.
  The first ranked method (mBJ) has the largest skewness in the set.
@@ -4799,6 +5622,90 @@ literal "false"
 .
 \end_layout
 
+\begin_layout Subsection
+The unseen...
+\end_layout
+
+\begin_layout Standard
+Cases might also occur where bias adds even more complexity to the comparison
+ of MUE values.
+ As summarized in Fig.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:ambiguity"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, the duality of the MUE as a location and dispersion statistic prevents
+ its use to predict the risk of large errors.
+ 
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Graphics
+	filename fig_ambiguity.png
+	lyxscale 50
+	height 8cm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:ambiguity"
+
+\end_inset
+
+Example of different error distributions having the same MUE (1.0) and offering
+ contradictory results for some tail statistics.
+ The probability to have 
+\emph on
+absolute
+\emph default
+ errors larger than 1.0 is 
+\begin_inset Formula $P_{1}=0.50$
+\end_inset
+
+ for the blue curve and 0.43 for the red curve, hiding the fact that the
+ red distribution contains much worse results that the blue one.
+ In this case, the problem is solved by the values of 
+\begin_inset Formula $Q_{95}$
+\end_inset
+
+, giving 1.16 for the blue curve, and 2.46 for the red one.
+ Shape statistics, such as the kurtosis, would not enable to discriminate
+ between both normal distributions.
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusion
 \end_layout
@@ -4833,6 +5740,27 @@ e.g.
  For high ranking methods, this is an incentive to inspect closely the error
  distributions and check if the selected methods have problems of reliability
  in their predictions.
+\end_layout
+
+\begin_layout Section*
+Supplementary Information
+\end_layout
+
+\begin_layout Standard
+
+\color red
+Lorenz curves and statistics for the literature datasets.
+\end_layout
+
+\begin_layout Section*
+Data availability statement 
+\end_layout
+
+\begin_layout Standard
+The data and codes that support the findings of this study are openly available
+ at the following URL
+\color red
+/DOI:https://doi.org/10.528 1/zenodo.3733 272
 \end_layout
 
 \begin_layout Section*

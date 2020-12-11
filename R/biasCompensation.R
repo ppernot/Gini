@@ -1,4 +1,19 @@
 
+gh = function(N = 1000,
+              g = 0,
+              h = 0) {
+  x = rnorm(N)
+  if (g == 0)
+    x = x * exp(h * x ^ 2 / 2)
+  if (g > 0)
+    x = (exp(g * x) - 1) * exp(h * x ^ 2 / 2) / g
+  return(x)
+}
+hrmode = function(X, index = 1:length(X), ...) {
+  genefilter::half.range.mode(X[index])
+}
+
+
 N = 1e5
 bl = 5
 db = 0.1
@@ -11,6 +26,16 @@ for (b in seq(-bl, bl, by = db)) {
   bi[i] = b
   gi[i] = ErrViewLib::gini(X)
   ku[i] = ErrViewLib::kurtcs(X)
+}
+
+gi0 = ku0 = bi0 = c()
+i = 0
+for (b in seq(-bl, bl, by = db)) {
+  i = i + 1
+  X = b + runif(N,-1,1)
+  bi0[i] = b
+  gi0[i] = ErrViewLib::gini(X)
+  ku0[i] = ErrViewLib::kurtcs(X)
 }
 
 nu = 2
@@ -90,7 +115,6 @@ par(
   cex = cex
 )
 
-
 plot(
   bi,
   gi,
@@ -106,6 +130,10 @@ plot(
   main = ''
 )
 grid()
+lines(bi0,
+      gi0,
+      lty = 5,
+      col = cols[5])
 lines(bi1,
       gi1,
       lty = 2,
@@ -122,9 +150,9 @@ legend(
   'topright', cex=0.75,
   bty = 'o',
   box.col = 'white',
-  legend = c('Normal', 'Student', 'logNormal','g-and-h'),
-  col = cols[c(2, 6, 3, 4)],
-  lty = 1:4
+  legend = c('Normal', 'Student', 'logNormal','g-and-h','Uniform'),
+  col = cols[c(2, 6, 3, 4, 5)],
+  lty = 1:5
 )
 box()
 mtext(
@@ -149,6 +177,10 @@ plot(
   main = ''
 )
 grid()
+lines(bi0,
+      gi0,
+      lty = 5,
+      col = cols[5])
 lines(bi1,
       gi1,
       lty = 2,
@@ -166,9 +198,7 @@ legend(
   bty = 'o',
   box.col = 'white',
   title = 'Mode-centered',
-  legend = c('Normal', 'Student', 'logNormal','g-and-h'),
-  col = cols[c(2, 6, 3, 4)],
-  lty = 1:4
+  legend = ''
 )
 box()
 mtext(

@@ -198,7 +198,7 @@ z = (x-y)/sqrt(ux^2+uy^2)
 hist(z, col = cols[6],
      xlab = expression(z[b]),
      main = '')
-abline(v=-3,lty=2)
+abline(v=-2,lty=2)
 # box()
 mtext(
   text = '(a)',
@@ -215,7 +215,7 @@ z = (x-y)/sqrt(ux^2+uy^2)
 hist(z, col = cols[3],
      xlab = expression(z[G]),
      main = '')
-abline(v=-3,lty=2)
+abline(v=-2,lty=2)
 # box()
 mtext(
   text = '(b)',
