@@ -1844,7 +1844,7 @@ literal "false"
 placement !t
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -4167,7 +4167,14 @@ noprefix "false"
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- as a shape statistic
+ as a shape statistl
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:GMCF-as-a-shape-stat"
+
+\end_inset
+
+ic
 \end_layout
 
 \begin_layout Standard
@@ -4572,7 +4579,7 @@ noprefix "false"
 placement ht
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -5457,8 +5464,8 @@ https://data.oecd.org/inequality/income-inequality.htm
 
 \end_inset
 
-), which is outside of our range of interest, and unlikely corresponds to
- a uniform distribution.
+), which is outside of our range of interest (and unlikely to correspond
+ to a uniform distribution).
  
 \end_layout
 
@@ -5478,7 +5485,11 @@ We have seen above that the ten largest
 \end_layout
 
 \begin_layout Subsection
-Ranking
+Application of 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ to ranking
 \end_layout
 
 \begin_layout Standard
@@ -5502,8 +5513,8 @@ noprefix "false"
 
 \end_inset
 
- shows, for each dataset, the ten methods with best ranking, flagged when
- their 
+(a) shows, for each dataset, the ten methods with best ranking, flagged
+ when their 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -5512,7 +5523,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -5542,7 +5553,8 @@ Flagging of large
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- values after mode-centering of 10 lowest MUE-ranked methods in each dataset.
+ values after mode-centering of at most 10 lowest MUE-ranked methods in
+ each dataset.
  
 \end_layout
 
@@ -5557,36 +5569,57 @@ Flagging of large
 \end_layout
 
 \begin_layout Standard
+If one considers the first rank, five methods are flagged by 
+\begin_inset Formula $G_{MCF}$
+\end_inset
 
-\color red
-Discuss sets where all flagged first...
- outliers, heterogeneous datasets, systematic trends? 
-\end_layout
-
-\begin_layout Standard
-If one considers the first rank, five methods are flagged by the test.
- Cases ZAS2019 and PER2018 have been discussed above.
- 
-\color red
-ZHA2018 is at the limit, SCAN errors with notable excess kurtosis, but nothing
- exceptional.
-
-\color inherit
+, but it is striking that three datasets have all their lowest MUE-ranked
+ methods flagged (BOR2019, PER2018 and THA2015).
  For BOR2019, all methods present some excess kurtosis and variable levels
- of skewness.
- The first ranked method (mBJ) has the largest skewness in the set.
- For case THA2015, all methods are flagged, which might point to the existence
- of global outliers in the reference dataset, 
+ of skewness, notably because of an increasing trend of the errors with
+ the bandgap value 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pernot2020a"
+literal "false"
+
+\end_inset
+
+.
+ In the case of PER2018, the error distributions present also large skewness
+ and kurtosis, associated with the chemical heterogeneity of the dataset
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pernot2018"
+literal "false"
+
+\end_inset
+
+.
+ For THA2015, the presence of global outliers in the reference dataset,
+ 
 \emph on
 i.e.
  
 \emph default
-data that no method in the panel is able to predict correctly.
+data that no method in the panel is able to predict correctly, is noteworthy
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Thakkar2015,Pernot2020a"
+literal "false"
+
+\end_inset
+
+.
+ These outliers are due to experimental reference data with large measurement
+ uncertainty.
  
 \end_layout
 
 \begin_layout Standard
-This can be checked in Fig.
+Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -5600,18 +5633,577 @@ noprefix "false"
 
 \end_inset
 
-(b), where the same analysis has been performed after the removal of global
- outliers, if any.
- Removal of global outliers (6 systems) for THA2015 changes the situation,
- with three less flagged methods.
- For case BOR2019, the leading method is unflagged after removal of the
- global outliers.
- In the other cases, no effect is observed, which might be due to either
- the absence of global outliers (NAR2019, PER2018, SCH2018, WU2015), or
- the intrinsic shape of the distributions (WU2015, ZAS2019).
- In all these cases, it might also be worth to investigate if the distorted
- shape of the distribution is due to systematic trends in the errors, as
- they could be profitably corrected 
+(b) reports the same analysis after removal of global outliers.
+ These are systems lying out of the 
+\begin_inset Formula $[q(0.025),q(0.975)]$
+\end_inset
+
+ interval for 
+\emph on
+all methods
+\emph default
+ of a dataset.
+ Their removal (6 systems) affects strongly the case THA2015, confirming
+ an experimental reference dataset problem 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Thakkar2015"
+literal "false"
+
+\end_inset
+
+.
+ The results for BOR2019 are mostly unchanged, except for the best MUE-ranked
+ method (mBJ) which benefits from the removal of a single global outlier.
+ No effect is observed for the PER2018 dataset, confirming the intrinsic
+ heavy-tailed shape of these atomization energy error sets 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pernot2018"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+The other datasets with leading 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+-flagged methods are ZAS2019 and ZHA2018.
+ The former has already been discussed (Sect.
+\begin_inset space \thinspace{}
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "subsec:GMCF-as-a-shape-stat"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+), and no global outliers are identified for this dataset.
+ In the case ZHA2018, the first MUE-ranked method is SCAN, which has a 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ value just above the threshold (0.503), presents no skewness and a slight
+ level of kurtosis.
+ Removal of 4 global outliers does not improve the shape of the errors distribut
+ion.
+ However, the errors on the formation enthalpies present a linear trend
+ as a function of the calculated values.
+ Correcting this trend 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "Pernot2015"
+literal "false"
+
+\end_inset
+
+ improves slightly the performance and the shape of the SCAN distribution,
+ but most notably of the PBE distribution, which performances get indistinguisha
+ble from those of SCAN 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:statsZHA"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float table
+placement ht
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\noindent
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="7">
+<features tabularvalignment="middle">
+<column alignment="left" valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<column alignment="decimal" decimal_point="." valignment="top">
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Methods 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MUE
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+MSE 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $Q_{95}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\beta_{GM}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\kappa_{CS}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(kcal/mol)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(kcal/mol)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+(kcal/mol)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+PBE 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.211(10) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.21(1) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.47(3) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.04(6) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.2(3) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.41(2) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+SCAN 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.102(7) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.017(10) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.29(2) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.01(7) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5(5) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.50(2) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+lc-PBE 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.092(6) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.29(4) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.14(7) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.0(4) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.48(2) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+lc-SCAN 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.092(6) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.28(3) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+-0.08(7) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3(4) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="decimal" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.48(2) 
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:statsZHA"
+
+\end_inset
+
+Statistics for the methods of the ZHA2018 dataset, before and after linear
+ correction ('lc-' prefix).
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+More generally, for methods with large 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+values,
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ it might be worth to investigate if the distorted shape of the distribution
+ is due to systematic trends in the errors, as they could be profitably
+ corrected 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Lejaeghere2014,Pernot2015,Lejaeghere2016,Proppe2016,Proppe2017"
@@ -5623,13 +6215,27 @@ literal "false"
 \end_layout
 
 \begin_layout Subsection
-The unseen...
+Limits of the 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ coefficient
 \end_layout
 
 \begin_layout Standard
-Cases might also occur where bias adds even more complexity to the comparison
- of MUE values.
- As summarized in Fig.
+We have shown above that 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ might be a useful complement to the usual ranking statistics, in order
+ to detect error distributions with shapes that might reveal problem in
+ prediction reliability.
+ However there remains cases where the 
+\begin_inset Formula $G_{MCF}$
+\end_inset
+
+ index is insufficient to reveal underlying problems.
+ Fig.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -5643,8 +6249,17 @@ noprefix "false"
 
 \end_inset
 
-, the duality of the MUE as a location and dispersion statistic prevents
- its use to predict the risk of large errors.
+ proposes a scenario of two normal distributions (
+\begin_inset Formula $G_{MCF}=0.41$
+\end_inset
+
+) with the same value of the MUE (1.0), and yet very different risks of large
+ prediction errors.
+ This is clearly a case where a quantile-based statistic, such as 
+\begin_inset Formula $Q_{95}$
+\end_inset
+
+, are an essential complement to the MUE.
  
 \begin_inset Float figure
 wide false
@@ -5735,7 +6350,7 @@ The Lorenz curve and Gini coefficient present an interesting addition to
 e.g.
 
 \emph default
- above 0.5, alert about large tails that might be due to large skewness,
+ above 0.5, alert us about large tails that might be due to large skewness,
  kurtosis and/or the presence of outliers.
  For high ranking methods, this is an incentive to inspect closely the error
  distributions and check if the selected methods have problems of reliability

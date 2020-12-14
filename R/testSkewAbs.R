@@ -415,6 +415,12 @@ legend(
   y.intersp = 0.9
 )
 box()
+mtext(
+  text = '(a)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
 
 # Remove global outliers ####
 sel = D$ctd == -1 & D$out & substr(D$Dataset,1,4) != 'Ref_'
@@ -444,6 +450,12 @@ legend(
   pch = -1
 )
 box()
+mtext(
+  text = '(b)',
+  side = 3,
+  adj = 1,
+  cex = cex,
+  line = 0.3)
 
 
 dev.off()
