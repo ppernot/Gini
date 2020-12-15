@@ -1,21 +1,15 @@
-# Bibliographic references for the datasets
+# Bibliographic references for the datasets 
 
 + __BOR2019__: P. Borlido, T. Aull, A. W. Huran, F. Tran, M. A. Marques, 
 and S. Botti (2019) [_J. Chem. Theory Comput._ __15__:5069–5079](http://dx.doi.org/10.1021/acs.jctc.9b00322)
-
-+ __CAL2019__: E. Caldeweyher, S. Ehlert, A. Hansen, H. Neugebauer, S. Spicher, 
-C. Bannwarth, and S. Grimme (2019) [_J. Chem. Phys._ __150__:154122](http://dx.doi.org/10.1063/1.5090222)
-
-+ __DAS2019__: T. Das, G. Di Liberto, S. Tosoni, and G. Pacchioni (2019)
-[_J. Chem. Theory Comput._ __15__:6294–6312](http://dx.doi.org/10.1021/acs.jctc.9b00545)
-
-+ __HAI2018__: D. Hait and M. Head-Gordon (2018) [_J. Chem. Theory Comput._ __14__:1969-1981](http://dx.doi.org/10.1021/acs.jctc.7b01252) 
-(Removed global outliers H20-Li, H2O-F and H20-Cl)
 
 + __NAR2019__: B. Narayanan, P. C. Redfern, R. S. Assary, and L. A. Curtiss (2019) [_Chem. Sci._ __10__:7449-7455](http://dx.doi.org/10.1039/c9sc02834j)
 
 + __PER2018__: P. Pernot and A. Savin (2018) [_J. Chem. Phys._
 __148__:241707](http://dx.doi.org/10.1063/1.5016248)
+
++ __SCH2018__: P. S. Schmidt and K. S. Thygesen (2018) [_J. Phys. Chem. C_
+__122__:4381-4390](http://dx.doi.org/10.1021/acs.jpcc.7b12258)
 
 + __THA2015__: A. J. Thakkar and T. Wu (2015) [_J. Chem. Phys._ __143__:144302](http://dx.doi.org/10.1063/1.4932594)
 
