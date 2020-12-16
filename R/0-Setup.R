@@ -1,16 +1,22 @@
 # Libraries ----
 
 libs <- c(
-  "devtools", "Hmisc", "rlist", "boot", "lmtest",
-  "inlmisc", "distillery", "ineq", "BiocManager"
+  "devtools",
+  "Hmisc",
+  "rlist",
+  "boot",
+  "lmtest",
+  "inlmisc",
+  "distillery",
+  "ineq",
+  "BiocManager"
 )
 for (lib in libs) {
   if (!require(lib, character.only = TRUE, quietly = TRUE)) {
-    install.packages(
-      lib,
-      dependencies = TRUE #,
-      # repos = "https://cran.univ-paris1.fr"
-    )
+    install.packages(lib,
+                     # repos = "https://cran.univ-paris1.fr",
+                     dependencies = TRUE )
+                     
   }
   library(lib, character.only = TRUE, quietly = TRUE)
 }
@@ -18,11 +24,11 @@ for (lib in libs) {
 lib = "ErrViewLib"
 # if(!require(lib,character.only = TRUE))
 #   devtools::install_github(paste0("ppernot/",lib))
-library(lib,character.only = TRUE)
+library(lib, character.only = TRUE)
 lib = "genefilter"
 # if(!require(lib,character.only = TRUE))
 #   BiocManager::install("genefilter", version="3.10")
-library(lib,character.only = TRUE)
+library(lib, character.only = TRUE)
 
 # Graphical parameters ----
 
@@ -41,21 +47,26 @@ reso = 1200
 
 resultsTab = file.path('..', 'results', 'tables', 'allStats.csv')
 
-dataSets = c(
-  'BOR2019',
-  'NAR2019',
-  'PER2018',
-  'SCH2018',
-  'THA2015', # Need relative errors
-  'WU2015', # Need relative errors
-  'ZAS2019',
-  'ZHA2018'
-)
+dataSets = c('BOR2019',
+             'NAR2019',
+             'PER2018',
+             'SCH2018',
+             'THA2015', # Needs relative errors
+             'WU2015',  # Needs relative errors
+             'ZAS2019',
+             'ZHA2018')
 
-relSets = c('THA2015','WU2015') # Use relative errors
+relSets = c('THA2015', 'WU2015') # Use relative errors
 
-units = c('eV','Debye','kcal/mol','kcal/mol',
-          'eV','%','%','kcal/mol','eV/atom')
+units = c('eV',
+          'Debye',
+          'kcal/mol',
+          'kcal/mol',
+          'eV',
+          '%',
+          '%',
+          'kcal/mol',
+          'eV/atom')
 names(units) = dataSets
 
 # Functions ----
@@ -70,7 +81,7 @@ names(units) = dataSets
 #   ilo = iup - 1
 #   Lcp = lc[ilo]+ (p-pr[ilo])*
 #     (lc[iup]-lc[ilo])/(pr[iup]-pr[ilo])
-#   
+#
 #   return(1-Lcp)
 # }
 
@@ -80,7 +91,7 @@ hrmode = function(X, index = 1:length(X), ...) {
 
 skewgm = function(X, index = 1:length(X), ...) {
   X = X[index]
-  m = hd(X,0.5)
+  m = hd(X, 0.5)
   s = (mean(X) - m) / mean(abs(X - m))
   return(s)
 }
@@ -98,7 +109,7 @@ skewgm_mcf = function(X, index = 1:length(X), ...) {
 # kurtcs_f = function(X, index = 1:length(X), ...) {
 #   return( ErrViewLib::kurtcs( abs(X[index]) ) )
 # }
-# 
+#
 # kurtcs_mcf = function(X, index = 1:length(X), ...) {
 #   X = X[index]
 #   X = abs(X - hrmode(X)) # Absolute mode-centered errors
@@ -124,7 +135,7 @@ gh = function(N = 1000,
 bmax = function(X, index = 1:length(X), ...) {
   X = X[index]
   m = hrmode(X)
-  gfun = function (b,X)
+  gfun = function (b, X)
     ErrViewLib::gini(abs(X - b))
   o = optim(
     par   = m,
@@ -132,7 +143,7 @@ bmax = function(X, index = 1:length(X), ...) {
     # method = "Brent",
     lower = min(X),
     upper = max(X),
-    control = list(fnscale=-1),
+    control = list(fnscale = -1),
     X     = X
   )
   return(o$par)
@@ -141,7 +152,7 @@ bmax = function(X, index = 1:length(X), ...) {
 gmax = function(X, index = 1:length(X), ...) {
   X = X[index]
   m = hrmode(X)
-  gfun = function (b,X)
+  gfun = function (b, X)
     ErrViewLib::gini(abs(X - b))
   o = optim(
     par   = m,
@@ -149,7 +160,7 @@ gmax = function(X, index = 1:length(X), ...) {
     # method = "Brent",
     lower = min(X),
     upper = max(X),
-    control = list(fnscale=-1),
+    control = list(fnscale = -1),
     X     = X
   )
   return(ErrViewLib::gini(abs(X - o$par)))

@@ -911,49 +911,50 @@ noprefix "false"
 \begin_inset Quotes eld
 \end_inset
 
-SI_allStats.csv
+allStats.csv
 \begin_inset Quotes erd
 \end_inset
 
-.
- 
-\end_layout
-
-\begin_layout Standard
-Meaning of the headers:
-\end_layout
-
-\begin_layout Description
-"Dataset" : name of the dataset
+ for four combinations of the correction level (ctd = -1/1) and outliers
+ treatment (out = FALSE/TRUE).
+ The headers in the table are defined as follows (prefix 'u_' refers to
+ uncertainty, obtained by bootstrapping with 1000 samples):
 \end_layout
 
 \begin_layout Description
-"Methods" : name of the method
+Dataset name of the dataset
 \end_layout
 
 \begin_layout Description
-"ctd" : -1 = raw data; 0 = centering on the MSE; 1 = linear correction
+Methods name of the method
 \end_layout
 
 \begin_layout Description
-"out" : FALSE = raw data; TRUE = removal of global outliers
+ctd -1 = raw data; 1 = linear correction
 \end_layout
 
 \begin_layout Description
-"mue","u_mue": mean unsigned error and its uncertainty 
+out FALSE = raw data; TRUE = removal of global outliers
 \end_layout
 
 \begin_layout Description
-"mse","u_mse": mean signed error
+mue mean unsigned error 
 \end_layout
 
 \begin_layout Description
-"rmsd","u_rmsd": root mean squared deviation
+mse mean signed error
 \end_layout
 
 \begin_layout Description
-"q95hd","u_q95hd": 95th quantile of the absolute errors (Harrell-Davis estimator
- 
+rmsd root mean squared deviation
+\end_layout
+
+\begin_layout Description
+q95hd 95th quantile of the absolute errors 
+\begin_inset Formula $Q_{95}$
+\end_inset
+
+ (Harrell-Davis estimator 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Harrell1982"
@@ -965,7 +966,7 @@ literal "false"
 \end_layout
 
 \begin_layout Description
-"hrmode","u_hrmode": mode of the errors distribution (HRM estimator 
+hrmode mode of the errors distribution (HRM estimator 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Bickel2002"
@@ -977,11 +978,11 @@ literal "false"
 \end_layout
 
 \begin_layout Description
-"skew","u_skew": skewness (moments-based formula)
+skew skewness (moments-based formula)
 \end_layout
 
 \begin_layout Description
-"skewgm","u_skewgm": robust skewness (Groeneveld and Meeden estimator 
+skewgm robust skewness (Groeneveld and Meeden estimator 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Groeneveld1984"
@@ -993,15 +994,15 @@ literal "false"
 \end_layout
 
 \begin_layout Description
-"skewgm_mcf","u_skewgm_mcf": robust skewness of mode-centered errors
+skewgm_mcf robust skewness of mode-centered errors
 \end_layout
 
 \begin_layout Description
-"kurt","u_kurt": kurtosis (moments-based formula)
+kurt kurtosis (moments-based formula)
 \end_layout
 
 \begin_layout Description
-"kurtcs","u_kurtcs": robust kurtosis excess 
+kurtcs robust kurtosis excess 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Bonato2011"
@@ -1013,7 +1014,7 @@ literal "false"
 \end_layout
 
 \begin_layout Description
-"gini","u_gini": Gini coefficient of the absolute errors 
+gini Gini coefficient of the absolute errors 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -1021,16 +1022,15 @@ literal "false"
 \end_layout
 
 \begin_layout Description
-"gimc","u_gimc": Gini coefficient of the mode-centered error distribution
+gimc Gini coefficient of the mode-centered error distribution
 \end_layout
 
 \begin_layout Description
-"bmax","u_bmax": value of the error bias maximizing the Gini coefficient
+bmax value of the error bias maximizing the Gini coefficient
 \end_layout
 
 \begin_layout Description
-"gmax","u_gmax": maximal value of the Gini coefficient as a function of
- error bias
+gmax maximal value of the Gini coefficient (data centered on bmax)
 \end_layout
 
 \begin_layout Section
