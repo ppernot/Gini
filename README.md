@@ -1,3 +1,6 @@
+
+[![DOI](https://zenodo.org/badge/315868596.svg)](https://zenodo.org/badge/latestdoi/315868596)
+
 # Gini
 
 1. Codes and data to reproduce the results of the paper:

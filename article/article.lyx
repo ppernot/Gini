@@ -373,8 +373,6 @@ literal "false"
 \end_inset
 
 , are used to evaluate the degree of inequality within these populations.
-
-\color orange
  The Gini coefficient is also used, for instance, in ecology, to estimate
  the inequality of properties within plant populations 
 \begin_inset CommandInset citation
@@ -566,8 +564,6 @@ Schematic cumulative density function (a) and Lorenz curve (b) for a folded
 \end_inset
 
 .
-
-\color orange
  
 \begin_inset Formula $Q_{p'}$
 \end_inset
@@ -577,8 +573,6 @@ Schematic cumulative density function (a) and Lorenz curve (b) for a folded
 \end_inset
 
 .
-
-\color inherit
  The area between the Lorenz curve and the identity axis (vertical bars)
  is half the Gini coefficient.
 \end_layout
@@ -861,8 +855,6 @@ literal "false"
 \end_inset
 
  the standard deviation of the absolute errors 
-\color orange
-
 \begin_inset Formula 
 \begin{equation}
 G_{F}\sim c_{v}/\sqrt{\pi}\label{eq:GcsCv}
@@ -870,8 +862,6 @@ G_{F}\sim c_{v}/\sqrt{\pi}\label{eq:GcsCv}
 
 \end_inset
 
-
-\color inherit
 Note that this relationship does hold only when all errors are of the same
  sign (
 \begin_inset Formula $\mu_{F}\gg\sigma_{F}$
@@ -914,8 +904,6 @@ literal "false"
 \end_layout
 
 \begin_layout Itemize
-
-\color orange
 for any zero-centered uniform distribution, 
 \begin_inset Formula $U(-a,a)$
 \end_inset
@@ -933,8 +921,6 @@ for any zero-centered uniform distribution,
 \begin_inset Formula $G_{FU}=1/3$
 \end_inset
 
-
-\color inherit
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1000,8 +986,6 @@ For the skewness, we use a measure using the difference between the mean
 
 \end_inset
 
-
-\color orange
 where the brackets indicate the mean value, 
 \begin_inset Formula $q(0.5)$
 \end_inset
@@ -1019,7 +1003,6 @@ signed
 \end_inset
 
  subscript refers to the authors of this definition, Goeneveld and Meeden
-\color inherit
  
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -1173,6 +1156,8 @@ literal "false"
 \end_inset
 
 , is used to estimate the location of the error samples main mode.
+ This methods proceeds by iterative bipartition of modal intervals (intervals
+ with highest density).
 \end_layout
 
 \begin_layout Paragraph
@@ -1475,9 +1460,7 @@ The Gini coefficient, Lorenz curves,
 \begin_inset Formula $\kappa_{CS}$
 \end_inset
 
- and mode estimator have been implemented in 
-\color orange
-the freely available R 
+ and mode estimator have been implemented in the freely available R 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "RTeam2019"
@@ -1485,9 +1468,7 @@ literal "false"
 
 \end_inset
 
- package
-\color inherit
- 
+ package 
 \family typewriter
 ErrViewLib
 \family default
@@ -1578,9 +1559,7 @@ literal "false"
 \begin_layout Standard
 It is important to note that we explore only distributions with a single
  dominant, more or less structured peak, such as the ones encountered in
- most computational chemistry error datasets
-\color orange
-.
+ most computational chemistry error datasets.
  In the list of analytical distributions above, the uniform is an exception
  because of its undefined mode.
  We use it as an extreme case of single peaked, continuous distribution,
@@ -2242,9 +2221,7 @@ noprefix "false"
 \begin_inset Formula $G_{F}=0.41$
 \end_inset
 
-, 
-\color orange
-for which Eq.
+, for which Eq.
 \begin_inset space \thinspace{}
 \end_inset
 
@@ -2258,9 +2235,7 @@ noprefix "false"
 
 \end_inset
 
- does not hold
-\color inherit
-.
+ does not hold.
  The dependence between a distribution shift and 
 \begin_inset Formula $G_{F}$
 \end_inset
@@ -2405,8 +2380,6 @@ The zero-centered unimodal symmetric distributions (normal and Student's-
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 The decay curves are symmetric with respect to the sign of the bias.
  This is no longer the case for asymmetric distributions (lognormal and
  
@@ -2423,8 +2396,6 @@ The decay curves are symmetric with respect to the sign of the bias.
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 In Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -2464,8 +2435,6 @@ noprefix "false"
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 Another important point illustrated by these curves is that the level of
  information that can be recovered from 
 \begin_inset Formula $G_{F}$
@@ -2533,16 +2502,12 @@ ze the shape of a distribution from its
 
  value, mode-centering seems to offer an interesting way to relieve the
  bias/shape compensation.
- 
-\color orange
-Mode-centering a distribution results in a folded distribution where both
+ Mode-centering a distribution results in a folded distribution where both
  tails overlap and mix, but it ensures that the contribution of the most-extende
 d tail will prevail.
  Note that this might not be the case when a biased distribution has a large
  tail encompassing zero, as the folding around zero of the tail might considerab
 ly reduce its length.
-
-\color inherit
  
 \end_layout
 
@@ -2801,9 +2766,7 @@ For all practical purposes in the present study, one can therefore estimate
 \end_inset
 
 .
- 
-\color orange
-We further note that for asymmetric distribution, centering on other location
+ We further note that for asymmetric distribution, centering on other location
  statistics than the mode (mean or median) would not maximize 
 \begin_inset Formula $G_{F}$
 \end_inset
@@ -3198,8 +3161,9 @@ Comparison of
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
- with other statistics: (a) absolute value of skewness 
-\begin_inset Formula $\beta_{GM}$
+ with shape statistics of error distributions: (a) absolute value of skewness
+ 
+\begin_inset Formula $|\beta_{GM}|$
 \end_inset
 
 ; (b) excess kurtosis 
@@ -3422,7 +3386,7 @@ noprefix "false"
 placement ht
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -4005,8 +3969,6 @@ Application of
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 To evaluate the interest of 
 \begin_inset Formula $G_{MCF}$
 \end_inset
@@ -4043,13 +4005,11 @@ What is the threshold for
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
 \align center
-
-\color orange
 \begin_inset Graphics
 	filename Fig_6.png
 	lyxscale 30
@@ -4061,8 +4021,6 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-
-\color orange
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -4092,8 +4050,6 @@ Flagging of large
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -4162,8 +4118,6 @@ global
 \end_layout
 
 \begin_layout Standard
-
-\color orange
 To explore the role of global outliers, Fig.
 \begin_inset space \thinspace{}
 \end_inset
@@ -4763,7 +4717,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -4858,8 +4812,6 @@ e.g.
  For high ranking methods, this is an incentive to inspect closely the error
  distributions and check if the selected methods might have problems of
  reliability in their predictions.
-
-\color orange
  It might then be worth to investigate if the distorted shape of the distributio
 n is due to systematic trends in the errors, as they can often be corrected
  by simple linear transformations 
@@ -4881,9 +4833,18 @@ Supplementary Information
 
 \begin_layout Standard
 Statistics, ECDFs and Lorenz curves for the literature datasets are openly
- available at the following
-\color red
- URL/DOI:...
+ available at the following URL: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://doi.org/10.5281/zenodo.4333218
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section*
@@ -4892,9 +4853,18 @@ Data availability statement
 
 \begin_layout Standard
 The data and codes that support the findings of this study are openly available
- at the following URL
-\color red
-/DOI:https://doi.org/10.528 1/zenodo.3733 272
+ at the following URL: 
+\begin_inset Flex URL
+status open
+
+\begin_layout Plain Layout
+
+https://doi.org/10.5281/zenodo.4333218
+\end_layout
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Section*
