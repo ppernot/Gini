@@ -71,54 +71,10 @@ names(units) = dataSets
 
 # Functions ----
 
-# lcp = function(X, index = 1:length(X), p=0.95, ...) {
-#   # Lorenz curve
-#   X = sort(abs(X[index]))
-#   pr = (1:length(X)) / length(X)
-#   lc = cumsum(X)/sum(X)
-#   # Linear interpolation
-#   iup = which(pr >= p)[1]
-#   ilo = iup - 1
-#   Lcp = lc[ilo]+ (p-pr[ilo])*
-#     (lc[iup]-lc[ilo])/(pr[iup]-pr[ilo])
-#
-#   return(1-Lcp)
-# }
-
-hrmode = function(X, index = 1:length(X), ...) {
-  genefilter::half.range.mode(X[index])
-}
-
-skewgm = function(X, index = 1:length(X), ...) {
-  X = X[index]
-  m = hd(X, 0.5)
-  s = (mean(X) - m) / mean(abs(X - m))
-  return(s)
-}
-
-# skewgm_f = function(X, index = 1:length(X), ...) {
-#   return(skewgm(abs(X[index])))
-# }
-
 skewgm_mcf = function(X, index = 1:length(X), ...) {
   X = X[index]
   X = abs(X - hrmode(X)) # Absolute mode-centered errors
-  return(skewgm(X))
-}
-
-# kurtcs_f = function(X, index = 1:length(X), ...) {
-#   return( ErrViewLib::kurtcs( abs(X[index]) ) )
-# }
-#
-# kurtcs_mcf = function(X, index = 1:length(X), ...) {
-#   X = X[index]
-#   X = abs(X - hrmode(X)) # Absolute mode-centered errors
-#   return( ErrViewLib::kurtcs(X) )
-# }
-
-gimc = function(X, index = 1:length(X), ...) {
-  X = X[index]
-  ErrViewLib::gini(abs(X - hrmode(X)))
+  return(ErrViewLib::skewgm(X))
 }
 
 gh = function(N = 1000,

@@ -167,7 +167,7 @@ The distribution of errors is a central object in the assesment and benchmarking
  We propose to relieve the ambiguity by applying the Gini coefficient to
  mode-centered error distributions.
  This version can usefully complement benchmarking statistics and alert
- on error sets with problematic shapes.
+ on error sets with potentially problematic shapes.
 \end_layout
 
 \begin_layout Standard
@@ -677,7 +677,7 @@ noprefix "false"
 
 \end_inset
 
-(left), it is the ratio between the slanted shaded area and the total slanted
+(a), it is the ratio between the slanted shaded area and the total slanted
  area.
  Its value for 
 \begin_inset Formula $p'$
@@ -697,7 +697,7 @@ noprefix "false"
 
 \end_inset
 
-(right)).
+(b)).
 \end_layout
 
 \begin_layout Standard
@@ -796,7 +796,7 @@ noprefix "false"
 
 \end_inset
 
-(right))
+(b))
 \begin_inset Formula 
 \begin{equation}
 G_{F}=2\int_{0}^{1}\left\{ p-L(p)\right\} \thinspace dp
@@ -818,13 +818,13 @@ where the factor two is used to scale
 \begin_inset Formula $G$
 \end_inset
 
-, is used for distributions with positive support.
+, is generally used for distributions with positive support.
  Our notation 
 \begin_inset Formula $G_{F}$
 \end_inset
 
- is a reminder that we are working here with folded distributions of absolute
- errors 
+ is a reminder that we are working here with distributions of absolute errors
+ 
 \begin_inset Formula $f_{F}(\varepsilon)$
 \end_inset
 
@@ -905,7 +905,6 @@ for any zero-centered normal distribution of errors
  
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Appendix"
 key "Dixon1987"
 literal "false"
 
@@ -939,7 +938,6 @@ for any zero-centered uniform distribution,
  
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Appendix"
 key "Dixon1987"
 literal "false"
 
@@ -1020,7 +1018,7 @@ signed
 \begin_inset Formula $GM$
 \end_inset
 
- subscript refers to the authors of the definition, Goeneveld and Meeden
+ subscript refers to the authors of this definition, Goeneveld and Meeden
 \color inherit
  
 \begin_inset CommandInset citation
@@ -1086,6 +1084,12 @@ signed
 excess
 \emph default
  kurtosis.
+ Datasets with 
+\begin_inset Formula $\kappa_{CS}>0$
+\end_inset
+
+ have larger tails than a normal distribution, and the opposite for negative
+ values.
 \end_layout
 
 \begin_layout Standard
@@ -1172,7 +1176,7 @@ literal "false"
 \end_layout
 
 \begin_layout Paragraph
-\begin_inset Formula $L(p)$
+\begin_inset Formula $L_{F}(p)$
 \end_inset
 
  and 
@@ -1228,7 +1232,7 @@ i.e.
 The Lorenz curve is estimated as
 \begin_inset Formula 
 \begin{equation}
-L(p)=\frac{S_{p\times N}}{S_{N}}\label{eq:lorenz}
+L_{F}(p)=\frac{S_{p\times N}}{S_{N}}\label{eq:lorenz}
 \end{equation}
 
 \end_inset
@@ -1252,7 +1256,7 @@ where
 \begin_layout Standard
 Using a fast sorting of the sample of absolute errors, an efficient estimation
  of 
-\begin_inset Formula $G$
+\begin_inset Formula $G_{F}$
 \end_inset
 
  uses the formula 
@@ -1266,7 +1270,7 @@ literal "false"
 
 \begin_inset Formula 
 \begin{equation}
-G=\frac{\sum_{i=1}^{N}(2i-N-1)\varepsilon_{[i]}}{N\sum_{i=1}^{N}\varepsilon_{[i]}}
+G_{F}=\frac{\sum_{i=1}^{N}(2i-N-1)\varepsilon_{[i]}}{N\sum_{i=1}^{N}\varepsilon_{[i]}}
 \end{equation}
 
 \end_inset
@@ -1282,7 +1286,7 @@ literal "false"
 
 \begin_inset Formula 
 \begin{equation}
-G=\frac{1}{MUE}<\max\{0,\varepsilon_{1}-\varepsilon_{2}\}>
+G_{F}=\frac{1}{MUE}<\max\{0,\varepsilon_{1}-\varepsilon_{2}\}>
 \end{equation}
 
 \end_inset
@@ -1296,7 +1300,7 @@ where
 \end_inset
 
  are two elements of 
-\begin_inset Formula $\varepsilon$
+\begin_inset Formula $\varXi$
 \end_inset
 
  and the mean is taken on all pairs.
@@ -1343,8 +1347,8 @@ noprefix "false"
 
 \end_inset
 
- are applied directly, with the robust method for quantiles due to Harrell
- and Davis 
+ are applied directly, with the robust method to estimate quantiles due
+ to Harrell and Davis 
 \begin_inset CommandInset citation
 LatexCommand citep
 key "Harrell1982,Wilcox2012,Pernot2020"
@@ -1440,7 +1444,11 @@ literal "false"
 
 ) and bootstrapping 
 \family typewriter
-(boot
+(
+\family default
+package
+\family typewriter
+ boot
 \family default
  
 \begin_inset CommandInset citation
@@ -1618,7 +1626,11 @@ literal "false"
 
 \end_inset
 
-.
+, from which we removed small datasets (
+\begin_inset Formula $N<100$
+\end_inset
+
+).
  The statistics, empirical cumulative density functions and Lorenz curves
  corresponding to these datasets are provided as Supplementary Information.
  
@@ -2275,7 +2287,7 @@ noprefix "false"
 \begin_inset Formula $N(0,1)$
 \end_inset
 
-, Student's 
+, Student's-
 \begin_inset Formula $t(\nu=2)$
 \end_inset
 
@@ -2349,8 +2361,11 @@ Variation of
 \end_layout
 
 \begin_layout Standard
-The zero-centered unimodal symmetric distributions (normal and Student's)
- have their maximal 
+The zero-centered unimodal symmetric distributions (normal and Student's-
+\begin_inset Formula $t$
+\end_inset
+
+) have their maximal 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -2424,8 +2439,8 @@ noprefix "false"
 
 \end_inset
 
-(b) we plotted identical curves for distributions centered on their mode
- before adding a bias (the symmetric distributions have been left unchanged).
+(b) we plotted similar curves for distributions centered on their mode before
+ adding a bias (the symmetric distributions have been left unchanged).
  This shows that the maximal value of 
 \begin_inset Formula $G_{F}$
 \end_inset
@@ -2637,7 +2652,6 @@ literal "false"
  values are equal 
 \begin_inset CommandInset citation
 LatexCommand cite
-after "Sect. V.A"
 key "Pernot2020"
 literal "false"
 
@@ -2681,7 +2695,7 @@ noprefix "false"
 \begin_inset Formula $z_{G}=-2.5$
 \end_inset
 
- corresponds to the MP2 method in dataset ZAS2019, which is has a practically
+ corresponds to the MP2 method in dataset ZAS2019, which has a practically
  normal distribution 
 \begin_inset CommandInset citation
 LatexCommand cite
@@ -2980,7 +2994,7 @@ noprefix "false"
 \begin_inset Formula $N=145$
 \end_inset
 
-) having the largest uncertainty, and the largest dataset (ZHA2019, 
+) having the largest uncertainty, and the largest dataset (ZAS2019, 
 \begin_inset Formula $N=6211)$
 \end_inset
 
@@ -3092,8 +3106,8 @@ noprefix "false"
 \end_inset
 
  distributions with a range of shape parameters, one observes a nearly perfect
- non-linear correlation (dashed line resulting from a quadratic fit of the
- sampled values).
+ non-linear correlation (dashed line, resulting from a quadratic fit of
+ the sampled values).
  The dispersion of the points for the literature datasets about this curve
  is mostly due to statistical uncertainty (the points for the largest dataset
  (ZAS2019, 
@@ -3109,7 +3123,7 @@ noprefix "false"
 \begin_inset Formula $\beta_{MCF}$
 \end_inset
 
-, and therefore performs better for smaller datasets .
+, and therefore performs better for smaller datasets.
 \end_layout
 
 \begin_layout Standard
@@ -3221,12 +3235,12 @@ noprefix "false"
 \end_inset
 
 (a)), all the points seem to lie within an angular sector, indicating that
- distributions with large skewness have large 
+ distributions with large skewness have necessarily large 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
-.
- For instance, if the skewness is above 0.3, 
+ values.
+ For instance, if the absolute value of the skewness is above 0.3, 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -3274,7 +3288,7 @@ noprefix "false"
 and
 \emph default
  excess kurtosis.
- Although information is list because of folding, 
+ Although information is lost because of folding, 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -3993,7 +4007,7 @@ Application of
 \begin_layout Standard
 
 \color orange
-In order to evaluate the interest of 
+To evaluate the interest of 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -4211,7 +4225,7 @@ noprefix "false"
 
 \end_inset
 
-), and no global outliers are identified for this dataset.
+), and the removal of several global outliers has no impact.
  In the case ZHA2018, the first MUE-ranked method is SCAN, which has a 
 \begin_inset Formula $G_{MCF}$
 \end_inset
@@ -4739,16 +4753,17 @@ noprefix "false"
 
 ) with the same value of the MUE (1.0), and yet very different risks of large
  prediction errors.
- This is clearly a case where a quantile-based statistic, such as 
+ This is clearly a case showing that a quantile-based statistic, such as
+ 
 \begin_inset Formula $Q_{95}$
 \end_inset
 
-, are an essential complement to the MUE.
+, is an essential complement to the MUE.
  
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \noindent
@@ -4823,8 +4838,8 @@ The Gini coefficient presents an interesting addition to the computational
 \end_layout
 
 \begin_layout Standard
-To unscramble this situation, we propose the Gini coefficient of the mode-center
-ed distributions, 
+To unscramble this situation, we propose to use the Gini coefficient of
+ the mode-centered distributions, 
 \begin_inset Formula $G_{MCF}$
 \end_inset
 
@@ -4865,9 +4880,10 @@ Supplementary Information
 \end_layout
 
 \begin_layout Standard
-
+Statistics, ECDFs and Lorenz curves for the literature datasets are openly
+ available at the following
 \color red
-Lorenz curves and statistics for the literature datasets.
+ URL/DOI:...
 \end_layout
 
 \begin_layout Section*
@@ -4886,7 +4902,7 @@ Dedication
 \end_layout
 
 \begin_layout Standard
-This work is dedicated to Ramon Carbó-Dorca to his 80th birthday.
+This work is dedicated to Ramon Carbó-Dorca for his 80th birthday.
  It reflects his interest for cross-disciplinary aspects of science, especially
  the role of mathematics in chemistry.
  
