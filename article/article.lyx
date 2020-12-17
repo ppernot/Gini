@@ -40,7 +40,7 @@
 \index_command default
 \float_placement !t
 \paperfontsize 12
-\spacing onehalf
+\spacing double
 \use_hyperref true
 \pdf_title "Comparison of methods"
 \pdf_bookmarks true
@@ -153,6 +153,13 @@ Sorbonne Universités, F-75252 Paris, France
 \end_inset
 
 Email: andreas.savin@lct.jussieu.fr
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage pagebreak
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -1071,7 +1078,7 @@ excess
 \begin_inset Formula $\kappa_{CS}>0$
 \end_inset
 
- have larger tails than a normal distribution, and the opposite for negative
+ have heavier tails than a normal distribution, and the opposite for negative
  values.
 \end_layout
 
@@ -1470,9 +1477,9 @@ literal "false"
 
  package 
 \family typewriter
-ErrViewLib
+ErrViewLib (v1.3,
 \family default
- (
+ 
 \begin_inset Flex URL
 status open
 
@@ -2287,7 +2294,7 @@ noprefix "false"
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \noindent
@@ -2318,11 +2325,8 @@ Variation of
 \end_inset
 
  with a bias value added to several model distributions: (a) no centering
- applied; (b) mode-centering applied before adding bias
-\color orange
- (Uniform, Student and Normal are unchanged)
-\color inherit
-.
+ applied; (b) mode-centering applied before adding bias (Uniform, Student
+ and Normal are unchanged).
 \end_layout
 
 \end_inset
@@ -2505,9 +2509,13 @@ ze the shape of a distribution from its
  Mode-centering a distribution results in a folded distribution where both
  tails overlap and mix, but it ensures that the contribution of the most-extende
 d tail will prevail.
- Note that this might not be the case when a biased distribution has a large
- tail encompassing zero, as the folding around zero of the tail might considerab
-ly reduce its length.
+
+\color orange
+ 
+\color inherit
+In absence of mode-centering, when a biased distribution has a large tail
+ encompassing zero, the folding around zero might considerably reduce this
+ tail.
  
 \end_layout
 
@@ -2766,8 +2774,8 @@ For all practical purposes in the present study, one can therefore estimate
 \end_inset
 
 .
- We further note that for asymmetric distribution, centering on other location
- statistics than the mode (mean or median) would not maximize 
+ We further note that for distributions having distinct mean and mode, centering
+ on the mean would not maximize 
 \begin_inset Formula $G_{F}$
 \end_inset
 
@@ -3755,7 +3763,10 @@ WU2015
 \begin_inset Text
 
 \begin_layout Plain Layout
-tHCTHhyb 
+\begin_inset Formula $\tau$
+\end_inset
+
+HCTHhyb 
 \end_layout
 
 \end_inset
