@@ -6,7 +6,7 @@
 1. Codes and data to reproduce the results of the paper:
 _Using the Gini coefficient to characterize the shape of 
   computational chemistry error distributions_, by P. Pernot 
-  and A. Savin (2021) [arXiv](https://arxiv.org/abs/2012.09589) 
+  and A. Savin (2021) _Theor. Chem. Acc._ __140__:24 [doi:10.1007/s00214-021-02725-0](https://doi.org/10.1007/s00214-021-02725-0); [arXiv](https://arxiv.org/abs/2012.09589) 
 
 2. [Supplementary Information](https://github.com/ppernot/Gini/tree/main/Supplementary_Information) to te paper:
 
